@@ -35,5 +35,14 @@ Implementation:
 * **Single page javascript app** - Not using React etc since we are working in SVG. Maybe there is a UI library we can build on, but I'm guessing we probably roll this from scratch.
 
 
+Initial data sets are focussed on the history of the united states, from 1775 to today.
+Data sets are:
+* **Wars**: E.g. the civil war, WW1/2, Vietnam war, 1812 war, Spanish-american war.
+* **Other major historical events**: Eg. the great deperession, the trail of tears, the lousiana purchase, the industrial revolution.
+* **Lifetimes of notable historical people**:  Both American and non-american - focussing on people well known today. Start and end are their birth and death dates.
+* **Media**: Creation dates of notable movies, books, songs etc. Particularly ones that are still very popular today and may be older than people realize. E.g. Back to the Future, Terminator, Star Wars.
+
+
+
 
 
