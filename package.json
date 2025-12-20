@@ -1,0 +1,19 @@
+{
+  "name": "histomap",
+  "version": "1.0.0",
+  "description": "Online tool for creating visualizations of history",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "http-server -p 8000 -o"
+  },
+  "keywords": [
+    "history",
+    "visualization",
+    "timeline"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histomap - History Visualization Tool</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Histomap</h1>
+            <p class="subtitle">Visualize Historical Events</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Controls Panel -->
+            <aside class="controls-panel">
+                <section class="control-section">
+                    <h2>Event Sets</h2>
+                    <div id="event-set-selector" class="event-sets">
+                        <!-- Event set checkboxes will be dynamically added here -->
+                    </div>
+                </section>
+
+                <section class="control-section">
+                    <h2>Time Range</h2>
+                    <div class="time-controls">
+                        <label>
+                            Start Year:
+                            <input type="number" id="start-year" value="1775" min="1000" max="2025">
+                        </label>
+                        <label>
+                            End Year:
+                            <input type="number" id="end-year" value="2025" min="1000" max="2100">
+                        </label>
+                    </div>
+                </section>
+
+                <section class="control-section">
+                    <h2>Dimensions</h2>
+                    <div class="dimension-controls">
+                        <label>
+                            Width (px):
+                            <input type="number" id="width" value="1200" min="400" max="5000" step="100">
+                        </label>
+                        <label>
+                            Height (px):
+                            <input type="number" id="height" value="800" min="200" max="3000" step="100">
+                        </label>
+                    </div>
+                </section>
+
+                <section class="control-section">
+                    <h2>Actions</h2>
+                    <button id="update-viz" class="btn btn-primary">Update Visualization</button>
+                    <button id="export-pdf" class="btn btn-secondary">Export as PDF</button>
+                </section>
+            </aside>
+
+            <!-- Visualization Area -->
+            <main class="visualization-area">
+                <div id="svg-container">
+                    <!-- SVG will be dynamically created here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svg2pdf.js@2.2.1/dist/svg2pdf.bundle.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="js/dataLoader.js"></script>
+    <script src="js/visualization.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/pdfExport.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
