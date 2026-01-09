@@ -222,10 +222,9 @@ const Visualization = (function() {
      */
     function drawEventBands() {
         let currentY = config.padding.top;
-        const bandHeight = 120; // Fixed height for bands mode
 
         selectedEventSets.forEach(eventSet => {
-            drawEventBand(eventSet, currentY, bandHeight);
+            const bandHeight = drawEventBand(eventSet, currentY);
             currentY += bandHeight + config.bandSpacing;
         });
     }
@@ -234,19 +233,37 @@ const Visualization = (function() {
      * Draw a single event band
      * @param {Object} eventSet - The event set to draw
      * @param {number} y - Y position of the band
-     * @param {number} height - Height of the band
+     * @returns {number} The actual height used by the band
      */
-    function drawEventBand(eventSet, y, height) {
+    function drawEventBand(eventSet, y) {
         const bandGroup = createSVGElement('g', { class: 'event-band' });
 
-        // Create clipPath for this band
+        // Use special rendering for "Notable People"
+        const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
+        const topPadding = 8;
+        const bottomPadding = 8;
+        const fontSize = 12;
+        // startY should be baseline position, accounting for text ascent above baseline
+        const startY = y + topPadding + fontSize;
+
+        let maxY;
+        if (eventSet.name === "Notable People") {
+            maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y);
+        } else {
+            maxY = drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y);
+        }
+
+        // Calculate actual height needed (maxY already includes content, just add bottom padding)
+        const actualHeight = (maxY - y) + bottomPadding;
+
+        // Create clipPath for this band with actual height
         const clipPathId = `clip-${eventSet.name.replace(/\s+/g, '-')}`;
         const clipPath = createSVGElement('clipPath', { id: clipPathId });
         const clipRect = createSVGElement('rect', {
             x: config.padding.left,
             y: y,
             width: config.width - config.padding.left - config.padding.right,
-            height: height
+            height: actualHeight
         });
         clipPath.appendChild(clipRect);
         svg.appendChild(clipPath);
@@ -259,7 +276,7 @@ const Visualization = (function() {
             x: config.padding.left,
             y: y,
             width: config.width - config.padding.left - config.padding.right,
-            height: height,
+            height: actualHeight,
             fill: eventSet.color,
             'fill-opacity': 0.05,
             stroke: eventSet.color,
@@ -271,7 +288,7 @@ const Visualization = (function() {
         // Band title (outside the clipped group so it's always visible)
         const title = createSVGElement('text', {
             x: config.padding.left - 10,
-            y: y + height / 2,
+            y: y + actualHeight / 2,
             'text-anchor': 'end',
             'dominant-baseline': 'middle',
             class: 'band-title',
@@ -280,12 +297,244 @@ const Visualization = (function() {
         title.textContent = eventSet.name;
         svg.appendChild(title);
 
-        // Draw all events together, sorted by priority
-        const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
-        const startY = y + 20; // Start near top of band
-        drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y, height);
-
         svg.appendChild(bandGroup);
+
+        return actualHeight;
+    }
+
+    /**
+     * Draw people band with unique colors and smart positioning
+     * @param {SVGElement} group - Parent SVG group
+     * @param {Array} events - People to draw
+     * @param {number} baseY - Base Y position
+     * @param {string} baseColor - Base color (not used, each person gets unique color)
+     * @param {number} bandY - Y position of the band
+     * @returns {number} The maximum Y position used
+     */
+    function drawPeopleBand(group, events, baseY, baseColor, bandY) {
+        const startTimestamp = new Date(config.startYear, 0, 1).getTime();
+        const endTimestamp = new Date(config.endYear, 11, 31).getTime();
+        const timeRange = endTimestamp - startTimestamp;
+        const chartWidth = config.width - config.padding.left - config.padding.right;
+
+        const lineHeight = 3;
+        const fontSize = 12;
+        const textHeight = fontSize + 4;
+        const lineGap = 6; // Minimum gap between lines (double the original 3px)
+        const textGap = 20; // Minimum gap between text labels
+        const charWidth = 6.5; // Estimated character width
+
+        // Generate unique colors for each person
+        // Colors with maximum hue spacing - each adjacent color is ~180° apart on color wheel
+        const colors = [
+            '#e74c3c', // red
+            '#1abc9c', // cyan/teal
+            '#f39c12', // orange
+            '#3498db', // blue
+            '#2ecc71', // green
+            '#e84393', // magenta/pink
+            '#f1c40f', // yellow
+            '#9b59b6', // purple
+            '#16a085', // dark teal
+            '#e67e22', // dark orange
+            '#2980b9', // dark blue
+            '#27ae60', // dark green
+            '#c0392b', // dark red
+            '#00b894', // turquoise
+            '#d35400', // burnt orange
+            '#6c5ce7', // lavender
+            '#8e44ad', // dark purple
+            '#95a5a6', // gray
+            '#34495e', // dark gray
+            '#7f8c8d'  // medium gray
+        ];
+
+        // Filter events within time range (don't assign colors yet)
+        const visiblePeople = [];
+        events.forEach((event) => {
+            if (event.startDate.getFullYear() >= config.startYear &&
+                event.startDate.getFullYear() <= config.endYear) {
+                visiblePeople.push(event);
+            }
+        });
+
+        // Sort by end date (latest first) within priority groups
+        const peopleByPriority = {};
+        visiblePeople.forEach(person => {
+            if (!peopleByPriority[person.priority]) {
+                peopleByPriority[person.priority] = [];
+            }
+            peopleByPriority[person.priority].push(person);
+        });
+
+        Object.values(peopleByPriority).forEach(priorityGroup => {
+            priorityGroup.sort((a, b) => {
+                const aEnd = a.endTimestamp || a.startTimestamp;
+                const bEnd = b.endTimestamp || b.startTimestamp;
+                return bEnd - aEnd;
+            });
+        });
+
+        const sortedPeople = [];
+        const priorities = Object.keys(peopleByPriority).map(Number).sort((a, b) => a - b);
+        priorities.forEach(priority => {
+            sortedPeople.push(...peopleByPriority[priority]);
+        });
+
+        // Track placed items (we'll draw them after calculating positions)
+        const placedItems = [];
+
+        sortedPeople.forEach(person => {
+            const startX = config.padding.left +
+                ((person.startTimestamp - startTimestamp) / timeRange) * chartWidth;
+
+            let endX = startX;
+            if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
+                // Person has died
+                endX = config.padding.left +
+                    ((person.endTimestamp - startTimestamp) / timeRange) * chartWidth;
+            } else if (!person.endDate) {
+                // Person is still alive, extend line to current end of timeline
+                endX = config.padding.left + chartWidth;
+            }
+
+            const lineLength = endX - startX;
+            const textWidth = person.name.length * charWidth;
+
+            // Step 1: Find Y position for the line that avoids line overlaps (4px gap)
+            let lineY = baseY;
+            let foundLinePosition = false;
+
+            while (!foundLinePosition) {
+                let hasLineOverlap = false;
+
+                for (const placed of placedItems) {
+                    const horizontalOverlap = (startX < placed.endX) && (endX > placed.startX);
+                    const verticalGap = Math.abs(lineY - placed.lineY);
+
+                    // Lines overlap if they're horizontally overlapping and vertically too close
+                    if (horizontalOverlap && verticalGap < lineGap) {
+                        hasLineOverlap = true;
+                        lineY = placed.lineY + lineGap;
+                        break;
+                    }
+                }
+
+                if (!hasLineOverlap) {
+                    foundLinePosition = true;
+                }
+            }
+
+            // Step 2: Try to find horizontal position for text that avoids text overlaps
+            let textX = startX; // Prefer start of line
+            const maxTextX = startX + lineLength - textWidth;
+            let foundTextPosition = false;
+
+            // Get all placed items that are vertically close enough for text to overlap
+            const nearbyItems = placedItems.filter(p => {
+                const verticalGap = Math.abs(lineY - p.lineY);
+                return verticalGap < textHeight;
+            });
+
+            // Try to find a position along the line where the text doesn't overlap
+            while (textX <= maxTextX && !foundTextPosition) {
+                let hasTextOverlap = false;
+
+                for (const placed of nearbyItems) {
+                    const textOverlapX = (textX < placed.textX + placed.textWidth + textGap) &&
+                                        (textX + textWidth + textGap > placed.textX);
+
+                    if (textOverlapX) {
+                        hasTextOverlap = true;
+                        // Jump to after this text
+                        textX = placed.textX + placed.textWidth + textGap;
+                        break;
+                    }
+                }
+
+                if (!hasTextOverlap) {
+                    foundTextPosition = true;
+                } else if (textX > maxTextX) {
+                    // Can't fit text without overlap, need to shift line down
+                    break;
+                }
+            }
+
+            // Step 3: If we couldn't find a text position, shift the line down and retry
+            if (!foundTextPosition) {
+                // Shift down and try again
+                lineY += textHeight;
+                textX = startX; // Reset to beginning of line
+            }
+
+            // Constrain text to line bounds
+            if (textX < startX) textX = startX;
+            if (textX > maxTextX) textX = maxTextX;
+
+            // Record this placement
+            placedItems.push({
+                person: person,
+                lineY: lineY,
+                startX: startX,
+                endX: endX,
+                textX: textX,
+                textWidth: textWidth
+            });
+        });
+
+        // Sort placed items by Y position and assign colors based on vertical order
+        placedItems.sort((a, b) => a.lineY - b.lineY);
+        placedItems.forEach((item, idx) => {
+            item.person.personColor = colors[idx % colors.length];
+        });
+
+        // Draw all timeline lines first (continuous from start to end)
+        placedItems.forEach(item => {
+            const line = createSVGElement('line', {
+                x1: item.startX,
+                y1: item.lineY,
+                x2: item.endX,
+                y2: item.lineY,
+                stroke: item.person.personColor,
+                'stroke-width': lineHeight,
+                'stroke-opacity': 0.7
+            });
+            group.appendChild(line);
+        });
+
+        // Draw white background rectangles behind text to make it readable over lines
+        // Stop the background just above the person's own timeline
+        placedItems.forEach(item => {
+            const textBg = createSVGElement('rect', {
+                x: item.textX - 2,
+                y: item.lineY - fontSize - 2,
+                width: item.textWidth + 4,
+                height: fontSize - 2,
+                fill: 'white',
+                'fill-opacity': 0.8
+            });
+            group.appendChild(textBg);
+        });
+
+        // Draw text on top
+        placedItems.forEach(item => {
+            const text = createSVGElement('text', {
+                x: item.textX,
+                y: item.lineY - 4,
+                class: 'event-label-major',
+                fill: item.person.personColor,
+                'fill-opacity': 1
+            });
+            text.textContent = item.person.name;
+            group.appendChild(text);
+        });
+
+        // Return the maximum Y position used
+        // lineY is the line center, lineHeight is 3, so bottom is lineY + 1.5
+        const maxY = placedItems.length > 0
+            ? Math.max(...placedItems.map(item => item.lineY + 1.5))
+            : baseY;
+        return maxY;
     }
 
     /**
@@ -294,11 +543,10 @@ const Visualization = (function() {
      * @param {Array} events - Events to draw (already sorted by priority)
      * @param {number} baseY - Base Y position for events
      * @param {string} color - Base color
-     * @param {number} bandY - Y position of the band (for clipping)
-     * @param {number} bandHeight - Height of the band (for clipping)
+     * @param {number} bandY - Y position of the band
+     * @returns {number} The maximum Y position used
      */
-    function drawBandEvents(group, events, baseY, color, bandY, bandHeight) {
-        const bandBottom = bandY + bandHeight;
+    function drawBandEvents(group, events, baseY, color, bandY) {
 
         const startTimestamp = new Date(config.startYear, 0, 1).getTime();
         const endTimestamp = new Date(config.endYear, 11, 31).getTime();
@@ -313,8 +561,34 @@ const Visualization = (function() {
         const verticalSpacing = size.fontSize + 4;
         const labelPadding = 20; // Horizontal spacing between labels to prevent them from reading as one word
         const dotOffset = 8; // Space between dot and text
+        const minVerticalShift = 1; // Minimum pixels to shift down when avoiding overlap
 
+        // Group events by priority, then sort by end date (latest first) within each priority
+        const eventsByPriority = {};
         events.forEach(event => {
+            if (!eventsByPriority[event.priority]) {
+                eventsByPriority[event.priority] = [];
+            }
+            eventsByPriority[event.priority].push(event);
+        });
+
+        // Sort each priority group by end date (latest first)
+        Object.values(eventsByPriority).forEach(priorityGroup => {
+            priorityGroup.sort((a, b) => {
+                const aEnd = a.endTimestamp || a.startTimestamp;
+                const bEnd = b.endTimestamp || b.startTimestamp;
+                return bEnd - aEnd; // Descending order (latest first)
+            });
+        });
+
+        // Flatten back to single array, maintaining priority order
+        const sortedEvents = [];
+        const priorities = Object.keys(eventsByPriority).map(Number).sort((a, b) => a - b);
+        priorities.forEach(priority => {
+            sortedEvents.push(...eventsByPriority[priority]);
+        });
+
+        sortedEvents.forEach(event => {
             // Only draw events within the visible time range
             if (event.startDate.getFullYear() < config.startYear ||
                 event.startDate.getFullYear() > config.endYear) {
@@ -338,43 +612,36 @@ const Visualization = (function() {
             const labelEndX = labelStartX + estimatedLabelWidth;
 
             // Find a Y position that doesn't overlap
+            // Start at baseY and shift down just enough to clear any overlaps
             let labelY = baseY;
-            let attempts = 0;
-            const maxAttempts = 20;
 
-            while (attempts < maxAttempts) {
-                let hasOverlap = false;
+            // Keep checking and adjusting until we find a position with no overlaps
+            let needsAdjustment = true;
+            let safetyCounter = 0;
+            while (needsAdjustment && safetyCounter < 50) {
+                needsAdjustment = false;
+                safetyCounter++;
 
                 for (const placed of placedEvents) {
-                    // Check if underlines would overlap (for events with durations)
-                    const underlineOverlapX = (x <= placed.endX) && (endX >= placed.x);
+                    // Check vertical proximity
+                    const verticallyClose = Math.abs(labelY - placed.labelY) < verticalSpacing;
 
-                    // Check if text labels would overlap
-                    const textOverlapX = (labelStartX <= placed.labelEndX + labelPadding) &&
-                                        (labelEndX >= placed.labelStartX - labelPadding);
+                    if (verticallyClose) {
+                        // Check if there's horizontal overlap
+                        const underlineOverlapX = (x <= placed.endX) && (endX >= placed.x);
+                        const textOverlapX = (labelStartX <= placed.labelEndX + labelPadding) &&
+                                            (labelEndX >= placed.labelStartX - labelPadding);
 
-                    const labelOverlapY = Math.abs(labelY - placed.labelY) < verticalSpacing;
-
-                    // Overlap if either underlines or text overlaps
-                    if ((underlineOverlapX || textOverlapX) && labelOverlapY) {
-                        hasOverlap = true;
-                        break;
+                        if (underlineOverlapX || textOverlapX) {
+                            // We overlap with this placed event, shift down just past it
+                            labelY = placed.labelY + verticalSpacing;
+                            needsAdjustment = true;
+                            break; // Re-check all events with new Y
+                        }
                     }
                 }
-
-                if (!hasOverlap) {
-                    break;
-                }
-
-                labelY += verticalSpacing;
-                attempts++;
             }
 
-            // Check if event would fit within the band
-            // Don't draw if the label would extend beyond the band bottom
-            if (labelY + size.fontSize / 2 > bandBottom) {
-                return; // Skip this event, it doesn't fit
-            }
 
             // Record this event's position
             placedEvents.push({
@@ -417,6 +684,14 @@ const Visualization = (function() {
                 group.appendChild(underline);
             }
         });
+
+        // Return the maximum Y position used
+        // labelY is text baseline, underline is at labelY+2, with stroke-width 3
+        // so bottom of underline is at labelY+2+1.5
+        const maxY = placedEvents.length > 0
+            ? Math.max(...placedEvents.map(ev => ev.labelY + 3.5))
+            : baseY;
+        return maxY;
     }
 
     /**
@@ -440,8 +715,32 @@ const Visualization = (function() {
         const verticalSpacing = size.fontSize + 4;
         const dotOffset = 8; // Space between dot and text
 
-        // Events are already sorted by combinedPriority
+        // Group events by combined priority, then sort by end date (latest first) within each priority
+        const eventsByPriority = {};
         events.forEach(event => {
+            if (!eventsByPriority[event.combinedPriority]) {
+                eventsByPriority[event.combinedPriority] = [];
+            }
+            eventsByPriority[event.combinedPriority].push(event);
+        });
+
+        // Sort each priority group by end date (latest first)
+        Object.values(eventsByPriority).forEach(priorityGroup => {
+            priorityGroup.sort((a, b) => {
+                const aEnd = a.endTimestamp || a.startTimestamp;
+                const bEnd = b.endTimestamp || b.startTimestamp;
+                return bEnd - aEnd; // Descending order (latest first)
+            });
+        });
+
+        // Flatten back to single array, maintaining priority order
+        const sortedEvents = [];
+        const priorities = Object.keys(eventsByPriority).map(Number).sort((a, b) => a - b);
+        priorities.forEach(priority => {
+            sortedEvents.push(...eventsByPriority[priority]);
+        });
+
+        sortedEvents.forEach(event => {
             const color = event.color;
             // Only draw events within the visible time range
             if (event.startDate.getFullYear() < config.startYear ||
@@ -466,37 +765,34 @@ const Visualization = (function() {
             const labelEndX = labelStartX + estimatedLabelWidth;
 
             // Find a Y position that doesn't overlap with existing events
+            // Start at baseY and shift down just enough to clear any overlaps
             let labelY = baseY;
-            let attempts = 0;
-            const maxAttempts = 20; // Prevent infinite loops
 
-            while (attempts < maxAttempts) {
-                let hasOverlap = false;
+            // Keep checking and adjusting until we find a position with no overlaps
+            let needsAdjustment = true;
+            let safetyCounter = 0;
+            while (needsAdjustment && safetyCounter < 50) {
+                needsAdjustment = false;
+                safetyCounter++;
 
                 for (const placed of placedEvents) {
-                    // Check if underlines would overlap (for events with durations)
-                    const underlineOverlapX = (x <= placed.endX) && (endX >= placed.x);
+                    // Check vertical proximity
+                    const verticallyClose = Math.abs(labelY - placed.labelY) < verticalSpacing;
 
-                    // Check if text labels would overlap
-                    const textOverlapX = (labelStartX <= placed.labelEndX + labelPadding) &&
-                                        (labelEndX >= placed.labelStartX - labelPadding);
+                    if (verticallyClose) {
+                        // Check if there's horizontal overlap
+                        const underlineOverlapX = (x <= placed.endX) && (endX >= placed.x);
+                        const textOverlapX = (labelStartX <= placed.labelEndX + labelPadding) &&
+                                            (labelEndX >= placed.labelStartX - labelPadding);
 
-                    const labelOverlapY = Math.abs(labelY - placed.labelY) < verticalSpacing;
-
-                    // Overlap if either underlines or text overlaps
-                    if ((underlineOverlapX || textOverlapX) && labelOverlapY) {
-                        hasOverlap = true;
-                        break;
+                        if (underlineOverlapX || textOverlapX) {
+                            // We overlap with this placed event, shift down just past it
+                            labelY = placed.labelY + verticalSpacing;
+                            needsAdjustment = true;
+                            break; // Re-check all events with new Y
+                        }
                     }
                 }
-
-                if (!hasOverlap) {
-                    break; // Found a good position
-                }
-
-                // Move down to next row
-                labelY += verticalSpacing;
-                attempts++;
             }
 
             // Record this event's position
