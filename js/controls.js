@@ -4,8 +4,7 @@
 const Controls = (function() {
     let eventSets = [];
     let selectedEventSets = new Set();
-    let eventSetSettings = {}; // Maps event set name to { priority, color }
-    let displayMode = 'bands'; // 'unified' or 'bands'
+    let eventSetSettings = {}; // Maps event set name to { color }
 
     /**
      * Initialize controls with event sets
@@ -18,7 +17,6 @@ const Controls = (function() {
         eventSets.forEach(set => {
             selectedEventSets.add(set.name);
             eventSetSettings[set.name] = {
-                priority: 5, // Default priority (1-10, lower is higher priority)
                 color: set.color // Use original color
             };
         });
@@ -55,7 +53,7 @@ const Controls = (function() {
             checkboxDiv.appendChild(checkbox);
             checkboxDiv.appendChild(label);
 
-            // Settings container (color and priority)
+            // Settings container (color picker)
             const settingsDiv = document.createElement('div');
             settingsDiv.className = 'event-set-settings';
 
@@ -75,26 +73,7 @@ const Controls = (function() {
             colorDiv.appendChild(colorLabel);
             colorDiv.appendChild(colorPicker);
 
-            // Priority selector
-            const priorityDiv = document.createElement('div');
-            priorityDiv.className = 'priority-selector';
-
-            const priorityLabel = document.createElement('label');
-            priorityLabel.textContent = 'Priority:';
-
-            const priorityInput = document.createElement('input');
-            priorityInput.type = 'number';
-            priorityInput.min = '1';
-            priorityInput.max = '10';
-            priorityInput.value = eventSetSettings[eventSet.name].priority;
-            priorityInput.dataset.eventSet = eventSet.name;
-            priorityInput.className = 'priority-input';
-
-            priorityDiv.appendChild(priorityLabel);
-            priorityDiv.appendChild(priorityInput);
-
             settingsDiv.appendChild(colorDiv);
-            settingsDiv.appendChild(priorityDiv);
 
             itemDiv.appendChild(checkboxDiv);
             itemDiv.appendChild(settingsDiv);
@@ -114,16 +93,6 @@ const Controls = (function() {
         // Color pickers
         document.querySelectorAll('.color-picker').forEach(picker => {
             picker.addEventListener('input', handleColorChange);
-        });
-
-        // Priority inputs
-        document.querySelectorAll('.priority-input').forEach(input => {
-            input.addEventListener('input', handlePriorityChange);
-        });
-
-        // Display mode toggle
-        document.querySelectorAll('input[name="display-mode"]').forEach(radio => {
-            radio.addEventListener('change', handleDisplayModeChange);
         });
 
         // Time range controls - auto-update on change
@@ -175,43 +144,15 @@ const Controls = (function() {
     }
 
     /**
-     * Handle priority input change
-     * @param {Event} e - Input event
-     */
-    function handlePriorityChange(e) {
-        const eventSetName = e.target.dataset.eventSet;
-        const priority = parseInt(e.target.value);
-
-        if (priority >= 1 && priority <= 10) {
-            eventSetSettings[eventSetName].priority = priority;
-
-            // Auto-update visualization
-            updateVisualization();
-        }
-    }
-
-    /**
-     * Handle display mode change
-     * @param {Event} e - Change event
-     */
-    function handleDisplayModeChange(e) {
-        displayMode = e.target.value;
-
-        // Auto-update visualization
-        updateVisualization();
-    }
-
-    /**
      * Update the visualization with current settings
      */
     function updateVisualization() {
-        // Get selected event sets with their settings applied
+        // Get selected event sets
         const selectedSets = eventSets
             .filter(set => selectedEventSets.has(set.name))
             .map(set => ({
                 ...set,
-                color: eventSetSettings[set.name].color,
-                setBasePriority: eventSetSettings[set.name].priority
+                color: eventSetSettings[set.name].color
             }));
 
         if (selectedSets.length === 0) {
@@ -237,8 +178,7 @@ const Controls = (function() {
             startYear,
             endYear,
             width,
-            height,
-            displayMode
+            height
         });
     }
 

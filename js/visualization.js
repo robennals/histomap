@@ -32,7 +32,6 @@ const Visualization = (function() {
 
     let svg = null;
     let selectedEventSets = [];
-    let displayMode = 'bands'; // 'unified' or 'bands'
 
     /**
      * Initialize visualization with event sets
@@ -45,7 +44,6 @@ const Visualization = (function() {
         if (settings.height) config.height = settings.height;
         if (settings.startYear) config.startYear = settings.startYear;
         if (settings.endYear) config.endYear = settings.endYear;
-        if (settings.displayMode) displayMode = settings.displayMode;
 
         selectedEventSets = eventSets;
 
@@ -72,12 +70,8 @@ const Visualization = (function() {
         // Draw timeline axis
         drawTimelineAxis();
 
-        // Draw based on display mode
-        if (displayMode === 'bands') {
-            drawEventBands();
-        } else {
-            drawUnifiedTimeline();
-        }
+        // Draw event bands
+        drawEventBands();
 
         container.appendChild(svg);
     }
@@ -177,45 +171,6 @@ const Visualization = (function() {
         svg.appendChild(axisGroup);
     }
 
-    /**
-     * Draw unified timeline with all events merged
-     */
-    function drawUnifiedTimeline() {
-        const timelineGroup = createSVGElement('g', { class: 'unified-timeline' });
-
-        // Merge all events from all event sets
-        const allEvents = [];
-        selectedEventSets.forEach(eventSet => {
-            eventSet.events.forEach(event => {
-                // Calculate combined priority (event priority + event set priority)
-                // Lower number = higher priority
-                const combinedPriority = event.priority + (eventSet.setBasePriority || 5);
-
-                allEvents.push({
-                    ...event,
-                    color: eventSet.color,
-                    eventSetName: eventSet.name,
-                    combinedPriority: combinedPriority
-                });
-            });
-        });
-
-        // Sort by combined priority (lower = more important)
-        allEvents.sort((a, b) => a.combinedPriority - b.combinedPriority);
-
-        // Determine if events are major or minor based on combined priority
-        // Events with combinedPriority <= 7 are major, others are minor
-        const majorEvents = allEvents.filter(e => e.combinedPriority <= 7);
-        const minorEvents = allEvents.filter(e => e.combinedPriority > 7);
-
-        // Start events at the top of the available vertical space
-        const timelineY = config.padding.top + 20;
-
-        // Draw all events starting from the top
-        drawUnifiedEvents(timelineGroup, allEvents, timelineY);
-
-        svg.appendChild(timelineGroup);
-    }
 
     /**
      * Draw all event bands (separate sections for each event set)
@@ -707,149 +662,6 @@ const Visualization = (function() {
         return maxY;
     }
 
-    /**
-     * Draw events in unified timeline
-     * @param {SVGElement} group - Parent SVG group
-     * @param {Array} events - Events to draw
-     * @param {number} baseY - Base Y position for events
-     */
-    function drawUnifiedEvents(group, events, baseY) {
-        const startTimestamp = new Date(config.startYear, 0, 1).getTime();
-        const endTimestamp = new Date(config.endYear, 11, 31).getTime();
-        const timeRange = endTimestamp - startTimestamp;
-        const chartWidth = config.width - config.padding.left - config.padding.right;
-
-        // Track placed events to detect overlaps
-        const placedEvents = [];
-        const labelPadding = 20; // Horizontal spacing between labels to prevent them from reading as one word
-        // All events use the same size
-        const size = config.majorEventSize;
-        const opacity = 1.0;
-        const verticalSpacing = size.fontSize + 4;
-        const dotOffset = 8; // Space between dot and text
-
-        // Group events by combined priority, then sort by end date (latest first) within each priority
-        const eventsByPriority = {};
-        events.forEach(event => {
-            if (!eventsByPriority[event.combinedPriority]) {
-                eventsByPriority[event.combinedPriority] = [];
-            }
-            eventsByPriority[event.combinedPriority].push(event);
-        });
-
-        // Sort each priority group by end date (latest first)
-        Object.values(eventsByPriority).forEach(priorityGroup => {
-            priorityGroup.sort((a, b) => {
-                const aEnd = a.endTimestamp || a.startTimestamp;
-                const bEnd = b.endTimestamp || b.startTimestamp;
-                return bEnd - aEnd; // Descending order (latest first)
-            });
-        });
-
-        // Flatten back to single array, maintaining priority order
-        const sortedEvents = [];
-        const priorities = Object.keys(eventsByPriority).map(Number).sort((a, b) => a - b);
-        priorities.forEach(priority => {
-            sortedEvents.push(...eventsByPriority[priority]);
-        });
-
-        sortedEvents.forEach(event => {
-            const color = event.color;
-            // Only draw events within the visible time range
-            if (event.startDate.getFullYear() < config.startYear ||
-                event.startDate.getFullYear() > config.endYear) {
-                return;
-            }
-
-            const x = config.padding.left +
-                ((event.startTimestamp - startTimestamp) / timeRange) * chartWidth;
-
-            // Calculate end X for duration events
-            let endX = x;
-            if (event.endDate && event.endDate.getFullYear() <= config.endYear) {
-                endX = config.padding.left +
-                    ((event.endTimestamp - startTimestamp) / timeRange) * chartWidth;
-            }
-
-            // Estimate label width
-            const charWidth = 6;
-            const estimatedLabelWidth = event.name.length * charWidth;
-            const labelStartX = x + dotOffset;
-            const labelEndX = labelStartX + estimatedLabelWidth;
-
-            // Find a Y position that doesn't overlap with existing events
-            // Start at baseY and shift down just enough to clear any overlaps
-            let labelY = baseY;
-
-            // Keep checking and adjusting until we find a position with no overlaps
-            let needsAdjustment = true;
-            let safetyCounter = 0;
-            while (needsAdjustment && safetyCounter < 50) {
-                needsAdjustment = false;
-                safetyCounter++;
-
-                for (const placed of placedEvents) {
-                    // Check vertical proximity
-                    const verticallyClose = Math.abs(labelY - placed.labelY) < verticalSpacing;
-
-                    if (verticallyClose) {
-                        // Check if there's horizontal overlap
-                        const underlineOverlapX = (x <= placed.endX) && (endX >= placed.x);
-                        const textOverlapX = (labelStartX <= placed.labelEndX + labelPadding) &&
-                                            (labelEndX >= placed.labelStartX - labelPadding);
-
-                        if (underlineOverlapX || textOverlapX) {
-                            // We overlap with this placed event, shift down just past it
-                            labelY = placed.labelY + verticalSpacing;
-                            needsAdjustment = true;
-                            break; // Re-check all events with new Y
-                        }
-                    }
-                }
-            }
-
-            // Record this event's position
-            placedEvents.push({
-                x: x,
-                endX: endX,
-                labelY: labelY,
-                labelStartX: labelStartX,
-                labelEndX: labelEndX
-            });
-
-            // Calculate event duration in years
-            let durationYears = 0;
-            if (event.endDate) {
-                durationYears = (event.endTimestamp - event.startTimestamp) / (1000 * 60 * 60 * 24 * 365.25);
-            }
-
-            // Draw event label
-            const label = createSVGElement('text', {
-                x: labelStartX,
-                y: labelY,
-                class: 'event-label-major',
-                fill: color,
-                'fill-opacity': opacity
-            });
-            label.textContent = event.name;
-            group.appendChild(label);
-
-            // Draw underline beneath text extending for the duration
-            if (event.endDate && event.endDate.getFullYear() <= config.endYear) {
-                const underlineY = labelY + 2; // Close to bottom of text
-                const underline = createSVGElement('line', {
-                    x1: labelStartX,
-                    y1: underlineY,
-                    x2: labelStartX + (endX - x - dotOffset),
-                    y2: underlineY,
-                    stroke: color,
-                    'stroke-width': size.lineWidth,
-                    'stroke-opacity': opacity * 0.6
-                });
-                group.appendChild(underline);
-            }
-        });
-    }
 
     /**
      * Helper function to create SVG elements
