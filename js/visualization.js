@@ -317,11 +317,14 @@ const Visualization = (function() {
             '#7f8c8d'  // medium gray
         ];
 
-        // Filter events within time range (don't assign colors yet)
+        // Filter events within time range (include if they overlap with visible range)
         const visiblePeople = [];
         events.forEach((event) => {
-            if (event.startDate.getFullYear() >= config.startYear &&
-                event.startDate.getFullYear() <= config.endYear) {
+            const startYear = event.startDate.getFullYear();
+            const endYear = event.endDate ? event.endDate.getFullYear() : config.endYear;
+
+            // Include event if it overlaps with the visible time range
+            if (endYear >= config.startYear && startYear <= config.endYear) {
                 visiblePeople.push(event);
             }
         });
@@ -353,34 +356,43 @@ const Visualization = (function() {
         const placedItems = [];
 
         sortedPeople.forEach(person => {
-            const startX = config.padding.left +
+            // Calculate the actual timeline position (may be outside visible range)
+            const actualStartX = config.padding.left +
                 ((person.startTimestamp - startTimestamp) / timeRange) * chartWidth;
 
-            let endX = startX;
+            let actualEndX = actualStartX;
             if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
                 // Person has died
-                endX = config.padding.left +
+                actualEndX = config.padding.left +
                     ((person.endTimestamp - startTimestamp) / timeRange) * chartWidth;
             } else if (!person.endDate) {
                 // Person is still alive, extend line to current end of timeline
-                endX = config.padding.left + chartWidth;
+                actualEndX = config.padding.left + chartWidth;
             }
+
+            // Clamp the visible line to the visible range
+            const startX = Math.max(actualStartX, config.padding.left);
+            const endX = Math.min(actualEndX, config.padding.left + chartWidth);
 
             const lineLength = endX - startX;
             const textWidth = person.name.length * charWidth;
+            const maxTextX = startX + lineLength - textWidth;
 
-            // Step 1: Find Y position for the line that avoids line overlaps (4px gap)
+            // Find Y position and text position together
             let lineY = baseY;
-            let foundLinePosition = false;
+            let textX = startX;
+            let foundPosition = false;
+            let safetyCounter = 0;
 
-            while (!foundLinePosition) {
+            while (!foundPosition && safetyCounter < 50) {
+                safetyCounter++;
+
+                // Step 1: Check if line position has any line overlaps
                 let hasLineOverlap = false;
-
                 for (const placed of placedItems) {
                     const horizontalOverlap = (startX < placed.endX) && (endX > placed.startX);
                     const verticalGap = Math.abs(lineY - placed.lineY);
 
-                    // Lines overlap if they're horizontally overlapping and vertically too close
                     if (horizontalOverlap && verticalGap < lineGap) {
                         hasLineOverlap = true;
                         lineY = placed.lineY + lineGap;
@@ -388,51 +400,48 @@ const Visualization = (function() {
                     }
                 }
 
-                if (!hasLineOverlap) {
-                    foundLinePosition = true;
+                if (hasLineOverlap) {
+                    continue; // Re-check at new Y
                 }
-            }
 
-            // Step 2: Try to find horizontal position for text that avoids text overlaps
-            let textX = startX; // Prefer start of line
-            const maxTextX = startX + lineLength - textWidth;
-            let foundTextPosition = false;
+                // Step 2: Try to find horizontal position for text at this Y
+                textX = startX;
+                let foundTextPosition = false;
 
-            // Get all placed items that are vertically close enough for text to overlap
-            const nearbyItems = placedItems.filter(p => {
-                const verticalGap = Math.abs(lineY - p.lineY);
-                return verticalGap < textHeight;
-            });
+                // Get all placed items that are vertically close enough for text to overlap
+                const nearbyItems = placedItems.filter(p => {
+                    const verticalGap = Math.abs(lineY - p.lineY);
+                    return verticalGap < textHeight;
+                });
 
-            // Try to find a position along the line where the text doesn't overlap
-            while (textX <= maxTextX && !foundTextPosition) {
-                let hasTextOverlap = false;
+                // Try to find a position along the line where the text doesn't overlap
+                while (textX <= maxTextX && !foundTextPosition) {
+                    let hasTextOverlap = false;
 
-                for (const placed of nearbyItems) {
-                    const textOverlapX = (textX < placed.textX + placed.textWidth + textGap) &&
-                                        (textX + textWidth + textGap > placed.textX);
+                    for (const placed of nearbyItems) {
+                        const textOverlapX = (textX < placed.textX + placed.textWidth + textGap) &&
+                                            (textX + textWidth + textGap > placed.textX);
 
-                    if (textOverlapX) {
-                        hasTextOverlap = true;
-                        // Jump to after this text
-                        textX = placed.textX + placed.textWidth + textGap;
+                        if (textOverlapX) {
+                            hasTextOverlap = true;
+                            textX = placed.textX + placed.textWidth + textGap;
+                            break;
+                        }
+                    }
+
+                    if (!hasTextOverlap) {
+                        foundTextPosition = true;
+                    } else if (textX > maxTextX) {
                         break;
                     }
                 }
 
-                if (!hasTextOverlap) {
-                    foundTextPosition = true;
-                } else if (textX > maxTextX) {
-                    // Can't fit text without overlap, need to shift line down
-                    break;
+                if (foundTextPosition) {
+                    foundPosition = true;
+                } else {
+                    // Couldn't find text position, shift line down
+                    lineY += textHeight;
                 }
-            }
-
-            // Step 3: If we couldn't find a text position, shift the line down and retry
-            if (!foundTextPosition) {
-                // Shift down and try again
-                lineY += textHeight;
-                textX = startX; // Reset to beginning of line
             }
 
             // Constrain text to line bounds
@@ -557,9 +566,12 @@ const Visualization = (function() {
         });
 
         sortedEvents.forEach(event => {
-            // Only draw events within the visible time range
-            if (event.startDate.getFullYear() < config.startYear ||
-                event.startDate.getFullYear() > config.endYear) {
+            // Only draw events that overlap with the visible time range
+            const startYear = event.startDate.getFullYear();
+            const endYear = event.endDate ? event.endDate.getFullYear() : startYear;
+
+            // Skip if event doesn't overlap with visible range
+            if (endYear < config.startYear || startYear > config.endYear) {
                 return;
             }
 
