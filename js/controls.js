@@ -76,27 +76,25 @@ const Controls = (function() {
 
             settingsDiv.appendChild(colorDiv);
 
-            // Row limit control (only for non-people bands)
-            if (eventSet.name !== 'People') {
-                const rowLimitDiv = document.createElement('div');
-                rowLimitDiv.className = 'row-limit-wrapper';
+            // Row/Height limit control
+            const limitDiv = document.createElement('div');
+            limitDiv.className = 'row-limit-wrapper';
 
-                const rowLimitLabel = document.createElement('label');
-                rowLimitLabel.textContent = 'Max rows:';
+            const limitLabel = document.createElement('label');
+            limitLabel.textContent = eventSet.name === 'People' ? 'Height (rows):' : 'Max rows:';
 
-                const rowLimitInput = document.createElement('input');
-                rowLimitInput.type = 'number';
-                rowLimitInput.min = '1';
-                rowLimitInput.max = '20';
-                rowLimitInput.value = eventSetSettings[eventSet.name].maxRows;
-                rowLimitInput.dataset.eventSet = eventSet.name;
-                rowLimitInput.className = 'row-limit-input';
+            const limitInput = document.createElement('input');
+            limitInput.type = 'number';
+            limitInput.min = '1';
+            limitInput.max = '20';
+            limitInput.value = eventSetSettings[eventSet.name].maxRows;
+            limitInput.dataset.eventSet = eventSet.name;
+            limitInput.className = 'row-limit-input';
 
-                rowLimitDiv.appendChild(rowLimitLabel);
-                rowLimitDiv.appendChild(rowLimitInput);
+            limitDiv.appendChild(limitLabel);
+            limitDiv.appendChild(limitInput);
 
-                settingsDiv.appendChild(rowLimitDiv);
-            }
+            settingsDiv.appendChild(limitDiv);
 
             itemDiv.appendChild(checkboxDiv);
             itemDiv.appendChild(settingsDiv);

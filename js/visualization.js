@@ -233,7 +233,8 @@ const Visualization = (function() {
 
         let maxY;
         if (eventSet.name === "People") {
-            maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y);
+            const maxRows = eventSet.maxRows || 999;
+            maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
         } else {
             const maxRows = eventSet.maxRows || 999;
             maxY = drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
@@ -297,7 +298,7 @@ const Visualization = (function() {
      * @param {number} bandY - Y position of the band
      * @returns {number} The maximum Y position used
      */
-    function drawPeopleBand(group, events, baseY, baseColor, bandY) {
+    function drawPeopleBand(group, events, baseY, baseColor, bandY, maxRows = 999) {
         const startTimestamp = new Date(config.startYear, 0, 1).getTime();
         const endTimestamp = new Date(config.endYear, 11, 31).getTime();
         const timeRange = endTimestamp - startTimestamp;
@@ -306,6 +307,10 @@ const Visualization = (function() {
         const lineHeight = 3;
         const fontSize = 12;
         const textHeight = fontSize + 4;
+
+        // Calculate max height based on row equivalence with regular bands
+        const verticalSpacing = fontSize + 4; // Same as regular events
+        const maxHeight = maxRows * verticalSpacing;
         const lineGap = 6; // Minimum gap between lines (double the original 3px)
         const textGap = 20; // Minimum gap between text labels
         const charWidth = 6.5; // Estimated character width
@@ -465,6 +470,12 @@ const Visualization = (function() {
             // Constrain text to line bounds
             if (textX < startX) textX = startX;
             if (textX > maxTextX) textX = maxTextX;
+
+            // Check if this person exceeds the height limit
+            const heightUsed = lineY - baseY;
+            if (heightUsed > maxHeight) {
+                return; // Skip this person - exceeds height limit
+            }
 
             // Record this placement
             placedItems.push({
