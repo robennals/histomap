@@ -10,7 +10,7 @@ const Visualization = (function() {
         height: 800,
         startYear: 1775,
         endYear: 2025,
-        padding: { top: 60, right: 40, bottom: 60, left: 100 },
+        padding: { top: 60, right: 40, bottom: 60, left: 140 },
         bandHeights: {
             half: 60,
             normal: 120,
@@ -221,12 +221,25 @@ const Visualization = (function() {
      * Draw all event bands (separate sections for each event set)
      */
     function drawEventBands() {
+        // Calculate required left padding based on longest band label
+        const charWidth = 7; // Approximate width per character for band titles
+        const labelGap = 10; // Gap between label and band edge
+        const maxLabelLength = Math.max(...selectedEventSets.map(set => set.name.length));
+        const requiredLeftPadding = maxLabelLength * charWidth + labelGap;
+
+        // Update left padding if needed
+        const originalLeftPadding = config.padding.left;
+        config.padding.left = Math.max(config.padding.left, requiredLeftPadding);
+
         let currentY = config.padding.top;
 
         selectedEventSets.forEach(eventSet => {
             const bandHeight = drawEventBand(eventSet, currentY);
             currentY += bandHeight + config.bandSpacing;
         });
+
+        // Restore original padding
+        config.padding.left = originalLeftPadding;
     }
 
     /**
