@@ -1,0 +1,260 @@
+{
+  "name": "Notable People",
+  "color": "#9b59b6",
+  "events": [
+    {
+      "name": "Wolfgang Amadeus Mozart",
+      "start": "1756-01-27",
+      "end": "1791-12-05",
+      "priority": 1
+    },
+    {
+      "name": "Napoleon Bonaparte",
+      "start": "1769-08-15",
+      "end": "1821-05-05",
+      "priority": 1
+    },
+    {
+      "name": "Ludwig van Beethoven",
+      "start": "1770-12-17",
+      "end": "1827-03-26",
+      "priority": 1
+    },
+    {
+      "name": "Jane Austen",
+      "start": "1775-12-16",
+      "end": "1817-07-18",
+      "priority": 2
+    },
+    {
+      "name": "Charles Darwin",
+      "start": "1809-02-12",
+      "end": "1882-04-19",
+      "priority": 1
+    },
+    {
+      "name": "Karl Marx",
+      "start": "1818-05-05",
+      "end": "1883-03-14",
+      "priority": 1
+    },
+    {
+      "name": "Florence Nightingale",
+      "start": "1820-05-12",
+      "end": "1910-08-13",
+      "priority": 2
+    },
+    {
+      "name": "Leo Tolstoy",
+      "start": "1828-09-09",
+      "end": "1910-11-20",
+      "priority": 2
+    },
+    {
+      "name": "Vincent van Gogh",
+      "start": "1853-03-30",
+      "end": "1890-07-29",
+      "priority": 1
+    },
+    {
+      "name": "Sigmund Freud",
+      "start": "1856-05-06",
+      "end": "1939-09-23",
+      "priority": 1
+    },
+    {
+      "name": "Nikola Tesla",
+      "start": "1856-07-10",
+      "end": "1943-01-07",
+      "priority": 2
+    },
+    {
+      "name": "Marie Curie",
+      "start": "1867-11-07",
+      "end": "1934-07-04",
+      "priority": 1
+    },
+    {
+      "name": "Mahatma Gandhi",
+      "start": "1869-10-02",
+      "end": "1948-01-30",
+      "priority": 1
+    },
+    {
+      "name": "Winston Churchill",
+      "start": "1874-11-30",
+      "end": "1965-01-24",
+      "priority": 1
+    },
+    {
+      "name": "Albert Einstein",
+      "start": "1879-03-14",
+      "end": "1955-04-18",
+      "priority": 1
+    },
+    {
+      "name": "Pablo Picasso",
+      "start": "1881-10-25",
+      "end": "1973-04-08",
+      "priority": 1
+    },
+    {
+      "name": "Coco Chanel",
+      "start": "1883-08-19",
+      "end": "1971-01-10",
+      "priority": 2
+    },
+    {
+      "name": "Adolf Hitler",
+      "start": "1889-04-20",
+      "end": "1945-04-30",
+      "priority": 1
+    },
+    {
+      "name": "Charlie Chaplin",
+      "start": "1889-04-16",
+      "end": "1977-12-25",
+      "priority": 2
+    },
+    {
+      "name": "J.R.R. Tolkien",
+      "start": "1892-01-03",
+      "end": "1973-09-02",
+      "priority": 2
+    },
+    {
+      "name": "Mao Zedong",
+      "start": "1893-12-26",
+      "end": "1976-09-09",
+      "priority": 1
+    },
+    {
+      "name": "Amelia Earhart",
+      "start": "1897-07-24",
+      "end": "1937-07-02",
+      "priority": 2
+    },
+    {
+      "name": "C.S. Lewis",
+      "start": "1898-11-29",
+      "end": "1963-11-22",
+      "priority": 2
+    },
+    {
+      "name": "Ernest Hemingway",
+      "start": "1899-07-21",
+      "end": "1961-07-02",
+      "priority": 2
+    },
+    {
+      "name": "Walt Disney",
+      "start": "1901-12-05",
+      "end": "1966-12-15",
+      "priority": 2
+    },
+    {
+      "name": "George Orwell",
+      "start": "1903-06-25",
+      "end": "1950-01-21",
+      "priority": 2
+    },
+    {
+      "name": "Salvador Dalí",
+      "start": "1904-05-11",
+      "end": "1989-01-23",
+      "priority": 2
+    },
+    {
+      "name": "Mother Teresa",
+      "start": "1910-08-26",
+      "end": "1997-09-05",
+      "priority": 1
+    },
+    {
+      "name": "Alan Turing",
+      "start": "1912-06-23",
+      "end": "1954-06-07",
+      "priority": 1
+    },
+    {
+      "name": "Rosa Parks",
+      "start": "1913-02-04",
+      "end": "2005-10-24",
+      "priority": 2
+    },
+    {
+      "name": "John F. Kennedy",
+      "start": "1917-05-29",
+      "end": "1963-11-22",
+      "priority": 1
+    },
+    {
+      "name": "Nelson Mandela",
+      "start": "1918-07-18",
+      "end": "2013-12-05",
+      "priority": 1
+    },
+    {
+      "name": "Anne Frank",
+      "start": "1929-06-12",
+      "end": "1945-02-15",
+      "priority": 1
+    },
+    {
+      "name": "Martin Luther King Jr.",
+      "start": "1929-01-15",
+      "end": "1968-04-04",
+      "priority": 1
+    },
+    {
+      "name": "Neil Armstrong",
+      "start": "1930-08-05",
+      "end": "2012-08-25",
+      "priority": 2
+    },
+    {
+      "name": "Muhammad Ali",
+      "start": "1942-01-17",
+      "end": "2016-06-03",
+      "priority": 2
+    },
+    {
+      "name": "Stephen Hawking",
+      "start": "1942-01-08",
+      "end": "2018-03-14",
+      "priority": 1
+    },
+    {
+      "name": "Steve Jobs",
+      "start": "1955-02-24",
+      "end": "2011-10-05",
+      "priority": 2
+    },
+    {
+      "name": "Bill Gates",
+      "start": "1955-10-28",
+      "priority": 2
+    },
+    {
+      "name": "Princess Diana",
+      "start": "1961-07-01",
+      "end": "1997-08-31",
+      "priority": 2
+    },
+    {
+      "name": "Barack Obama",
+      "start": "1961-08-04",
+      "priority": 2
+    },
+    {
+      "name": "Elon Musk",
+      "start": "1971-06-28",
+      "priority": 2
+    },
+    {
+      "name": "Malala Yousafzai",
+      "start": "1997-07-12",
+      "priority": 2
+    }
+  ]
+}

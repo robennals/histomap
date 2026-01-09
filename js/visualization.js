@@ -67,6 +67,13 @@ const Visualization = (function() {
             fill: 'white'
         }));
 
+        // Calculate required left padding BEFORE drawing anything
+        const charWidth = 7;
+        const labelGap = 10;
+        const maxLabelLength = Math.max(...selectedEventSets.map(set => set.name.length));
+        const requiredLeftPadding = maxLabelLength * charWidth + labelGap;
+        config.padding.left = Math.max(40, requiredLeftPadding);
+
         // Draw timeline axis
         drawTimelineAxis();
 
@@ -99,70 +106,93 @@ const Visualization = (function() {
         });
         axisGroup.appendChild(axisLine);
 
-        // Round start year down to nearest 5
-        const startYear = Math.floor(config.startYear / 5) * 5;
+        // Round start year down to nearest year
+        const startYear = Math.floor(config.startYear);
         const endYear = config.endYear;
 
-        // Draw lines every 5 years
-        for (let year = startYear; year <= endYear; year += 5) {
+        // Draw lines every year with three levels of prominence
+        for (let year = startYear; year <= endYear; year += 1) {
             const yearTimestamp = new Date(year, 0, 1).getTime();
             const x = config.padding.left + ((yearTimestamp - startTimestamp) / timeRange) * chartWidth;
 
-            const is25YearMark = (year % 25 === 0);
+            const is50Year = (year % 50 === 0);
+            const isDecade = (year % 10 === 0);
 
-            if (is25YearMark) {
-                // Major tick mark (every 25 years)
+            if (is50Year) {
+                // Most prominent: 50-year marks
                 const tick = createSVGElement('line', {
                     x1: x,
-                    y1: config.padding.top - 25,
+                    y1: config.padding.top - 28,
                     x2: x,
                     y2: config.padding.top - 15,
-                    stroke: '#7f8c8d',
-                    'stroke-width': 2
+                    stroke: '#5a6c7d',
+                    'stroke-width': 2.5
                 });
                 axisGroup.appendChild(tick);
 
-                // Year label (only for 25-year marks)
+                // Year label (every 50 years)
                 const label = createSVGElement('text', {
                     x: x,
-                    y: config.padding.top - 30,
+                    y: config.padding.top - 32,
+                    'text-anchor': 'middle',
+                    class: 'timeline-label',
+                    'font-weight': 'bold'
+                });
+                label.textContent = year;
+                axisGroup.appendChild(label);
+
+                // Bold vertical grid line (every 50 years)
+                const gridLine = createSVGElement('line', {
+                    x1: x,
+                    y1: config.padding.top,
+                    x2: x,
+                    y2: config.height - config.padding.bottom,
+                    stroke: '#95a5a6',
+                    'stroke-width': 2
+                });
+                axisGroup.appendChild(gridLine);
+            } else if (isDecade) {
+                // Medium: decade marks
+                const tick = createSVGElement('line', {
+                    x1: x,
+                    y1: config.padding.top - 23,
+                    x2: x,
+                    y2: config.padding.top - 17,
+                    stroke: '#7f8c8d',
+                    'stroke-width': 1.5
+                });
+                axisGroup.appendChild(tick);
+
+                // Year label (every decade)
+                const label = createSVGElement('text', {
+                    x: x,
+                    y: config.padding.top - 26,
                     'text-anchor': 'middle',
                     class: 'timeline-label'
                 });
                 label.textContent = year;
                 axisGroup.appendChild(label);
 
-                // Prominent vertical grid line (every 25 years)
+                // Moderate vertical grid line (every decade)
                 const gridLine = createSVGElement('line', {
                     x1: x,
                     y1: config.padding.top,
                     x2: x,
                     y2: config.height - config.padding.bottom,
                     stroke: '#bdc3c7',
-                    'stroke-width': 1.5
+                    'stroke-width': 1
                 });
                 axisGroup.appendChild(gridLine);
             } else {
-                // Minor tick mark (every 5 years)
-                const tick = createSVGElement('line', {
-                    x1: x,
-                    y1: config.padding.top - 22,
-                    x2: x,
-                    y2: config.padding.top - 18,
-                    stroke: '#95a5a6',
-                    'stroke-width': 1
-                });
-                axisGroup.appendChild(tick);
-
-                // Faint vertical grid line (every 5 years)
+                // Faintest: yearly marks
                 const gridLine = createSVGElement('line', {
                     x1: x,
                     y1: config.padding.top,
                     x2: x,
                     y2: config.height - config.padding.bottom,
-                    stroke: '#e0e0e0',
-                    'stroke-width': 1,
-                    'stroke-opacity': 0.7
+                    stroke: '#e8e8e8',
+                    'stroke-width': 0.5,
+                    'stroke-opacity': 0.6
                 });
                 axisGroup.appendChild(gridLine);
             }
@@ -176,25 +206,12 @@ const Visualization = (function() {
      * Draw all event bands (separate sections for each event set)
      */
     function drawEventBands() {
-        // Calculate required left padding based on longest band label
-        const charWidth = 7; // Approximate width per character for band titles
-        const labelGap = 10; // Gap between label and band edge
-        const maxLabelLength = Math.max(...selectedEventSets.map(set => set.name.length));
-        const requiredLeftPadding = maxLabelLength * charWidth + labelGap;
-
-        // Update left padding if needed
-        const originalLeftPadding = config.padding.left;
-        config.padding.left = Math.max(config.padding.left, requiredLeftPadding);
-
         let currentY = config.padding.top;
 
         selectedEventSets.forEach(eventSet => {
             const bandHeight = drawEventBand(eventSet, currentY);
             currentY += bandHeight + config.bandSpacing;
         });
-
-        // Restore original padding
-        config.padding.left = originalLeftPadding;
     }
 
     /**
@@ -206,7 +223,7 @@ const Visualization = (function() {
     function drawEventBand(eventSet, y) {
         const bandGroup = createSVGElement('g', { class: 'event-band' });
 
-        // Use special rendering for "Notable People"
+        // Use special rendering for "People"
         const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
         const topPadding = 8;
         const bottomPadding = 8;
@@ -215,10 +232,11 @@ const Visualization = (function() {
         const startY = y + topPadding + fontSize;
 
         let maxY;
-        if (eventSet.name === "Notable People") {
+        if (eventSet.name === "People") {
             maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y);
         } else {
-            maxY = drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y);
+            const maxRows = eventSet.maxRows || 999;
+            maxY = drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
         }
 
         // Calculate actual height needed (maxY already includes content, just add bottom padding)
@@ -521,9 +539,10 @@ const Visualization = (function() {
      * @param {number} baseY - Base Y position for events
      * @param {string} color - Base color
      * @param {number} bandY - Y position of the band
+     * @param {number} maxRows - Maximum number of rows to display
      * @returns {number} The maximum Y position used
      */
-    function drawBandEvents(group, events, baseY, color, bandY) {
+    function drawBandEvents(group, events, baseY, color, bandY, maxRows = 999) {
 
         const startTimestamp = new Date(config.startYear, 0, 1).getTime();
         const endTimestamp = new Date(config.endYear, 11, 31).getTime();
@@ -575,15 +594,20 @@ const Visualization = (function() {
                 return;
             }
 
-            const x = config.padding.left +
+            // Calculate actual position (may be outside visible range)
+            const actualStartX = config.padding.left +
                 ((event.startTimestamp - startTimestamp) / timeRange) * chartWidth;
 
             // Calculate end X for duration events
-            let endX = x;
+            let actualEndX = actualStartX;
             if (event.endDate && event.endDate.getFullYear() <= config.endYear) {
-                endX = config.padding.left +
+                actualEndX = config.padding.left +
                     ((event.endTimestamp - startTimestamp) / timeRange) * chartWidth;
             }
+
+            // Clamp to visible range
+            const x = Math.max(actualStartX, config.padding.left);
+            const endX = Math.max(actualEndX, config.padding.left);
 
             // Estimate label width
             const charWidth = 6;
@@ -622,6 +646,11 @@ const Visualization = (function() {
                 }
             }
 
+            // Check if this event exceeds the max row limit
+            const rowNumber = Math.floor((labelY - baseY) / verticalSpacing) + 1;
+            if (rowNumber > maxRows) {
+                return; // Skip this event - it exceeds the row limit
+            }
 
             // Record this event's position
             placedEvents.push({

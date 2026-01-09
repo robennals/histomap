@@ -1,7 +1,13 @@
 {
-  "name": "Notable People",
+  "name": "People",
   "color": "#3498db",
   "events": [
+    {
+      "name": "Benjamin Franklin",
+      "start": "1706-01-17",
+      "end": "1790-04-17",
+      "priority": 1
+    },
     {
       "name": "George Washington",
       "start": "1732-02-22",
@@ -15,16 +21,46 @@
       "priority": 1
     },
     {
-      "name": "Benjamin Franklin",
-      "start": "1706-01-17",
-      "end": "1790-04-17",
-      "priority": 1
+      "name": "Alexander Hamilton",
+      "start": "1755-01-11",
+      "end": "1804-07-12",
+      "priority": 2
     },
     {
       "name": "Abraham Lincoln",
       "start": "1809-02-12",
       "end": "1865-04-15",
       "priority": 1
+    },
+    {
+      "name": "Edgar Allan Poe",
+      "start": "1809-01-19",
+      "end": "1849-10-07",
+      "priority": 2
+    },
+    {
+      "name": "Frederick Douglass",
+      "start": "1818-02-14",
+      "end": "1895-02-20",
+      "priority": 2
+    },
+    {
+      "name": "Harriet Tubman",
+      "start": "1822-03-10",
+      "end": "1913-03-10",
+      "priority": 2
+    },
+    {
+      "name": "Ulysses S. Grant",
+      "start": "1822-04-27",
+      "end": "1885-07-23",
+      "priority": 2
+    },
+    {
+      "name": "Emily Dickinson",
+      "start": "1830-12-10",
+      "end": "1886-05-15",
+      "priority": 2
     },
     {
       "name": "Mark Twain",

@@ -4,7 +4,7 @@
 const Controls = (function() {
     let eventSets = [];
     let selectedEventSets = new Set();
-    let eventSetSettings = {}; // Maps event set name to { color }
+    let eventSetSettings = {}; // Maps event set name to { color, maxRows }
 
     /**
      * Initialize controls with event sets
@@ -17,7 +17,8 @@ const Controls = (function() {
         eventSets.forEach(set => {
             selectedEventSets.add(set.name);
             eventSetSettings[set.name] = {
-                color: set.color // Use original color
+                color: set.color,
+                maxRows: 3 // Default to 3 rows for non-people bands
             };
         });
 
@@ -53,7 +54,7 @@ const Controls = (function() {
             checkboxDiv.appendChild(checkbox);
             checkboxDiv.appendChild(label);
 
-            // Settings container (color picker)
+            // Settings container (color picker and row limit)
             const settingsDiv = document.createElement('div');
             settingsDiv.className = 'event-set-settings';
 
@@ -75,6 +76,28 @@ const Controls = (function() {
 
             settingsDiv.appendChild(colorDiv);
 
+            // Row limit control (only for non-people bands)
+            if (eventSet.name !== 'People') {
+                const rowLimitDiv = document.createElement('div');
+                rowLimitDiv.className = 'row-limit-wrapper';
+
+                const rowLimitLabel = document.createElement('label');
+                rowLimitLabel.textContent = 'Max rows:';
+
+                const rowLimitInput = document.createElement('input');
+                rowLimitInput.type = 'number';
+                rowLimitInput.min = '1';
+                rowLimitInput.max = '20';
+                rowLimitInput.value = eventSetSettings[eventSet.name].maxRows;
+                rowLimitInput.dataset.eventSet = eventSet.name;
+                rowLimitInput.className = 'row-limit-input';
+
+                rowLimitDiv.appendChild(rowLimitLabel);
+                rowLimitDiv.appendChild(rowLimitInput);
+
+                settingsDiv.appendChild(rowLimitDiv);
+            }
+
             itemDiv.appendChild(checkboxDiv);
             itemDiv.appendChild(settingsDiv);
             container.appendChild(itemDiv);
@@ -93,6 +116,11 @@ const Controls = (function() {
         // Color pickers
         document.querySelectorAll('.color-picker').forEach(picker => {
             picker.addEventListener('input', handleColorChange);
+        });
+
+        // Row limit inputs
+        document.querySelectorAll('.row-limit-input').forEach(input => {
+            input.addEventListener('input', handleRowLimitChange);
         });
 
         // Time range controls - auto-update on change
@@ -144,6 +172,22 @@ const Controls = (function() {
     }
 
     /**
+     * Handle row limit change
+     * @param {Event} e - Input event
+     */
+    function handleRowLimitChange(e) {
+        const eventSetName = e.target.dataset.eventSet;
+        const maxRows = parseInt(e.target.value);
+
+        if (maxRows >= 1 && maxRows <= 20) {
+            eventSetSettings[eventSetName].maxRows = maxRows;
+
+            // Auto-update visualization
+            updateVisualization();
+        }
+    }
+
+    /**
      * Update the visualization with current settings
      */
     function updateVisualization() {
@@ -152,7 +196,8 @@ const Controls = (function() {
             .filter(set => selectedEventSets.has(set.name))
             .map(set => ({
                 ...set,
-                color: eventSetSettings[set.name].color
+                color: eventSetSettings[set.name].color,
+                maxRows: eventSetSettings[set.name].maxRows
             }));
 
         if (selectedSets.length === 0) {

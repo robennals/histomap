@@ -1,150 +1,209 @@
 {
-  "name": "Media & Culture",
+  "name": "Fiction",
   "color": "#f39c12",
   "events": [
     {
-      "name": "The Great Gatsby (book)",
-      "start": "1925-04-10",
+      "name": "The Patriot",
+      "start": "1776-01-01",
+      "end": "1781-12-31",
       "priority": 2
     },
     {
-      "name": "Gone with the Wind (film)",
-      "start": "1939-12-15",
-      "priority": 2
-    },
-    {
-      "name": "Citizen Kane",
-      "start": "1941-05-01",
-      "priority": 3
-    },
-    {
-      "name": "Casablanca",
-      "start": "1942-11-26",
-      "priority": 2
-    },
-    {
-      "name": "1984 (book)",
-      "start": "1949-06-08",
-      "priority": 2
-    },
-    {
-      "name": "The Catcher in the Rye",
-      "start": "1951-07-16",
-      "priority": 2
-    },
-    {
-      "name": "I Love Lucy (TV premiere)",
-      "start": "1951-10-15",
-      "priority": 2
-    },
-    {
-      "name": "To Kill a Mockingbird (book)",
-      "start": "1960-07-11",
-      "priority": 2
-    },
-    {
-      "name": "The Beatles on Ed Sullivan",
-      "start": "1964-02-09",
+      "name": "Hamilton",
+      "start": "1789-01-01",
+      "end": "1804-07-11",
       "priority": 1
     },
     {
-      "name": "Star Trek (TV premiere)",
-      "start": "1966-09-08",
+      "name": "Sleepy Hollow",
+      "start": "1790-01-01",
+      "end": "1790-12-31",
       "priority": 2
     },
     {
-      "name": "Woodstock Festival",
-      "start": "1969-08-15",
+      "name": "Rip Van Winkle",
+      "start": "1819-01-01",
+      "end": "1819-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Johnny Appleseed",
+      "start": "1800-01-01",
+      "end": "1820-12-31",
+      "priority": 2
+    },
+    {
+      "name": "The Revenant",
+      "start": "1823-01-01",
+      "end": "1824-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Amistad",
+      "start": "1839-01-01",
+      "end": "1841-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Uncle Tom's Cabin",
+      "start": "1850-01-01",
+      "end": "1852-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Moby-Dick",
+      "start": "1841-01-01",
+      "end": "1841-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Tom Sawyer",
+      "start": "1840-01-01",
+      "end": "1845-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Huckleberry Finn",
+      "start": "1835-01-01",
+      "end": "1845-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Little Women",
+      "start": "1861-01-01",
+      "end": "1862-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Call of the Wild",
+      "start": "1897-01-01",
+      "end": "1897-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Wizard of Oz",
+      "start": "1900-01-01",
+      "end": "1900-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Great Gatsby",
+      "start": "1922-01-01",
+      "end": "1922-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Grapes of Wrath",
+      "start": "1930-01-01",
+      "end": "1939-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Gone with the Wind",
+      "start": "1861-01-01",
+      "end": "1873-12-31",
+      "priority": 1
+    },
+    {
+      "name": "To Kill a Mockingbird",
+      "start": "1933-01-01",
+      "end": "1935-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Catcher in the Rye",
+      "start": "1950-12-01",
+      "end": "1951-01-15",
+      "priority": 2
+    },
+    {
+      "name": "On the Road",
+      "start": "1947-01-01",
+      "end": "1950-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Catch-22",
+      "start": "1944-01-01",
+      "end": "1944-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Slaughterhouse-Five",
+      "start": "1945-02-13",
+      "end": "1945-02-14",
       "priority": 2
     },
     {
       "name": "The Godfather",
-      "start": "1972-03-24",
+      "start": "1945-01-01",
+      "end": "1955-12-31",
       "priority": 1
     },
     {
-      "name": "Jaws",
-      "start": "1975-06-20",
-      "priority": 2
-    },
-    {
-      "name": "Star Wars",
-      "start": "1977-05-25",
-      "priority": 1
-    },
-    {
-      "name": "MTV Launch",
-      "start": "1981-08-01",
-      "priority": 2
-    },
-    {
-      "name": "E.T. the Extra-Terrestrial",
-      "start": "1982-06-11",
+      "name": "The Shining",
+      "start": "1975-01-01",
+      "end": "1975-12-31",
       "priority": 2
     },
     {
       "name": "Back to the Future",
-      "start": "1985-07-03",
-      "priority": 2
-    },
-    {
-      "name": "The Simpsons (TV premiere)",
-      "start": "1989-12-17",
+      "start": "1985-10-26",
+      "end": "1985-11-12",
       "priority": 2
     },
     {
       "name": "Jurassic Park",
       "start": "1993-06-11",
+      "end": "1993-06-13",
       "priority": 2
     },
     {
-      "name": "Titanic",
-      "start": "1997-12-19",
+      "name": "Handmaid's Tale",
+      "start": "2005-01-01",
+      "end": "2005-12-31",
       "priority": 2
     },
     {
-      "name": "Harry Potter (book 1)",
-      "start": "1997-06-26",
-      "priority": 1
-    },
-    {
-      "name": "The Matrix",
-      "start": "1999-03-31",
+      "name": "Mad Men",
+      "start": "1960-03-01",
+      "end": "1970-11-01",
       "priority": 2
     },
     {
-      "name": "iPod Release",
-      "start": "2001-10-23",
+      "name": "Breaking Bad",
+      "start": "2008-09-07",
+      "end": "2010-09-29",
       "priority": 2
     },
     {
-      "name": "Lord of the Rings: Fellowship",
-      "start": "2001-12-19",
+      "name": "The Wire",
+      "start": "2002-01-01",
+      "end": "2008-12-31",
       "priority": 2
     },
     {
-      "name": "The Dark Knight",
-      "start": "2008-07-18",
+      "name": "12 Years a Slave",
+      "start": "1841-01-01",
+      "end": "1853-12-31",
       "priority": 2
     },
     {
-      "name": "iPhone Release",
-      "start": "2007-06-29",
-      "priority": 1
-    },
-    {
-      "name": "Breaking Bad (TV premiere)",
-      "start": "2008-01-20",
+      "name": "Little House on the Prairie",
+      "start": "1874-01-01",
+      "end": "1875-12-31",
       "priority": 2
     },
     {
-      "name": "Game of Thrones (TV premiere)",
-      "start": "2011-04-17",
+      "name": "West Side Story",
+      "start": "1957-01-01",
+      "end": "1957-12-31",
       "priority": 2
     },
     {
-      "name": "Hamilton (Broadway premiere)",
-      "start": "2015-08-06",
+      "name": "O Brother Where Art Thou",
+      "start": "1937-01-01",
+      "end": "1937-12-31",
       "priority": 2
     }
   ]

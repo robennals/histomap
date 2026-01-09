@@ -15,6 +15,12 @@
       "priority": 2
     },
     {
+      "name": "Texas Revolution",
+      "start": "1835-10-02",
+      "end": "1836-04-21",
+      "priority": 3
+    },
+    {
       "name": "Mexican-American War",
       "start": "1846-04-25",
       "end": "1848-02-02",

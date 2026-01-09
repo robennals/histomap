@@ -1,0 +1,256 @@
+{
+  "name": "States Joined",
+  "color": "#16a085",
+  "events": [
+    {
+      "name": "Delaware",
+      "start": "1787-12-07",
+      "priority": 2
+    },
+    {
+      "name": "Pennsylvania",
+      "start": "1787-12-12",
+      "priority": 2
+    },
+    {
+      "name": "New Jersey",
+      "start": "1787-12-18",
+      "priority": 2
+    },
+    {
+      "name": "Georgia",
+      "start": "1788-01-02",
+      "priority": 2
+    },
+    {
+      "name": "Connecticut",
+      "start": "1788-01-09",
+      "priority": 2
+    },
+    {
+      "name": "Massachusetts",
+      "start": "1788-02-06",
+      "priority": 2
+    },
+    {
+      "name": "Maryland",
+      "start": "1788-04-28",
+      "priority": 2
+    },
+    {
+      "name": "South Carolina",
+      "start": "1788-05-23",
+      "priority": 2
+    },
+    {
+      "name": "New Hampshire",
+      "start": "1788-06-21",
+      "priority": 2
+    },
+    {
+      "name": "Virginia",
+      "start": "1788-06-25",
+      "priority": 2
+    },
+    {
+      "name": "New York",
+      "start": "1788-07-26",
+      "priority": 2
+    },
+    {
+      "name": "North Carolina",
+      "start": "1789-11-21",
+      "priority": 2
+    },
+    {
+      "name": "Rhode Island",
+      "start": "1790-05-29",
+      "priority": 2
+    },
+    {
+      "name": "Vermont",
+      "start": "1791-03-04",
+      "priority": 2
+    },
+    {
+      "name": "Kentucky",
+      "start": "1792-06-01",
+      "priority": 2
+    },
+    {
+      "name": "Tennessee",
+      "start": "1796-06-01",
+      "priority": 2
+    },
+    {
+      "name": "Ohio",
+      "start": "1803-03-01",
+      "priority": 2
+    },
+    {
+      "name": "Louisiana",
+      "start": "1812-04-30",
+      "priority": 2
+    },
+    {
+      "name": "Indiana",
+      "start": "1816-12-11",
+      "priority": 2
+    },
+    {
+      "name": "Mississippi",
+      "start": "1817-12-10",
+      "priority": 2
+    },
+    {
+      "name": "Illinois",
+      "start": "1818-12-03",
+      "priority": 2
+    },
+    {
+      "name": "Alabama",
+      "start": "1819-12-14",
+      "priority": 2
+    },
+    {
+      "name": "Maine",
+      "start": "1820-03-15",
+      "priority": 2
+    },
+    {
+      "name": "Missouri",
+      "start": "1821-08-10",
+      "priority": 2
+    },
+    {
+      "name": "Arkansas",
+      "start": "1836-06-15",
+      "priority": 2
+    },
+    {
+      "name": "Michigan",
+      "start": "1837-01-26",
+      "priority": 2
+    },
+    {
+      "name": "Florida",
+      "start": "1845-03-03",
+      "priority": 2
+    },
+    {
+      "name": "Texas",
+      "start": "1845-12-29",
+      "priority": 2
+    },
+    {
+      "name": "Iowa",
+      "start": "1846-12-28",
+      "priority": 2
+    },
+    {
+      "name": "Wisconsin",
+      "start": "1848-05-29",
+      "priority": 2
+    },
+    {
+      "name": "California",
+      "start": "1850-09-09",
+      "priority": 2
+    },
+    {
+      "name": "Minnesota",
+      "start": "1858-05-11",
+      "priority": 2
+    },
+    {
+      "name": "Oregon",
+      "start": "1859-02-14",
+      "priority": 2
+    },
+    {
+      "name": "Kansas",
+      "start": "1861-01-29",
+      "priority": 2
+    },
+    {
+      "name": "West Virginia",
+      "start": "1863-06-20",
+      "priority": 2
+    },
+    {
+      "name": "Nevada",
+      "start": "1864-10-31",
+      "priority": 2
+    },
+    {
+      "name": "Nebraska",
+      "start": "1867-03-01",
+      "priority": 2
+    },
+    {
+      "name": "Colorado",
+      "start": "1876-08-01",
+      "priority": 2
+    },
+    {
+      "name": "North Dakota",
+      "start": "1889-11-02",
+      "priority": 2
+    },
+    {
+      "name": "South Dakota",
+      "start": "1889-11-02",
+      "priority": 2
+    },
+    {
+      "name": "Montana",
+      "start": "1889-11-08",
+      "priority": 2
+    },
+    {
+      "name": "Washington",
+      "start": "1889-11-11",
+      "priority": 2
+    },
+    {
+      "name": "Idaho",
+      "start": "1890-07-03",
+      "priority": 2
+    },
+    {
+      "name": "Wyoming",
+      "start": "1890-07-10",
+      "priority": 2
+    },
+    {
+      "name": "Utah",
+      "start": "1896-01-04",
+      "priority": 2
+    },
+    {
+      "name": "Oklahoma",
+      "start": "1907-11-16",
+      "priority": 2
+    },
+    {
+      "name": "New Mexico",
+      "start": "1912-01-06",
+      "priority": 2
+    },
+    {
+      "name": "Arizona",
+      "start": "1912-02-14",
+      "priority": 2
+    },
+    {
+      "name": "Alaska",
+      "start": "1959-01-03",
+      "priority": 2
+    },
+    {
+      "name": "Hawaii",
+      "start": "1959-08-21",
+      "priority": 2
+    }
+  ]
+}
