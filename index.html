@@ -9,22 +9,28 @@
 <body>
     <div class="container">
         <header>
-            <h1>Histomap</h1>
-            <p class="subtitle">Visualize Historical Events</p>
+            <h1>US History Visualizer</h1>
+            <button id="toggle-controls" class="toggle-controls-btn">Settings</button>
         </header>
 
         <div class="main-content">
-            <!-- Controls Panel -->
-            <aside class="controls-panel">
+
+            <!-- Controls Panel (slide-in drawer) -->
+            <aside class="controls-panel" id="controls-panel">
+                <div class="controls-header">
+                    <h2>Settings</h2>
+                    <button id="close-controls" class="close-btn">✕</button>
+                </div>
+
                 <section class="control-section">
-                    <h2>Event Sets</h2>
+                    <h3>Bands</h3>
                     <div id="event-set-selector" class="event-sets">
                         <!-- Event set checkboxes will be dynamically added here -->
                     </div>
                 </section>
 
                 <section class="control-section">
-                    <h2>Time Range</h2>
+                    <h3>Time Range</h3>
                     <div class="time-controls">
                         <label>
                             Start Year:
@@ -38,21 +44,17 @@
                 </section>
 
                 <section class="control-section">
-                    <h2>Dimensions</h2>
+                    <h3>Dimensions</h3>
                     <div class="dimension-controls">
                         <label>
                             Width (px):
                             <input type="number" id="width" value="2400" min="400" max="5000" step="100">
                         </label>
-                        <label>
-                            Height (px):
-                            <input type="number" id="height" value="800" min="200" max="3000" step="100">
-                        </label>
                     </div>
                 </section>
 
                 <section class="control-section">
-                    <h2>Actions</h2>
+                    <h3>Actions</h3>
                     <button id="update-viz" class="btn btn-primary">Update Visualization</button>
                     <button id="export-pdf" class="btn btn-secondary">Export as PDF</button>
                 </section>

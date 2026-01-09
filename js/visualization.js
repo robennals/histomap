@@ -41,17 +41,39 @@ const Visualization = (function() {
     function render(eventSets, settings = {}) {
         // Update configuration if settings provided
         if (settings.width) config.width = settings.width;
-        if (settings.height) config.height = settings.height;
         if (settings.startYear) config.startYear = settings.startYear;
         if (settings.endYear) config.endYear = settings.endYear;
 
         selectedEventSets = eventSets;
 
+        // Calculate required left padding
+        const charWidth = 7;
+        const labelGap = 10;
+        const maxLabelLength = Math.max(...selectedEventSets.map(set => set.name.length));
+        const requiredLeftPadding = maxLabelLength * charWidth + labelGap;
+        config.padding.left = Math.max(40, requiredLeftPadding);
+
+        // Calculate total height needed for all bands
+        let totalHeight = config.padding.top;
+
+        // Calculate height for each band
+        selectedEventSets.forEach((eventSet, index) => {
+            // Estimate band height (will be recalculated more precisely during actual rendering)
+            const estimatedBandHeight = 100; // Default estimate
+            totalHeight += estimatedBandHeight;
+            if (index < selectedEventSets.length - 1) {
+                totalHeight += config.bandSpacing;
+            }
+        });
+
+        totalHeight += config.padding.bottom;
+        config.height = totalHeight;
+
         // Clear existing SVG
         const container = document.getElementById('svg-container');
         container.innerHTML = '';
 
-        // Create new SVG
+        // Create new SVG with calculated height
         svg = createSVGElement('svg', {
             width: config.width,
             height: config.height,
@@ -67,18 +89,16 @@ const Visualization = (function() {
             fill: 'white'
         }));
 
-        // Calculate required left padding BEFORE drawing anything
-        const charWidth = 7;
-        const labelGap = 10;
-        const maxLabelLength = Math.max(...selectedEventSets.map(set => set.name.length));
-        const requiredLeftPadding = maxLabelLength * charWidth + labelGap;
-        config.padding.left = Math.max(40, requiredLeftPadding);
+        // Draw event bands and get actual height
+        const actualHeight = drawEventBands();
 
-        // Draw timeline axis
+        // Update SVG height to actual size (match top padding of ~32px)
+        const finalHeight = actualHeight + 32; // Bottom padding matches top label spacing
+        svg.setAttribute('height', finalHeight);
+        svg.querySelector('rect').setAttribute('height', finalHeight);
+
+        // Now draw timeline axis with correct height
         drawTimelineAxis();
-
-        // Draw event bands
-        drawEventBands();
 
         container.appendChild(svg);
     }
@@ -94,6 +114,9 @@ const Visualization = (function() {
         const timeRange = endTimestamp - startTimestamp;
 
         const chartWidth = config.width - config.padding.left - config.padding.right;
+
+        // Get actual SVG height
+        const actualHeight = parseInt(svg.getAttribute('height'));
 
         // Draw main axis line
         const axisLine = createSVGElement('line', {
@@ -146,7 +169,7 @@ const Visualization = (function() {
                     x1: x,
                     y1: config.padding.top,
                     x2: x,
-                    y2: config.height - config.padding.bottom,
+                    y2: actualHeight - config.padding.bottom,
                     stroke: '#95a5a6',
                     'stroke-width': 2
                 });
@@ -178,7 +201,7 @@ const Visualization = (function() {
                     x1: x,
                     y1: config.padding.top,
                     x2: x,
-                    y2: config.height - config.padding.bottom,
+                    y2: actualHeight - config.padding.bottom,
                     stroke: '#bdc3c7',
                     'stroke-width': 1
                 });
@@ -189,7 +212,7 @@ const Visualization = (function() {
                     x1: x,
                     y1: config.padding.top,
                     x2: x,
-                    y2: config.height - config.padding.bottom,
+                    y2: actualHeight - config.padding.bottom,
                     stroke: '#e8e8e8',
                     'stroke-width': 0.5,
                     'stroke-opacity': 0.6
@@ -204,14 +227,22 @@ const Visualization = (function() {
 
     /**
      * Draw all event bands (separate sections for each event set)
+     * @returns {number} The final Y position after all bands
      */
     function drawEventBands() {
         let currentY = config.padding.top;
 
-        selectedEventSets.forEach(eventSet => {
+        selectedEventSets.forEach((eventSet, index) => {
             const bandHeight = drawEventBand(eventSet, currentY);
-            currentY += bandHeight + config.bandSpacing;
+            currentY += bandHeight;
+
+            // Add spacing between bands (but not after the last one)
+            if (index < selectedEventSets.length - 1) {
+                currentY += config.bandSpacing;
+            }
         });
+
+        return currentY;
     }
 
     /**

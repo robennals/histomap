@@ -37,33 +37,43 @@ const Controls = (function() {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'event-set-item';
 
-            // Checkbox and label container
-            const checkboxDiv = document.createElement('div');
-            checkboxDiv.className = 'event-set-checkbox';
+            // Header with checkbox and expand button
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'event-set-header';
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = `checkbox-${eventSet.name}`;
             checkbox.checked = selectedEventSets.has(eventSet.name);
             checkbox.dataset.eventSet = eventSet.name;
+            checkbox.className = 'event-set-checkbox';
 
             const label = document.createElement('label');
             label.htmlFor = `checkbox-${eventSet.name}`;
             label.textContent = eventSet.name;
+            label.className = 'event-set-label';
 
-            checkboxDiv.appendChild(checkbox);
-            checkboxDiv.appendChild(label);
+            const expandBtn = document.createElement('button');
+            expandBtn.className = 'expand-btn';
+            expandBtn.innerHTML = '▼';
+            expandBtn.dataset.eventSet = eventSet.name;
 
-            // Settings container (color picker and row limit)
+            headerDiv.appendChild(checkbox);
+            headerDiv.appendChild(label);
+            headerDiv.appendChild(expandBtn);
+
+            // Settings container (collapsed by default)
             const settingsDiv = document.createElement('div');
-            settingsDiv.className = 'event-set-settings';
+            settingsDiv.className = 'event-set-settings collapsed';
+            settingsDiv.dataset.eventSet = eventSet.name;
 
-            // Color picker
-            const colorDiv = document.createElement('div');
-            colorDiv.className = 'color-picker-wrapper';
+            // Color picker row
+            const colorRow = document.createElement('div');
+            colorRow.className = 'setting-row';
 
             const colorLabel = document.createElement('label');
-            colorLabel.textContent = 'Color:';
+            colorLabel.textContent = 'Color';
+            colorLabel.className = 'setting-label';
 
             const colorPicker = document.createElement('input');
             colorPicker.type = 'color';
@@ -71,17 +81,18 @@ const Controls = (function() {
             colorPicker.dataset.eventSet = eventSet.name;
             colorPicker.className = 'color-picker';
 
-            colorDiv.appendChild(colorLabel);
-            colorDiv.appendChild(colorPicker);
+            colorRow.appendChild(colorLabel);
+            colorRow.appendChild(colorPicker);
 
-            settingsDiv.appendChild(colorDiv);
+            settingsDiv.appendChild(colorRow);
 
-            // Row/Height limit control
-            const limitDiv = document.createElement('div');
-            limitDiv.className = 'row-limit-wrapper';
+            // Row/Height limit row
+            const limitRow = document.createElement('div');
+            limitRow.className = 'setting-row';
 
             const limitLabel = document.createElement('label');
-            limitLabel.textContent = eventSet.name === 'People' ? 'Height (rows):' : 'Max rows:';
+            limitLabel.textContent = eventSet.name === 'People' ? 'Height (rows)' : 'Max rows';
+            limitLabel.className = 'setting-label';
 
             const limitInput = document.createElement('input');
             limitInput.type = 'number';
@@ -91,12 +102,12 @@ const Controls = (function() {
             limitInput.dataset.eventSet = eventSet.name;
             limitInput.className = 'row-limit-input';
 
-            limitDiv.appendChild(limitLabel);
-            limitDiv.appendChild(limitInput);
+            limitRow.appendChild(limitLabel);
+            limitRow.appendChild(limitInput);
 
-            settingsDiv.appendChild(limitDiv);
+            settingsDiv.appendChild(limitRow);
 
-            itemDiv.appendChild(checkboxDiv);
+            itemDiv.appendChild(headerDiv);
             itemDiv.appendChild(settingsDiv);
             container.appendChild(itemDiv);
         });
@@ -106,8 +117,22 @@ const Controls = (function() {
      * Attach event listeners to controls
      */
     function attachEventListeners() {
+        // Panel toggle buttons
+        document.getElementById('toggle-controls').addEventListener('click', () => {
+            document.getElementById('controls-panel').classList.add('open');
+        });
+
+        document.getElementById('close-controls').addEventListener('click', () => {
+            document.getElementById('controls-panel').classList.remove('open');
+        });
+
+        // Expand buttons for event sets
+        document.querySelectorAll('.expand-btn').forEach(btn => {
+            btn.addEventListener('click', handleExpandToggle);
+        });
+
         // Event set checkboxes
-        document.querySelectorAll('#event-set-selector input[type="checkbox"]').forEach(checkbox => {
+        document.querySelectorAll('.event-set-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', handleEventSetToggle);
         });
 
@@ -127,7 +152,6 @@ const Controls = (function() {
 
         // Dimension controls - auto-update on change
         document.getElementById('width').addEventListener('input', updateVisualization);
-        document.getElementById('height').addEventListener('input', updateVisualization);
 
         // Update visualization button
         document.getElementById('update-viz').addEventListener('click', updateVisualization);
@@ -136,6 +160,24 @@ const Controls = (function() {
         document.getElementById('export-pdf').addEventListener('click', () => {
             PDFExport.exportToPDF();
         });
+    }
+
+    /**
+     * Handle expand/collapse toggle for event set settings
+     * @param {Event} e - Click event
+     */
+    function handleExpandToggle(e) {
+        const eventSetName = e.target.dataset.eventSet;
+        const settingsDiv = document.querySelector(`.event-set-settings[data-event-set="${eventSetName}"]`);
+        const expandBtn = e.target;
+
+        if (settingsDiv.classList.contains('collapsed')) {
+            settingsDiv.classList.remove('collapsed');
+            expandBtn.innerHTML = '▲';
+        } else {
+            settingsDiv.classList.add('collapsed');
+            expandBtn.innerHTML = '▼';
+        }
     }
 
     /**
@@ -214,14 +256,12 @@ const Controls = (function() {
 
         // Get dimensions
         const width = parseInt(document.getElementById('width').value);
-        const height = parseInt(document.getElementById('height').value);
 
-        // Render visualization
+        // Render visualization (height will be auto-calculated)
         Visualization.render(selectedSets, {
             startYear,
             endYear,
-            width,
-            height
+            width
         });
     }
 
