@@ -108,28 +108,68 @@ header h1 {
     flex: 1;
 }
 
-.color-indicator {
-    width: 20px;
-    height: 20px;
-    border-radius: 3px;
-    border: 1px solid #ddd;
-}
-
-.height-selector {
+/* Event Set Settings */
+.event-set-settings {
+    display: flex;
+    gap: 10px;
     margin-left: 26px;
+    margin-top: 5px;
 }
 
-.height-selector label {
-    font-size: 0.9em;
+.color-picker-wrapper,
+.priority-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
+.color-picker-wrapper label,
+.priority-selector label {
+    font-size: 0.85em;
     color: #7f8c8d;
+    font-weight: 400;
 }
 
-.height-selector select {
+.color-picker {
     width: 100%;
-    padding: 5px;
+    height: 32px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    background: white;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.priority-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95em;
+}
+
+/* Display Mode Controls */
+.display-mode-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.display-mode-controls label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.display-mode-controls label:hover {
+    background-color: #f0f0f0;
+}
+
+.display-mode-controls input[type="radio"] {
     cursor: pointer;
 }
 
@@ -198,11 +238,13 @@ input[type="number"] {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow-x: auto;
+    overflow: auto;
+    max-height: calc(100vh - 200px);
 }
 
 #svg-container {
-    width: 100%;
+    width: fit-content;
+    min-width: 100%;
     display: flex;
     justify-content: center;
 }

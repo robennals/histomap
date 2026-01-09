@@ -4,7 +4,8 @@
 const Controls = (function() {
     let eventSets = [];
     let selectedEventSets = new Set();
-    let eventSetHeights = {}; // Maps event set name to height setting
+    let eventSetSettings = {}; // Maps event set name to { priority, color }
+    let displayMode = 'bands'; // 'unified' or 'bands'
 
     /**
      * Initialize controls with event sets
@@ -13,10 +14,13 @@ const Controls = (function() {
     function init(sets) {
         eventSets = sets;
 
-        // Initialize all event sets as selected by default
+        // Initialize all event sets as selected by default with their original settings
         eventSets.forEach(set => {
             selectedEventSets.add(set.name);
-            eventSetHeights[set.name] = 'normal';
+            eventSetSettings[set.name] = {
+                priority: 5, // Default priority (1-10, lower is higher priority)
+                color: set.color // Use original color
+            };
         });
 
         renderEventSetSelector();
@@ -48,39 +52,52 @@ const Controls = (function() {
             label.htmlFor = `checkbox-${eventSet.name}`;
             label.textContent = eventSet.name;
 
-            const colorIndicator = document.createElement('div');
-            colorIndicator.className = 'color-indicator';
-            colorIndicator.style.backgroundColor = eventSet.color;
-
             checkboxDiv.appendChild(checkbox);
             checkboxDiv.appendChild(label);
-            checkboxDiv.appendChild(colorIndicator);
 
-            // Height selector
-            const heightDiv = document.createElement('div');
-            heightDiv.className = 'height-selector';
+            // Settings container (color and priority)
+            const settingsDiv = document.createElement('div');
+            settingsDiv.className = 'event-set-settings';
 
-            const heightLabel = document.createElement('label');
-            heightLabel.textContent = 'Height:';
+            // Color picker
+            const colorDiv = document.createElement('div');
+            colorDiv.className = 'color-picker-wrapper';
 
-            const heightSelect = document.createElement('select');
-            heightSelect.dataset.eventSet = eventSet.name;
+            const colorLabel = document.createElement('label');
+            colorLabel.textContent = 'Color:';
 
-            ['half', 'normal', 'double'].forEach(option => {
-                const optionElement = document.createElement('option');
-                optionElement.value = option;
-                optionElement.textContent = option.charAt(0).toUpperCase() + option.slice(1);
-                if (option === 'normal') {
-                    optionElement.selected = true;
-                }
-                heightSelect.appendChild(optionElement);
-            });
+            const colorPicker = document.createElement('input');
+            colorPicker.type = 'color';
+            colorPicker.value = eventSetSettings[eventSet.name].color;
+            colorPicker.dataset.eventSet = eventSet.name;
+            colorPicker.className = 'color-picker';
 
-            heightDiv.appendChild(heightLabel);
-            heightDiv.appendChild(heightSelect);
+            colorDiv.appendChild(colorLabel);
+            colorDiv.appendChild(colorPicker);
+
+            // Priority selector
+            const priorityDiv = document.createElement('div');
+            priorityDiv.className = 'priority-selector';
+
+            const priorityLabel = document.createElement('label');
+            priorityLabel.textContent = 'Priority:';
+
+            const priorityInput = document.createElement('input');
+            priorityInput.type = 'number';
+            priorityInput.min = '1';
+            priorityInput.max = '10';
+            priorityInput.value = eventSetSettings[eventSet.name].priority;
+            priorityInput.dataset.eventSet = eventSet.name;
+            priorityInput.className = 'priority-input';
+
+            priorityDiv.appendChild(priorityLabel);
+            priorityDiv.appendChild(priorityInput);
+
+            settingsDiv.appendChild(colorDiv);
+            settingsDiv.appendChild(priorityDiv);
 
             itemDiv.appendChild(checkboxDiv);
-            itemDiv.appendChild(heightDiv);
+            itemDiv.appendChild(settingsDiv);
             container.appendChild(itemDiv);
         });
     }
@@ -94,9 +111,19 @@ const Controls = (function() {
             checkbox.addEventListener('change', handleEventSetToggle);
         });
 
-        // Height selectors
-        document.querySelectorAll('.height-selector select').forEach(select => {
-            select.addEventListener('change', handleHeightChange);
+        // Color pickers
+        document.querySelectorAll('.color-picker').forEach(picker => {
+            picker.addEventListener('input', handleColorChange);
+        });
+
+        // Priority inputs
+        document.querySelectorAll('.priority-input').forEach(input => {
+            input.addEventListener('input', handlePriorityChange);
+        });
+
+        // Display mode toggle
+        document.querySelectorAll('input[name="display-mode"]').forEach(radio => {
+            radio.addEventListener('change', handleDisplayModeChange);
         });
 
         // Time range controls - auto-update on change
@@ -134,15 +161,41 @@ const Controls = (function() {
     }
 
     /**
-     * Handle height selector change
+     * Handle color picker change
+     * @param {Event} e - Input event
+     */
+    function handleColorChange(e) {
+        const eventSetName = e.target.dataset.eventSet;
+        const color = e.target.value;
+
+        eventSetSettings[eventSetName].color = color;
+
+        // Auto-update visualization
+        updateVisualization();
+    }
+
+    /**
+     * Handle priority input change
+     * @param {Event} e - Input event
+     */
+    function handlePriorityChange(e) {
+        const eventSetName = e.target.dataset.eventSet;
+        const priority = parseInt(e.target.value);
+
+        if (priority >= 1 && priority <= 10) {
+            eventSetSettings[eventSetName].priority = priority;
+
+            // Auto-update visualization
+            updateVisualization();
+        }
+    }
+
+    /**
+     * Handle display mode change
      * @param {Event} e - Change event
      */
-    function handleHeightChange(e) {
-        const eventSetName = e.target.dataset.eventSet;
-        const height = e.target.value;
-
-        eventSetHeights[eventSetName] = height;
-        Visualization.setEventSetHeight(eventSetName, height);
+    function handleDisplayModeChange(e) {
+        displayMode = e.target.value;
 
         // Auto-update visualization
         updateVisualization();
@@ -152,10 +205,14 @@ const Controls = (function() {
      * Update the visualization with current settings
      */
     function updateVisualization() {
-        // Get selected event sets
-        const selectedSets = eventSets.filter(set =>
-            selectedEventSets.has(set.name)
-        );
+        // Get selected event sets with their settings applied
+        const selectedSets = eventSets
+            .filter(set => selectedEventSets.has(set.name))
+            .map(set => ({
+                ...set,
+                color: eventSetSettings[set.name].color,
+                setBasePriority: eventSetSettings[set.name].priority
+            }));
 
         if (selectedSets.length === 0) {
             alert('Please select at least one event set to visualize.');
@@ -175,17 +232,13 @@ const Controls = (function() {
         const width = parseInt(document.getElementById('width').value);
         const height = parseInt(document.getElementById('height').value);
 
-        // Update visualization height settings
-        Object.entries(eventSetHeights).forEach(([name, height]) => {
-            Visualization.setEventSetHeight(name, height);
-        });
-
         // Render visualization
         Visualization.render(selectedSets, {
             startYear,
             endYear,
             width,
-            height
+            height,
+            displayMode
         });
     }
 
@@ -196,7 +249,7 @@ const Controls = (function() {
     function getSettings() {
         return {
             selectedEventSets: Array.from(selectedEventSets),
-            eventSetHeights,
+            eventSetSettings,
             startYear: parseInt(document.getElementById('start-year').value),
             endYear: parseInt(document.getElementById('end-year').value),
             width: parseInt(document.getElementById('width').value),
