@@ -92,8 +92,11 @@ const Visualization = (function() {
         // Draw event bands and get actual height
         const actualHeight = drawEventBands();
 
-        // Update SVG height to actual size (match top padding of ~32px)
-        const finalHeight = actualHeight + 32; // Bottom padding matches top label spacing
+        // Update bottom padding to match top label spacing (32px)
+        config.padding.bottom = 32;
+
+        // Update SVG height to actual size
+        const finalHeight = actualHeight + config.padding.bottom;
         svg.setAttribute('height', finalHeight);
         svg.querySelector('rect').setAttribute('height', finalHeight);
 
@@ -221,7 +224,14 @@ const Visualization = (function() {
             }
         }
 
-        svg.appendChild(axisGroup);
+        // Insert axis group after background but before event bands
+        // The background rect is the first child, so insert after it
+        const backgroundRect = svg.querySelector('rect');
+        if (backgroundRect && backgroundRect.nextSibling) {
+            svg.insertBefore(axisGroup, backgroundRect.nextSibling);
+        } else {
+            svg.appendChild(axisGroup);
+        }
     }
 
 
