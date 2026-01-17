@@ -20,31 +20,32 @@ const PDFExport = (function() {
             exportButton.textContent = 'Generating PDF...';
             exportButton.disabled = true;
 
-            // Get SVG dimensions
+            // Get SVG dimensions (in pixels)
             const width = parseFloat(svg.getAttribute('width'));
             const height = parseFloat(svg.getAttribute('height'));
 
-            // Convert pixels to points (1 px = 0.75 pt)
-            const widthPt = width * 0.75;
-            const heightPt = height * 0.75;
-
-            // Create jsPDF instance with custom dimensions
+            // Create jsPDF instance with dimensions in points
+            // jsPDF at 96 DPI: 1 px = 72/96 = 0.75 pt
+            // But svg2pdf renders SVG at 1:1 scale into the PDF coordinate space
+            // So we create a PDF page in points that matches the SVG pixel dimensions
             const { jsPDF } = window.jspdf;
+            const orientation = width > height ? 'landscape' : 'portrait';
             const pdf = new jsPDF({
-                orientation: width > height ? 'landscape' : 'portrait',
                 unit: 'pt',
-                format: [widthPt, heightPt]
+                format: [width, height],
+                orientation: orientation
             });
 
             // Clone the SVG to avoid modifying the original
             const svgClone = svg.cloneNode(true);
 
             // Convert SVG to PDF using svg2pdf
+            // Pass pixel dimensions - svg2pdf maps SVG coordinates 1:1 to PDF points
             await pdf.svg(svgClone, {
                 x: 0,
                 y: 0,
-                width: widthPt,
-                height: heightPt
+                width: width,
+                height: height
             });
 
             // Generate filename with current date

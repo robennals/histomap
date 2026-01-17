@@ -83,6 +83,10 @@ const Visualization = (function() {
             id: 'histomap-viz'
         });
 
+        // Create defs section for clipPaths (must be defined before use for svg2pdf compatibility)
+        const defs = createSVGElement('defs');
+        svg.appendChild(defs);
+
         // Add background
         svg.appendChild(createSVGElement('rect', {
             x: 0,
@@ -104,7 +108,8 @@ const Visualization = (function() {
         // Update SVG height to actual size
         const finalHeight = actualHeight + config.padding.bottom;
         svg.setAttribute('height', finalHeight);
-        svg.querySelector('rect').setAttribute('height', finalHeight);
+        // Update the background rect (direct child of SVG, not inside defs)
+        svg.querySelector(':scope > rect').setAttribute('height', finalHeight);
 
         // Now draw timeline axis with correct height
         drawTimelineAxis();
@@ -297,6 +302,7 @@ const Visualization = (function() {
         const actualHeight = (maxY - y) + bottomPadding;
 
         // Create clipPath for this band with actual height
+        // Add to defs section for svg2pdf compatibility (clipPaths must be defined before use)
         const clipPathId = `clip-${eventSet.name.replace(/\s+/g, '-')}`;
         const clipPath = createSVGElement('clipPath', { id: clipPathId });
         const clipRect = createSVGElement('rect', {
@@ -306,7 +312,7 @@ const Visualization = (function() {
             height: actualHeight
         });
         clipPath.appendChild(clipRect);
-        svg.appendChild(clipPath);
+        svg.querySelector('defs').appendChild(clipPath);
 
         // Apply clip path to band group
         bandGroup.setAttribute('clip-path', `url(#${clipPathId})`);
