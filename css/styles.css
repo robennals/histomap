@@ -340,28 +340,7 @@ input[type="number"] {
 
 /* SVG Text Styling */
 svg text {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     user-select: none;
-}
-
-.event-label-major {
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.event-label-minor {
-    font-size: 9px;
-    font-weight: 400;
-}
-
-.timeline-label {
-    font-size: 11px;
-    fill: #7f8c8d;
-}
-
-.band-title {
-    font-size: 14px;
-    font-weight: 600;
 }
 
 /* Responsive Design */

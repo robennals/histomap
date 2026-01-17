@@ -4,6 +4,9 @@
 const Visualization = (function() {
     const SVG_NS = 'http://www.w3.org/2000/svg';
 
+    // Font configuration - use PDF-compatible fonts for consistent rendering
+    const FONT_FAMILY = 'Helvetica, Arial, sans-serif';
+
     // Configuration
     const config = {
         width: 2400,
@@ -89,6 +92,9 @@ const Visualization = (function() {
             fill: 'white'
         }));
 
+        // Append SVG to container early so getBBox() works for text measurement
+        container.appendChild(svg);
+
         // Draw event bands and get actual height
         const actualHeight = drawEventBands();
 
@@ -102,8 +108,6 @@ const Visualization = (function() {
 
         // Now draw timeline axis with correct height
         drawTimelineAxis();
-
-        container.appendChild(svg);
     }
 
     /**
@@ -161,8 +165,10 @@ const Visualization = (function() {
                     x: x,
                     y: config.padding.top - 32,
                     'text-anchor': 'middle',
-                    class: 'timeline-label',
-                    'font-weight': 'bold'
+                    'font-family': FONT_FAMILY,
+                    'font-size': '11px',
+                    'font-weight': 'bold',
+                    fill: '#7f8c8d'
                 });
                 label.textContent = year;
                 axisGroup.appendChild(label);
@@ -194,7 +200,10 @@ const Visualization = (function() {
                     x: x,
                     y: config.padding.top - 26,
                     'text-anchor': 'middle',
-                    class: 'timeline-label'
+                    'font-family': FONT_FAMILY,
+                    'font-size': '11px',
+                    'font-weight': 'normal',
+                    fill: '#7f8c8d'
                 });
                 label.textContent = year;
                 axisGroup.appendChild(label);
@@ -264,6 +273,9 @@ const Visualization = (function() {
     function drawEventBand(eventSet, y) {
         const bandGroup = createSVGElement('g', { class: 'event-band' });
 
+        // Append group to SVG early so getBBox() works for text measurement
+        svg.appendChild(bandGroup);
+
         // Use special rendering for "People"
         const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
         const topPadding = 8;
@@ -319,13 +331,13 @@ const Visualization = (function() {
             y: y + actualHeight / 2,
             'text-anchor': 'end',
             'dominant-baseline': 'middle',
-            class: 'band-title',
+            'font-family': FONT_FAMILY,
+            'font-size': '14px',
+            'font-weight': 'bold',
             fill: eventSet.color
         });
         title.textContent = eventSet.name;
         svg.appendChild(title);
-
-        svg.appendChild(bandGroup);
 
         return actualHeight;
     }
@@ -549,31 +561,36 @@ const Visualization = (function() {
             group.appendChild(line);
         });
 
-        // Draw white background rectangles behind text to make it readable over lines
-        // Stop the background just above the person's own timeline
-        placedItems.forEach(item => {
-            const textBg = createSVGElement('rect', {
-                x: item.textX - 2,
-                y: item.lineY - fontSize - 2,
-                width: item.textWidth + 4,
-                height: fontSize - 2,
-                fill: 'white',
-                'fill-opacity': 0.8
-            });
-            group.appendChild(textBg);
-        });
-
-        // Draw text on top
+        // Create text elements first to measure actual width
+        const textElements = [];
         placedItems.forEach(item => {
             const text = createSVGElement('text', {
                 x: item.textX,
                 y: item.lineY - 4,
-                class: 'event-label-major',
+                'font-family': FONT_FAMILY,
+                'font-size': '12px',
+                'font-weight': 'normal',
                 fill: item.person.personColor,
                 'fill-opacity': 1
             });
             text.textContent = item.person.name;
             group.appendChild(text);
+            textElements.push({ text, item });
+        });
+
+        // Measure actual text widths and create background rectangles
+        // Insert backgrounds before text elements so text renders on top
+        textElements.forEach(({ text, item }) => {
+            const bbox = text.getBBox();
+            const textBg = createSVGElement('rect', {
+                x: bbox.x - 2,
+                y: item.lineY - fontSize - 2,
+                width: bbox.width + 4,
+                height: fontSize - 2,
+                fill: 'white',
+                'fill-opacity': 0.8
+            });
+            group.insertBefore(textBg, text);
         });
 
         // Return the maximum Y position used
@@ -723,7 +740,9 @@ const Visualization = (function() {
             const label = createSVGElement('text', {
                 x: labelStartX,
                 y: labelY,
-                class: 'event-label-major',
+                'font-family': FONT_FAMILY,
+                'font-size': '12px',
+                'font-weight': 'normal',
                 fill: color,
                 'fill-opacity': opacity
             });
