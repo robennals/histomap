@@ -680,6 +680,34 @@ const Visualization = (function() {
     }
 
     /**
+     * Calculate perceptual distance between two hex colors
+     * @param {string} color1 - Hex color string (e.g., "#e74c3c")
+     * @param {string} color2 - Hex color string
+     * @returns {number} Distance value (higher = more different)
+     */
+    function colorDistance(color1, color2) {
+        // Convert hex to RGB
+        const hex1 = color1.replace('#', '');
+        const hex2 = color2.replace('#', '');
+
+        const r1 = parseInt(hex1.substr(0, 2), 16);
+        const g1 = parseInt(hex1.substr(2, 2), 16);
+        const b1 = parseInt(hex1.substr(4, 2), 16);
+
+        const r2 = parseInt(hex2.substr(0, 2), 16);
+        const g2 = parseInt(hex2.substr(2, 2), 16);
+        const b2 = parseInt(hex2.substr(4, 2), 16);
+
+        // Simple Euclidean distance in RGB space
+        // (Could use LAB color space for better perceptual accuracy, but RGB is sufficient)
+        return Math.sqrt(
+            Math.pow(r1 - r2, 2) +
+            Math.pow(g1 - g2, 2) +
+            Math.pow(b1 - b2, 2)
+        );
+    }
+
+    /**
      * Draw people band with unique colors and smart positioning
      * @param {SVGElement} group - Parent SVG group
      * @param {Array} events - People/events to draw
@@ -713,7 +741,7 @@ const Visualization = (function() {
             '#3498db', // blue
             '#2ecc71', // green
             '#e84393', // magenta/pink
-            '#f1c40f', // yellow
+            '#d4af37', // gold (bolder than yellow)
             '#9b59b6', // purple
             '#16a085', // dark teal
             '#e67e22', // dark orange
@@ -842,9 +870,11 @@ const Visualization = (function() {
                 let foundTextPosition = false;
 
                 // Get all placed items that are vertically close enough for text to overlap
+                // Using 12px instead of full textHeight (16px) allows labels to be closer together
+                const verticalTextOverlapThreshold = 12;
                 const nearbyItems = placedItems.filter(p => {
                     const verticalGap = Math.abs(lineY - p.lineY);
-                    return verticalGap < textHeight;
+                    return verticalGap < verticalTextOverlapThreshold;
                 });
 
                 // Calculate the valid range for text positioning
@@ -901,10 +931,59 @@ const Visualization = (function() {
             });
         });
 
-        // Sort placed items by Y position and assign colors based on vertical order
+        // Sort placed items by Y position and assign colors intelligently
         placedItems.sort((a, b) => a.lineY - b.lineY);
+
+        // Assign colors to avoid similar colors for adjacent items
         placedItems.forEach((item, idx) => {
-            item.person.personColor = colors[idx % colors.length];
+            // If event already has a color (e.g., presidents with party colors), use it
+            if (item.person.color) {
+                item.person.personColor = item.person.color;
+                return;
+            }
+
+            if (idx === 0) {
+                // First item gets the first color
+                item.person.personColor = colors[0];
+            } else {
+                // Look at items within vertical proximity (up to 3 items above)
+                const lookbackCount = Math.min(3, idx);
+                const recentColors = [];
+                for (let i = 1; i <= lookbackCount; i++) {
+                    const prevItem = placedItems[idx - i];
+                    const verticalDistance = Math.abs(item.lineY - prevItem.lineY);
+                    // Only consider items that are visually close (within ~50px)
+                    if (verticalDistance < 50) {
+                        recentColors.push(prevItem.person.personColor);
+                    }
+                }
+
+                // Find the color most different from recent colors
+                let bestColor = colors[0];
+                let maxMinDistance = -1;
+
+                for (const candidateColor of colors) {
+                    if (recentColors.length === 0) {
+                        bestColor = candidateColor;
+                        break;
+                    }
+
+                    // Calculate minimum distance to any recent color
+                    let minDistance = Infinity;
+                    for (const recentColor of recentColors) {
+                        const distance = colorDistance(candidateColor, recentColor);
+                        minDistance = Math.min(minDistance, distance);
+                    }
+
+                    // Choose color with maximum minimum distance (most different from all nearby)
+                    if (minDistance > maxMinDistance) {
+                        maxMinDistance = minDistance;
+                        bestColor = candidateColor;
+                    }
+                }
+
+                item.person.personColor = bestColor;
+            }
         });
 
         // Draw all timeline lines first (continuous from start to end)
