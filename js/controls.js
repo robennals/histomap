@@ -16,10 +16,16 @@ const Controls = (function() {
         // Initialize all event sets as selected by default with their original settings
         eventSets.forEach(set => {
             selectedEventSets.add(set.name);
+            // Set default heights based on band type
+            let defaultMaxHeight = 80; // Default for most bands
+            if (set.name === 'Media' || set.name === 'Events') {
+                defaultMaxHeight = 60; // Media and Events bands get less height
+            }
+
             eventSetSettings[set.name] = {
                 color: set.color,
-                maxRows: 3, // Default to 3 rows for non-people bands
-                height: set.type === 'gdp-blocs' ? 100 : undefined // Default height for GDP blocs
+                maxHeight: set.type === 'gdp-blocs' ? undefined : defaultMaxHeight,
+                height: set.type === 'gdp-blocs' ? 100 : undefined // Height for GDP blocs
             };
         });
 
@@ -112,15 +118,17 @@ const Controls = (function() {
                 limitLabel.textContent = 'Height (px)';
                 limitInput.min = '100';
                 limitInput.max = '500';
+                limitInput.step = '10';
                 limitInput.value = eventSetSettings[eventSet.name].height || 100;
                 limitInput.className = 'height-input';
             } else {
-                // Row limit for other bands
-                limitLabel.textContent = eventSet.name === 'People' ? 'Height (rows)' : 'Max rows';
-                limitInput.min = '1';
-                limitInput.max = '20';
-                limitInput.value = eventSetSettings[eventSet.name].maxRows;
-                limitInput.className = 'row-limit-input';
+                // Max height for other bands
+                limitLabel.textContent = 'Max Height (px)';
+                limitInput.min = '50';
+                limitInput.max = '500';
+                limitInput.step = '10';
+                limitInput.value = eventSetSettings[eventSet.name].maxHeight || 80;
+                limitInput.className = 'max-height-input';
             }
 
             limitLabel.className = 'setting-label';
@@ -164,9 +172,9 @@ const Controls = (function() {
             picker.addEventListener('input', handleColorChange);
         });
 
-        // Row limit inputs
-        document.querySelectorAll('.row-limit-input').forEach(input => {
-            input.addEventListener('input', handleRowLimitChange);
+        // Max height inputs for event bands
+        document.querySelectorAll('.max-height-input').forEach(input => {
+            input.addEventListener('input', handleMaxHeightChange);
         });
 
         // Height inputs for GDP blocs
@@ -248,15 +256,15 @@ const Controls = (function() {
     }
 
     /**
-     * Handle row limit change
+     * Handle max height change for event bands
      * @param {Event} e - Input event
      */
-    function handleRowLimitChange(e) {
+    function handleMaxHeightChange(e) {
         const eventSetName = e.target.dataset.eventSet;
-        const maxRows = parseInt(e.target.value);
+        const maxHeight = parseInt(e.target.value);
 
-        if (maxRows >= 1 && maxRows <= 20) {
-            eventSetSettings[eventSetName].maxRows = maxRows;
+        if (maxHeight >= 50 && maxHeight <= 500) {
+            eventSetSettings[eventSetName].maxHeight = maxHeight;
 
             // Auto-update visualization
             updateVisualization();
@@ -361,7 +369,7 @@ const Controls = (function() {
             .map(set => ({
                 ...set,
                 color: eventSetSettings[set.name].color,
-                maxRows: eventSetSettings[set.name].maxRows,
+                maxHeight: eventSetSettings[set.name].maxHeight,
                 height: eventSetSettings[set.name].height
             }));
 

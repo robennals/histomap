@@ -93,8 +93,9 @@ header h1 {
     background: white;
     box-shadow: -2px 0 10px rgba(0,0,0,0.15);
     z-index: 1000;
-    overflow-y: auto;
     transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .controls-panel.open {
@@ -108,6 +109,13 @@ header h1 {
     padding: 16px 20px;
     border-bottom: 2px solid #ecf0f1;
     background: #f8f9fa;
+    flex-shrink: 0;
+}
+
+.controls-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .controls-header h2 {

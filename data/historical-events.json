@@ -35,24 +35,6 @@
       "priority": 2
     },
     {
-      "name": "Reconstruction Era",
-      "start": "1865-01-01",
-      "end": "1877-03-31",
-      "priority": 2
-    },
-    {
-      "name": "Industrial Revolution (US)",
-      "start": "1870-01-01",
-      "end": "1914-12-31",
-      "priority": 1
-    },
-    {
-      "name": "Great Depression",
-      "start": "1929-10-29",
-      "end": "1939-12-31",
-      "priority": 1
-    },
-    {
       "name": "New Deal",
       "start": "1933-03-04",
       "end": "1939-12-31",
@@ -92,12 +74,6 @@
     {
       "name": "9/11 Attacks",
       "start": "2001-09-11",
-      "priority": 1
-    },
-    {
-      "name": "Great Recession",
-      "start": "2007-12-01",
-      "end": "2009-06-30",
       "priority": 1
     },
     {

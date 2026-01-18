@@ -616,7 +616,7 @@ const Visualization = (function() {
             maxY = drawGDPBlocsBand(bandGroup, eventSet, y, bandHeight);
             actualHeight = bandHeight;
         } else {
-            // Use special rendering for "People"
+            // Use People rendering approach for all bands (allows overlap and compact packing)
             const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
             const topPadding = 8;
             const bottomPadding = 8;
@@ -624,13 +624,9 @@ const Visualization = (function() {
             // startY should be baseline position, accounting for text ascent above baseline
             const startY = y + topPadding + fontSize;
 
-            if (eventSet.name === "People") {
-                const maxRows = eventSet.maxRows || 999;
-                maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
-            } else {
-                const maxRows = eventSet.maxRows || 999;
-                maxY = drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
-            }
+            const maxHeight = eventSet.maxHeight || 999;
+            const isPeopleBand = eventSet.name === "People";
+            maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y, maxHeight, isPeopleBand);
 
             // Calculate actual height needed (maxY already includes content, just add bottom padding)
             actualHeight = (maxY - y) + bottomPadding;
@@ -686,13 +682,15 @@ const Visualization = (function() {
     /**
      * Draw people band with unique colors and smart positioning
      * @param {SVGElement} group - Parent SVG group
-     * @param {Array} events - People to draw
+     * @param {Array} events - People/events to draw
      * @param {number} baseY - Base Y position
      * @param {string} baseColor - Base color (not used, each person gets unique color)
      * @param {number} bandY - Y position of the band
+     * @param {number} maxHeight - Maximum height in pixels for this band
+     * @param {boolean} isPeopleBand - If true, no end date means "still alive"; if false, no end date means "point event"
      * @returns {number} The maximum Y position used
      */
-    function drawPeopleBand(group, events, baseY, baseColor, bandY, maxRows = 999) {
+    function drawPeopleBand(group, events, baseY, baseColor, bandY, maxHeight = 999, isPeopleBand = true) {
         const startTimestamp = new Date(config.startYear, 0, 1).getTime();
         const endTimestamp = new Date(config.endYear, 11, 31).getTime();
         const timeRange = endTimestamp - startTimestamp;
@@ -702,11 +700,8 @@ const Visualization = (function() {
         const fontSize = 12;
         const textHeight = fontSize + 4;
 
-        // Calculate max height based on row equivalence with regular bands
-        const verticalSpacing = fontSize + 4; // Same as regular events
-        const maxHeight = maxRows * verticalSpacing;
-        const lineGap = 6; // Minimum gap between lines (double the original 3px)
-        const textGap = 20; // Minimum gap between text labels
+        const lineGap = 6; // Minimum gap between timeline lines when checking for overlap
+        const textGap = 20; // Minimum gap between text labels horizontally
         const charWidth = 6.5; // Estimated character width
 
         // Generate unique colors for each person
@@ -738,7 +733,10 @@ const Visualization = (function() {
         const visiblePeople = [];
         events.forEach((event) => {
             const startYear = event.startDate.getFullYear();
-            const endYear = event.endDate ? event.endDate.getFullYear() : config.endYear;
+            // For people without end date, they're "still alive" - extend to endYear
+            // For non-people without end date, it's a point event - use startYear
+            const endYear = event.endDate ? event.endDate.getFullYear() :
+                            (isPeopleBand ? config.endYear : startYear);
 
             // Include event if it overlaps with the visible time range
             if (endYear >= config.startYear && startYear <= config.endYear) {
@@ -779,12 +777,17 @@ const Visualization = (function() {
 
             let actualEndX = actualStartX;
             if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
-                // Person has died
+                // Event has ended
                 actualEndX = config.padding.left +
                     ((person.endTimestamp - startTimestamp) / timeRange) * chartWidth;
             } else if (!person.endDate) {
-                // Person is still alive, extend line to current end of timeline
-                actualEndX = config.padding.left + chartWidth;
+                if (isPeopleBand) {
+                    // Person is still alive, extend line to current end of timeline
+                    actualEndX = config.padding.left + chartWidth;
+                } else {
+                    // Point event - no line extension
+                    actualEndX = actualStartX;
+                }
             }
 
             // Clamp the visible line to the visible range
@@ -793,7 +796,11 @@ const Visualization = (function() {
 
             const lineLength = endX - startX;
             const textWidth = person.name.length * charWidth;
-            const maxTextX = startX + lineLength - textWidth;
+            // For people, constrain text to their timeline
+            // For other events, allow text to extend beyond the event (to the right edge)
+            const maxTextX = isPeopleBand ?
+                (startX + lineLength - textWidth) :
+                (config.padding.left + chartWidth - textWidth);
 
             // Find Y position and text position together
             let lineY = baseY;
@@ -803,6 +810,15 @@ const Visualization = (function() {
 
             while (!foundPosition && safetyCounter < 50) {
                 safetyCounter++;
+
+                // Check if current position would exceed height limit
+                // Measure from band start (bandY), not baseline (baseY)
+                // Also account for text height above the line and bottom padding
+                const heightUsed = (lineY + textHeight) - bandY;
+                if (heightUsed > maxHeight) {
+                    // Can't place this event within height limit - skip it
+                    break;
+                }
 
                 // Step 1: Check if line position has any line overlaps
                 let hasLineOverlap = false;
@@ -831,8 +847,13 @@ const Visualization = (function() {
                     return verticalGap < textHeight;
                 });
 
+                // Calculate the valid range for text positioning
+                // For non-people events, text must start within the event (startX to endX)
+                // But can extend beyond endX
+                const textMaxStartX = isPeopleBand ? maxTextX : Math.min(endX, maxTextX);
+
                 // Try to find a position along the line where the text doesn't overlap
-                while (textX <= maxTextX && !foundTextPosition) {
+                while (textX <= textMaxStartX && !foundTextPosition) {
                     let hasTextOverlap = false;
 
                     for (const placed of nearbyItems) {
@@ -846,9 +867,9 @@ const Visualization = (function() {
                         }
                     }
 
-                    if (!hasTextOverlap) {
+                    if (!hasTextOverlap && textX <= textMaxStartX) {
                         foundTextPosition = true;
-                    } else if (textX > maxTextX) {
+                    } else if (textX > textMaxStartX) {
                         break;
                     }
                 }
@@ -861,15 +882,13 @@ const Visualization = (function() {
                 }
             }
 
-            // Constrain text to line bounds
-            if (textX < startX) textX = startX;
-            if (textX > maxTextX) textX = maxTextX;
-
-            // Check if this person exceeds the height limit
-            const heightUsed = lineY - baseY;
-            if (heightUsed > maxHeight) {
-                return; // Skip this person - exceeds height limit
+            // If we didn't find a position within the height limit, skip this event
+            if (!foundPosition) {
+                return;
             }
+
+            // Final constraint: ensure text doesn't go off the right edge
+            if (textX > maxTextX) textX = maxTextX;
 
             // Record this placement
             placedItems.push({

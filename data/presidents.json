@@ -3,329 +3,329 @@
   "color": "#e74c3c",
   "events": [
     {
-      "name": "George Washington",
+      "name": "Washington",
       "start": "1789-04-30",
       "end": "1797-03-04",
       "color": "#95a5a6",
       "priority": 1
     },
     {
-      "name": "John Adams",
+      "name": "J. Adams",
       "start": "1797-03-04",
       "end": "1801-03-04",
       "color": "#D4A574",
       "priority": 2
     },
     {
-      "name": "Thomas Jefferson",
+      "name": "Jefferson",
       "start": "1801-03-04",
       "end": "1809-03-04",
       "color": "#3498db",
       "priority": 1
     },
     {
-      "name": "James Madison",
+      "name": "Madison",
       "start": "1809-03-04",
       "end": "1817-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "James Monroe",
+      "name": "Monroe",
       "start": "1817-03-04",
       "end": "1825-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "John Quincy Adams",
+      "name": "JQ Adams",
       "start": "1825-03-04",
       "end": "1829-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Andrew Jackson",
+      "name": "Jackson",
       "start": "1829-03-04",
       "end": "1837-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Martin Van Buren",
+      "name": "Van Buren",
       "start": "1837-03-04",
       "end": "1841-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "William Henry Harrison",
+      "name": "WH Harrison",
       "start": "1841-03-04",
       "end": "1841-04-04",
       "color": "#D4A574",
       "priority": 3
     },
     {
-      "name": "John Tyler",
+      "name": "Tyler",
       "start": "1841-04-04",
       "end": "1845-03-04",
       "color": "#D4A574",
       "priority": 2
     },
     {
-      "name": "James K. Polk",
+      "name": "Polk",
       "start": "1845-03-04",
       "end": "1849-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Zachary Taylor",
+      "name": "Taylor",
       "start": "1849-03-04",
       "end": "1850-07-09",
       "color": "#D4A574",
       "priority": 3
     },
     {
-      "name": "Millard Fillmore",
+      "name": "Fillmore",
       "start": "1850-07-09",
       "end": "1853-03-04",
       "color": "#D4A574",
       "priority": 2
     },
     {
-      "name": "Franklin Pierce",
+      "name": "Pierce",
       "start": "1853-03-04",
       "end": "1857-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "James Buchanan",
+      "name": "Buchanan",
       "start": "1857-03-04",
       "end": "1861-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Abraham Lincoln",
+      "name": "Lincoln",
       "start": "1861-03-04",
       "end": "1865-04-15",
       "color": "#e74c3c",
       "priority": 1
     },
     {
-      "name": "Andrew Johnson",
+      "name": "A. Johnson",
       "start": "1865-04-15",
       "end": "1869-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Ulysses S. Grant",
+      "name": "Grant",
       "start": "1869-03-04",
       "end": "1877-03-04",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Rutherford B. Hayes",
+      "name": "Hayes",
       "start": "1877-03-04",
       "end": "1881-03-04",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "James A. Garfield",
+      "name": "Garfield",
       "start": "1881-03-04",
       "end": "1881-09-19",
       "color": "#e74c3c",
       "priority": 3
     },
     {
-      "name": "Chester A. Arthur",
+      "name": "Arthur",
       "start": "1881-09-19",
       "end": "1885-03-04",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Grover Cleveland",
+      "name": "Cleveland",
       "start": "1885-03-04",
       "end": "1889-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Benjamin Harrison",
+      "name": "B. Harrison",
       "start": "1889-03-04",
       "end": "1893-03-04",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Grover Cleveland",
+      "name": "Cleveland",
       "start": "1893-03-04",
       "end": "1897-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "William McKinley",
+      "name": "McKinley",
       "start": "1897-03-04",
       "end": "1901-09-14",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Theodore Roosevelt",
+      "name": "T. Roosevelt",
       "start": "1901-09-14",
       "end": "1909-03-04",
       "color": "#e74c3c",
       "priority": 1
     },
     {
-      "name": "William Howard Taft",
+      "name": "Taft",
       "start": "1909-03-04",
       "end": "1913-03-04",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Woodrow Wilson",
+      "name": "Wilson",
       "start": "1913-03-04",
       "end": "1921-03-04",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Warren G. Harding",
+      "name": "Harding",
       "start": "1921-03-04",
       "end": "1923-08-02",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Calvin Coolidge",
+      "name": "Coolidge",
       "start": "1923-08-02",
       "end": "1929-03-04",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Herbert Hoover",
+      "name": "Hoover",
       "start": "1929-03-04",
       "end": "1933-03-04",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Franklin D. Roosevelt",
+      "name": "FD Roosevelt",
       "start": "1933-03-04",
       "end": "1945-04-12",
       "color": "#3498db",
       "priority": 1
     },
     {
-      "name": "Harry S. Truman",
+      "name": "Truman",
       "start": "1945-04-12",
       "end": "1953-01-20",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Dwight D. Eisenhower",
+      "name": "Eisenhower",
       "start": "1953-01-20",
       "end": "1961-01-20",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "John F. Kennedy",
+      "name": "Kennedy",
       "start": "1961-01-20",
       "end": "1963-11-22",
       "color": "#3498db",
       "priority": 1
     },
     {
-      "name": "Lyndon B. Johnson",
+      "name": "LB Johnson",
       "start": "1963-11-22",
       "end": "1969-01-20",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Richard Nixon",
+      "name": "Nixon",
       "start": "1969-01-20",
       "end": "1974-08-09",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Gerald Ford",
+      "name": "Ford",
       "start": "1974-08-09",
       "end": "1977-01-20",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Jimmy Carter",
+      "name": "Carter",
       "start": "1977-01-20",
       "end": "1981-01-20",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Ronald Reagan",
+      "name": "Reagan",
       "start": "1981-01-20",
       "end": "1989-01-20",
       "color": "#e74c3c",
       "priority": 1
     },
     {
-      "name": "George H. W. Bush",
+      "name": "GHW Bush",
       "start": "1989-01-20",
       "end": "1993-01-20",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Bill Clinton",
+      "name": "Clinton",
       "start": "1993-01-20",
       "end": "2001-01-20",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "George W. Bush",
+      "name": "GW Bush",
       "start": "2001-01-20",
       "end": "2009-01-20",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Barack Obama",
+      "name": "Obama",
       "start": "2009-01-20",
       "end": "2017-01-20",
       "color": "#3498db",
       "priority": 1
     },
     {
-      "name": "Donald Trump",
+      "name": "Trump",
       "start": "2017-01-20",
       "end": "2021-01-20",
       "color": "#e74c3c",
       "priority": 2
     },
     {
-      "name": "Joe Biden",
+      "name": "Biden",
       "start": "2021-01-20",
       "end": "2025-01-20",
       "color": "#3498db",
       "priority": 2
     },
     {
-      "name": "Donald Trump",
+      "name": "Trump",
       "start": "2025-01-20",
       "color": "#e74c3c",
       "priority": 2
