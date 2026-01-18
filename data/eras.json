@@ -111,12 +111,6 @@
       "priority": 2
     },
     {
-      "name": "Reagan Era",
-      "start": "1981-01-20",
-      "end": "1989-01-20",
-      "priority": 2
-    },
-    {
       "name": "Dot-com Boom",
       "start": "1995-01-01",
       "end": "2001-03-11",

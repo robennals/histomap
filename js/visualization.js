@@ -14,14 +14,14 @@ const Visualization = (function() {
     //                Japanese Empire, Ottoman Empire, Other European Empires, Other, BRICS + Aligned
     const GDP_BLOC_COLORS = {
         'China': '#e74c3c',                      // Red (large bloc)
+        'BRICS + Aligned': '#d68910',            // Dark red (succeeds USSR, distinct but related)
         'Independent Indian States': '#f39c12',  // Orange (adjacent to China)
-        'India': '#d68910',                      // Darker orange (succeeds Independent Indian, similar but distinct)
+        'India': '#f39c12',                      // Darker orange (succeeds Independent Indian, similar but distinct)
         'British Empire': '#2874a6',             // Dark blue (distinct from India/China)
         'NATO + Aligned': '#1abc9c',             // Teal (succeeds British, related blue tone but distinct)
         'US': '#9b59b6',                         // Purple (next to NATO, distinct)
         'Russian Empire': '#e84393',             // Pink (distinct from others)
         'USSR + Aligned': '#b03a69',             // Darker pink (succeeds Russian, similar but distinct)
-        'BRICS + Aligned': '#c0392b',            // Dark red (succeeds USSR, distinct but related)
         'Japanese Empire': '#27ae60',            // Green (distinct from orange India)
         'Ottoman Empire': '#16a085',             // Dark teal (distinct)
         'Other European Empires': '#f1c40f',     // Yellow (moved from Japanese, distinct from teal/blue)

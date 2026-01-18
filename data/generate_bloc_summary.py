@@ -56,17 +56,17 @@ def main():
     # Japanese → Russian → USSR → BRICS → Other (at top, residual non-aligned)
     bloc_order = [
         'China',
+        'BRICS + Aligned',
+        'India - post independence',  # Will be renamed to just "India"
         'Ottoman Empire',
         'Other European Empires',
         'NATO + Aligned',
         'British Empire',
         'US',
         'Independent Indian States',
-        'India - post independence',  # Will be renamed to just "India"
         'Japanese Empire',
         'Russian Empire',
         'USSR + Aligned',
-        'BRICS + Aligned',
         'Other'
     ]
 
