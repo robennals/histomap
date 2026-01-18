@@ -9,28 +9,10 @@
       "priority": 1
     },
     {
-      "name": "George Washington",
-      "start": "1732-02-22",
-      "end": "1799-12-14",
-      "priority": 1
-    },
-    {
-      "name": "Thomas Jefferson",
-      "start": "1743-04-13",
-      "end": "1826-07-04",
-      "priority": 1
-    },
-    {
       "name": "Alexander Hamilton",
       "start": "1755-01-11",
       "end": "1804-07-12",
       "priority": 2
-    },
-    {
-      "name": "Abraham Lincoln",
-      "start": "1809-02-12",
-      "end": "1865-04-15",
-      "priority": 1
     },
     {
       "name": "Edgar Allan Poe",
@@ -48,12 +30,6 @@
       "name": "Harriet Tubman",
       "start": "1822-03-10",
       "end": "1913-03-10",
-      "priority": 2
-    },
-    {
-      "name": "Ulysses S. Grant",
-      "start": "1822-04-27",
-      "end": "1885-07-23",
       "priority": 2
     },
     {
@@ -75,12 +51,6 @@
       "priority": 1
     },
     {
-      "name": "Theodore Roosevelt",
-      "start": "1858-10-27",
-      "end": "1919-01-06",
-      "priority": 2
-    },
-    {
       "name": "Henry Ford",
       "start": "1863-07-30",
       "end": "1947-04-07",
@@ -96,12 +66,6 @@
       "name": "Albert Einstein",
       "start": "1879-03-14",
       "end": "1955-04-18",
-      "priority": 1
-    },
-    {
-      "name": "Franklin D. Roosevelt",
-      "start": "1882-01-30",
-      "end": "1945-04-12",
       "priority": 1
     },
     {
@@ -121,12 +85,6 @@
       "start": "1913-02-04",
       "end": "2005-10-24",
       "priority": 2
-    },
-    {
-      "name": "John F. Kennedy",
-      "start": "1917-05-29",
-      "end": "1963-11-22",
-      "priority": 1
     },
     {
       "name": "Martin Luther King Jr.",
@@ -150,11 +108,6 @@
       "name": "Steve Jobs",
       "start": "1955-02-24",
       "end": "2011-10-05",
-      "priority": 2
-    },
-    {
-      "name": "Barack Obama",
-      "start": "1961-08-04",
       "priority": 2
     }
   ]

@@ -71,12 +71,24 @@ const Visualization = (function() {
 
         selectedEventSets = eventSets;
 
-        // Calculate required left padding
-        const charWidth = 7;
-        const labelGap = 10;
-        const maxLabelLength = Math.max(...selectedEventSets.map(set => set.name.length));
-        const requiredLeftPadding = maxLabelLength * charWidth + labelGap;
-        config.padding.left = Math.max(40, requiredLeftPadding);
+        // Calculate required left padding by measuring actual text width
+        // Use a canvas to measure text width accurately
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+
+        const maxTextWidth = Math.max(...selectedEventSets.map(set => {
+            return ctx.measureText(set.name).width;
+        }));
+
+        // To match the top padding (60px total):
+        // Band titles are positioned at (padding.left - 10) with text-anchor: end
+        // This means the right edge of text is 10px from the chart area
+        // We want: maxTextWidth + 10px (to chart) = total that fits in padding
+        // And we want total left padding = 60px (to match top)
+        // So we need to ensure: maxTextWidth + 10 <= 60
+        // If text is wider, we need more padding
+        config.padding.left = maxTextWidth + 24;
 
         // Calculate total height needed for all bands
         let totalHeight = config.padding.top;
@@ -1065,6 +1077,9 @@ const Visualization = (function() {
                 durationYears = (event.endTimestamp - event.startTimestamp) / (1000 * 60 * 60 * 24 * 365.25);
             }
 
+            // Use event's color if available, otherwise use base color
+            const eventColor = event.color || color;
+
             // Draw event label
             const label = createSVGElement('text', {
                 x: labelStartX,
@@ -1072,7 +1087,7 @@ const Visualization = (function() {
                 'font-family': FONT_FAMILY,
                 'font-size': '12px',
                 'font-weight': 'normal',
-                fill: color,
+                fill: eventColor,
                 'fill-opacity': opacity
             });
             label.textContent = event.name;
@@ -1086,7 +1101,7 @@ const Visualization = (function() {
                     y1: underlineY,
                     x2: labelStartX + (endX - x - dotOffset),
                     y2: underlineY,
-                    stroke: color,
+                    stroke: eventColor,
                     'stroke-width': size.lineWidth,
                     'stroke-opacity': opacity * 0.6
                 });

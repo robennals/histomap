@@ -1,0 +1,149 @@
+{
+  "name": "Eras",
+  "color": "#9b59b6",
+  "events": [
+    {
+      "name": "Colonial Era",
+      "start": "1607-01-01",
+      "end": "1776-07-04",
+      "priority": 2
+    },
+    {
+      "name": "Revolutionary Era",
+      "start": "1765-01-01",
+      "end": "1789-04-30",
+      "priority": 1
+    },
+    {
+      "name": "Early Republic",
+      "start": "1789-04-30",
+      "end": "1815-12-24",
+      "priority": 2
+    },
+    {
+      "name": "Era of Good Feelings",
+      "start": "1815-12-24",
+      "end": "1825-03-04",
+      "priority": 2
+    },
+    {
+      "name": "Jacksonian Democracy",
+      "start": "1829-03-04",
+      "end": "1841-03-04",
+      "priority": 2
+    },
+    {
+      "name": "Antebellum Period",
+      "start": "1815-01-01",
+      "end": "1861-04-12",
+      "priority": 2
+    },
+    {
+      "name": "Westward Expansion",
+      "start": "1803-05-02",
+      "end": "1890-12-29",
+      "priority": 2
+    },
+    {
+      "name": "Civil War",
+      "start": "1861-04-12",
+      "end": "1865-05-09",
+      "priority": 1
+    },
+    {
+      "name": "Reconstruction",
+      "start": "1865-05-09",
+      "end": "1877-03-31",
+      "priority": 1
+    },
+    {
+      "name": "Gilded Age",
+      "start": "1877-03-31",
+      "end": "1896-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Progressive Era",
+      "start": "1896-01-01",
+      "end": "1920-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Roaring Twenties",
+      "start": "1920-01-01",
+      "end": "1929-10-29",
+      "priority": 2
+    },
+    {
+      "name": "Great Depression",
+      "start": "1929-10-29",
+      "end": "1941-12-07",
+      "priority": 1
+    },
+    {
+      "name": "New Deal Era",
+      "start": "1933-03-04",
+      "end": "1945-09-02",
+      "priority": 2
+    },
+    {
+      "name": "Post-War Boom",
+      "start": "1945-09-02",
+      "end": "1973-11-01",
+      "priority": 2
+    },
+    {
+      "name": "Cold War",
+      "start": "1947-03-12",
+      "end": "1991-12-26",
+      "priority": 1
+    },
+    {
+      "name": "Civil Rights Movement",
+      "start": "1954-05-17",
+      "end": "1968-04-11",
+      "priority": 1
+    },
+    {
+      "name": "Stagflation",
+      "start": "1973-11-01",
+      "end": "1982-11-01",
+      "priority": 2
+    },
+    {
+      "name": "Reagan Era",
+      "start": "1981-01-20",
+      "end": "1989-01-20",
+      "priority": 2
+    },
+    {
+      "name": "Dot-com Boom",
+      "start": "1995-01-01",
+      "end": "2001-03-11",
+      "priority": 2
+    },
+    {
+      "name": "War on Terror",
+      "start": "2001-09-11",
+      "end": "2021-08-30",
+      "priority": 2
+    },
+    {
+      "name": "Great Recession",
+      "start": "2007-12-01",
+      "end": "2009-06-01",
+      "priority": 1
+    },
+    {
+      "name": "Digital Age",
+      "start": "2007-06-29",
+      "priority": 2
+    },
+    {
+      "name": "COVID-19 Pandemic",
+      "start": "2020-03-11",
+      "end": "2023-05-05",
+      "priority": 1
+    }
+  ]
+}

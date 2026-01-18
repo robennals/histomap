@@ -1,0 +1,296 @@
+{
+  "name": "Technology",
+  "color": "#16a085",
+  "events": [
+    {
+      "name": "Steam Engine",
+      "start": "1712-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Cotton Gin",
+      "start": "1793-03-14",
+      "priority": 2
+    },
+    {
+      "name": "Steamboat",
+      "start": "1807-08-17",
+      "priority": 2
+    },
+    {
+      "name": "Locomotive",
+      "start": "1825-09-27",
+      "priority": 2
+    },
+    {
+      "name": "Telegraph",
+      "start": "1837-09-04",
+      "priority": 2
+    },
+    {
+      "name": "Photography",
+      "start": "1839-08-19",
+      "priority": 2
+    },
+    {
+      "name": "Sewing Machine",
+      "start": "1846-09-10",
+      "priority": 3
+    },
+    {
+      "name": "Elevator (Safety)",
+      "start": "1853-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Bessemer Steel Process",
+      "start": "1856-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Transcontinental Railroad",
+      "start": "1869-05-10",
+      "priority": 1
+    },
+    {
+      "name": "Telephone",
+      "start": "1876-03-10",
+      "priority": 1
+    },
+    {
+      "name": "Phonograph",
+      "start": "1877-11-21",
+      "priority": 2
+    },
+    {
+      "name": "Light Bulb",
+      "start": "1879-10-21",
+      "priority": 1
+    },
+    {
+      "name": "Skyscraper",
+      "start": "1885-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Motion Pictures",
+      "start": "1891-05-20",
+      "priority": 2
+    },
+    {
+      "name": "Radio",
+      "start": "1895-12-12",
+      "priority": 2
+    },
+    {
+      "name": "Airplane",
+      "start": "1903-12-17",
+      "priority": 1
+    },
+    {
+      "name": "Assembly Line",
+      "start": "1913-12-01",
+      "priority": 1
+    },
+    {
+      "name": "Commercial Radio Broadcasting",
+      "start": "1920-11-02",
+      "priority": 2
+    },
+    {
+      "name": "Television",
+      "start": "1927-09-07",
+      "priority": 2
+    },
+    {
+      "name": "Jet Engine",
+      "start": "1939-08-27",
+      "priority": 2
+    },
+    {
+      "name": "Nuclear Reactor",
+      "start": "1942-12-02",
+      "priority": 1
+    },
+    {
+      "name": "Electronic Computer (ENIAC)",
+      "start": "1946-02-14",
+      "priority": 1
+    },
+    {
+      "name": "Transistor",
+      "start": "1947-12-16",
+      "priority": 1
+    },
+    {
+      "name": "Credit Card",
+      "start": "1950-02-08",
+      "priority": 2
+    },
+    {
+      "name": "Polio Vaccine",
+      "start": "1955-04-12",
+      "priority": 1
+    },
+    {
+      "name": "Satellite (Sputnik)",
+      "start": "1957-10-04",
+      "priority": 1
+    },
+    {
+      "name": "Integrated Circuit",
+      "start": "1958-09-12",
+      "priority": 1
+    },
+    {
+      "name": "Communications Satellite",
+      "start": "1962-07-10",
+      "priority": 2
+    },
+    {
+      "name": "Computer Mouse",
+      "start": "1964-01-01",
+      "priority": 3
+    },
+    {
+      "name": "ARPANET (Internet Precursor)",
+      "start": "1969-10-29",
+      "priority": 1
+    },
+    {
+      "name": "Microprocessor",
+      "start": "1971-11-15",
+      "priority": 1
+    },
+    {
+      "name": "Personal Computer",
+      "start": "1975-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Fiber Optics",
+      "start": "1977-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Apple II",
+      "start": "1977-06-10",
+      "priority": 2
+    },
+    {
+      "name": "IBM PC",
+      "start": "1981-08-12",
+      "priority": 2
+    },
+    {
+      "name": "Space Shuttle",
+      "start": "1981-04-12",
+      "priority": 2
+    },
+    {
+      "name": "Compact Disc",
+      "start": "1982-10-01",
+      "priority": 3
+    },
+    {
+      "name": "DNA Fingerprinting",
+      "start": "1984-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Windows OS",
+      "start": "1985-11-20",
+      "priority": 2
+    },
+    {
+      "name": "World Wide Web",
+      "start": "1989-03-12",
+      "priority": 1
+    },
+    {
+      "name": "Digital Camera",
+      "start": "1991-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Text Messaging (SMS)",
+      "start": "1992-12-03",
+      "priority": 2
+    },
+    {
+      "name": "GPS for Civilians",
+      "start": "1995-01-01",
+      "priority": 2
+    },
+    {
+      "name": "DVD",
+      "start": "1995-11-01",
+      "priority": 3
+    },
+    {
+      "name": "Google Search",
+      "start": "1998-09-04",
+      "priority": 1
+    },
+    {
+      "name": "Wi-Fi",
+      "start": "1999-01-01",
+      "priority": 2
+    },
+    {
+      "name": "iPod",
+      "start": "2001-10-23",
+      "priority": 2
+    },
+    {
+      "name": "Human Genome Sequenced",
+      "start": "2003-04-14",
+      "priority": 1
+    },
+    {
+      "name": "Facebook",
+      "start": "2004-02-04",
+      "priority": 2
+    },
+    {
+      "name": "YouTube",
+      "start": "2005-02-14",
+      "priority": 2
+    },
+    {
+      "name": "iPhone",
+      "start": "2007-06-29",
+      "priority": 1
+    },
+    {
+      "name": "Tesla Roadster",
+      "start": "2008-02-01",
+      "priority": 2
+    },
+    {
+      "name": "Bitcoin",
+      "start": "2009-01-03",
+      "priority": 2
+    },
+    {
+      "name": "iPad",
+      "start": "2010-04-03",
+      "priority": 2
+    },
+    {
+      "name": "Self-Driving Car (Google)",
+      "start": "2012-05-07",
+      "priority": 2
+    },
+    {
+      "name": "CRISPR Gene Editing",
+      "start": "2012-08-17",
+      "priority": 1
+    },
+    {
+      "name": "ChatGPT",
+      "start": "2022-11-30",
+      "priority": 1
+    }
+  ]
+}
