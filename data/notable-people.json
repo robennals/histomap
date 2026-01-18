@@ -15,6 +15,78 @@
       "priority": 2
     },
     {
+      "name": "Daniel Boone",
+      "start": "1734-11-02",
+      "end": "1820-09-26",
+      "priority": 2
+    },
+    {
+      "name": "Paul Revere",
+      "start": "1735-01-01",
+      "end": "1818-05-10",
+      "priority": 2
+    },
+    {
+      "name": "Benedict Arnold",
+      "start": "1741-01-14",
+      "end": "1801-06-14",
+      "priority": 3
+    },
+    {
+      "name": "John Paul Jones",
+      "start": "1747-07-06",
+      "end": "1792-07-18",
+      "priority": 3
+    },
+    {
+      "name": "Betsy Ross",
+      "start": "1752-01-01",
+      "end": "1836-01-30",
+      "priority": 3
+    },
+    {
+      "name": "Noah Webster",
+      "start": "1758-10-16",
+      "end": "1843-05-28",
+      "priority": 2
+    },
+    {
+      "name": "Washington Irving",
+      "start": "1783-04-03",
+      "end": "1859-11-28",
+      "priority": 2
+    },
+    {
+      "name": "John James Audubon",
+      "start": "1785-04-26",
+      "end": "1851-01-27",
+      "priority": 3
+    },
+    {
+      "name": "William Clark",
+      "start": "1770-08-01",
+      "end": "1838-09-01",
+      "priority": 2
+    },
+    {
+      "name": "Meriwether Lewis",
+      "start": "1774-08-18",
+      "end": "1809-10-11",
+      "priority": 2
+    },
+    {
+      "name": "Sacagawea",
+      "start": "1788-05-01",
+      "end": "1812-12-20",
+      "priority": 2
+    },
+    {
+      "name": "James Fenimore Cooper",
+      "start": "1789-09-15",
+      "end": "1851-09-14",
+      "priority": 3
+    },
+    {
       "name": "Edgar Allan Poe",
       "start": "1809-01-19",
       "end": "1849-10-07",
@@ -39,9 +111,33 @@
       "priority": 2
     },
     {
+      "name": "Cornelius Vanderbilt",
+      "start": "1794-05-27",
+      "end": "1877-01-04",
+      "priority": 2
+    },
+    {
       "name": "Mark Twain",
       "start": "1835-11-30",
       "end": "1910-04-21",
+      "priority": 2
+    },
+    {
+      "name": "Andrew Carnegie",
+      "start": "1835-11-25",
+      "end": "1919-08-11",
+      "priority": 2
+    },
+    {
+      "name": "J.P. Morgan",
+      "start": "1837-04-17",
+      "end": "1913-03-31",
+      "priority": 2
+    },
+    {
+      "name": "John D. Rockefeller",
+      "start": "1839-07-08",
+      "end": "1937-05-23",
       "priority": 2
     },
     {
@@ -49,6 +145,12 @@
       "start": "1847-02-11",
       "end": "1931-10-18",
       "priority": 1
+    },
+    {
+      "name": "Billy the Kid",
+      "start": "1859-11-23",
+      "end": "1881-07-14",
+      "priority": 3
     },
     {
       "name": "Henry Ford",
@@ -96,6 +198,12 @@
       "name": "Neil Armstrong",
       "start": "1930-08-05",
       "end": "2012-08-25",
+      "priority": 2
+    },
+    {
+      "name": "Evel Knievel",
+      "start": "1938-10-17",
+      "end": "2007-11-30",
       "priority": 2
     },
     {
