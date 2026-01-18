@@ -12,6 +12,19 @@ from collections import defaultdict
 def main():
     print("Loading bloc GDP data...")
 
+    # Define empires to consolidate into "Other European Empires"
+    # Keep only British, Russian, Japanese, Ottoman separate as major powers
+    consolidate_to_other_european = {
+        'Spanish Empire',
+        'French Empire',
+        'Portuguese Empire',
+        'Austro-Hungarian Empire',
+        'Dutch Empire',
+        'German Empire',
+        'Belgian Empire',
+        'Italian Empire'
+    }
+
     # Collect GDP percentages by decade and bloc
     bloc_gdp = defaultdict(lambda: defaultdict(float))
     all_blocs = set()
@@ -24,13 +37,37 @@ def main():
             bloc = row['bloc']
             gdp_percent = float(row['gdp_percent'])
 
+            # Consolidate smaller European empires
+            if bloc in consolidate_to_other_european:
+                bloc = 'Other European Empires'
+
             bloc_gdp[decade][bloc] += gdp_percent
             all_blocs.add(bloc)
             all_decades.add(decade)
 
-    # Sort blocs and decades
+    # Sort decades chronologically
     sorted_decades = sorted(all_decades)
-    sorted_blocs = sorted(all_blocs)
+
+    # Define custom bloc order based on succession/inheritance
+    # Group related blocs together for clearer visualization
+    bloc_order = [
+        'China',
+        'Independent Indian States',
+        'India - post independence',  # Will be renamed to just "India"
+        'British Empire',
+        'NATO + Aligned',
+        'US',
+        'Russian Empire',
+        'USSR + Aligned',
+        'Japanese Empire',
+        'Ottoman Empire',
+        'Other European Empires',
+        'Other'
+    ]
+
+    # Sort blocs according to custom order, with any unlisted blocs at the end
+    sorted_blocs = [b for b in bloc_order if b in all_blocs]
+    sorted_blocs += sorted([b for b in all_blocs if b not in bloc_order])
 
     print(f"Found {len(sorted_blocs)} blocs across {len(sorted_decades)} decades")
 
@@ -39,8 +76,11 @@ def main():
     with open('bloc_gdp_summary.csv', 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
 
-        # Write header
-        header = ['Year'] + sorted_blocs
+        # Write header with renamed blocs
+        header = ['Year'] + [
+            'India' if bloc == 'India - post independence' else bloc
+            for bloc in sorted_blocs
+        ]
         writer.writerow(header)
 
         # Write data rows

@@ -23,7 +23,10 @@ AUT,Austria,1750,1910,Austro-Hungarian Empire,100
 AUT,Austria,1920,1930,Other,100
 AUT,Austria,1950,2020,NATO + Aligned,100
 AZE,Azerbaijan,1990,2020,Other,100
-BDI,Burundi,1750,2020,Other,100
+BDI,Burundi,1750,1870,Other,100
+BDI,Burundi,1880,1910,German Empire,100
+BDI,Burundi,1920,1950,Belgian Empire,100
+BDI,Burundi,1960,2020,Other,100
 BEL,Belgium,1750,1780,Austro-Hungarian Empire,100
 BEL,Belgium,1790,1810,French Empire,100
 BEL,Belgium,1820,1930,Other,100
@@ -75,10 +78,11 @@ CIV,Côte d'Ivoire,1750,1880,Other,100
 CIV,Côte d'Ivoire,1890,1950,French Empire,100
 CIV,Côte d'Ivoire,1960,2020,Other,100
 CMR,Cameroon,1750,1870,Other,100
-CMR,Cameroon,1880,1900,Other,100
-CMR,Cameroon,1910,1950,French Empire,100
+CMR,Cameroon,1880,1910,German Empire,100
+CMR,Cameroon,1920,1950,French Empire,100
 CMR,Cameroon,1960,2020,Other,100
-COD,D.R. of the Congo,1750,1950,Other,100
+COD,D.R. of the Congo,1750,1870,Other,100
+COD,D.R. of the Congo,1880,1950,Belgian Empire,100
 COD,D.R. of the Congo,1960,1970,Other,100
 COD,D.R. of the Congo,1980,1990,USSR + Aligned,100
 COD,D.R. of the Congo,2000,2020,Other,100
@@ -137,7 +141,9 @@ ESP,Spain,1900,1930,Other,100
 ESP,Spain,1940,1970,Other,100
 ESP,Spain,1980,2020,NATO + Aligned,100
 EST,Estonia,1990,2020,NATO + Aligned,100
-ETH,Ethiopia,1750,1970,Other,100
+ETH,Ethiopia,1750,1920,Other,100
+ETH,Ethiopia,1930,1940,Italian Empire,100
+ETH,Ethiopia,1950,1970,Other,100
 ETH,Ethiopia,1980,1980,USSR + Aligned,100
 ETH,Ethiopia,1990,2020,Other,100
 FIN,Finland,1750,1800,Other,100
@@ -248,7 +254,8 @@ LBN,Lebanon,1920,1940,French Empire,100
 LBN,Lebanon,1950,2020,Other,100
 LBR,Liberia,1750,2020,Other,100
 LBY,Libya,1750,1900,Ottoman Empire,100
-LBY,Libya,1910,1950,Other,100
+LBY,Libya,1910,1940,Italian Empire,100
+LBY,Libya,1950,1950,Other,100
 LBY,Libya,1960,1980,USSR + Aligned,100
 LBY,Libya,1990,2020,Other,100
 LCA,Saint Lucia,1750,1950,British Empire,100
@@ -303,7 +310,8 @@ MWI,Malawi,1960,2020,Other,100
 MYS,Malaysia,1750,1780,Other,100
 MYS,Malaysia,1790,1940,British Empire,100
 MYS,Malaysia,1950,2020,Other,100
-NAM,Namibia,1750,1910,Other,100
+NAM,Namibia,1750,1870,Other,100
+NAM,Namibia,1880,1910,German Empire,100
 NAM,Namibia,1920,1950,British Empire,100
 NAM,Namibia,1960,1980,Other,100
 NAM,Namibia,1990,2020,Other,100
@@ -365,7 +373,10 @@ ROU,Romania,1860,1930,Other,100
 ROU,Romania,1950,1980,USSR + Aligned,100
 ROU,Romania,1990,2020,NATO + Aligned,100
 RUS,Russian Federation,1990,2020,Other,100
-RWA,Rwanda,1750,2020,Other,100
+RWA,Rwanda,1750,1870,Other,100
+RWA,Rwanda,1880,1910,German Empire,100
+RWA,Rwanda,1920,1950,Belgian Empire,100
+RWA,Rwanda,1960,2020,Other,100
 SAU,Saudi Arabia,1750,1910,Ottoman Empire,100
 SAU,Saudi Arabia,1920,2020,Other,100
 SDN,Sudan (Former),1750,1810,Ottoman Empire,100
@@ -408,7 +419,7 @@ TCD,Chad,1750,1890,Other,100
 TCD,Chad,1900,1950,French Empire,100
 TCD,Chad,1960,2020,Other,100
 TGO,Togo,1750,1870,Other,100
-TGO,Togo,1880,1910,Other,100
+TGO,Togo,1880,1910,German Empire,100
 TGO,Togo,1920,1950,French Empire,100
 TGO,Togo,1960,2020,Other,100
 THA,Thailand,1750,2020,Other,100
@@ -426,7 +437,7 @@ TWN,"Taiwan, Province of China",1750,1880,Other,100
 TWN,"Taiwan, Province of China",1890,1940,Japanese Empire,100
 TWN,"Taiwan, Province of China",1950,2020,Other,100
 TZA,U.R. of Tanzania: Mainland,1750,1870,Other,100
-TZA,U.R. of Tanzania: Mainland,1880,1910,Other,100
+TZA,U.R. of Tanzania: Mainland,1880,1910,German Empire,100
 TZA,U.R. of Tanzania: Mainland,1920,1950,British Empire,100
 TZA,U.R. of Tanzania: Mainland,1960,2020,Other,100
 UGA,Uganda,1750,1880,Other,100
