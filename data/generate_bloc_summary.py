@@ -49,19 +49,24 @@ def main():
     sorted_decades = sorted(all_decades)
 
     # Define custom bloc order based on succession/inheritance
-    # Group related blocs together for clearer visualization
+    # Stack blocs to maximize adjacency with territory transfer partners
+    # Bottom to top: China → Ottoman (dissolves) → Other Euro Empires →
+    # NATO (receives Euro empires below and British above) → British → US (British breakaway) →
+    # Ind. Indian States (absorbed by British) → India (succession) →
+    # Japanese → Russian → USSR → BRICS → Other (at top, residual non-aligned)
     bloc_order = [
         'China',
-        'Independent Indian States',
-        'India - post independence',  # Will be renamed to just "India"
-        'British Empire',
-        'NATO + Aligned',
-        'US',
-        'Russian Empire',
-        'USSR + Aligned',
-        'Japanese Empire',
         'Ottoman Empire',
         'Other European Empires',
+        'NATO + Aligned',
+        'British Empire',
+        'US',
+        'Independent Indian States',
+        'India - post independence',  # Will be renamed to just "India"
+        'Japanese Empire',
+        'Russian Empire',
+        'USSR + Aligned',
+        'BRICS + Aligned',
         'Other'
     ]
 

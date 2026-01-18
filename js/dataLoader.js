@@ -7,36 +7,92 @@ const DataLoader = (function() {
         'data/wars.json',
         'data/historical-events.json',
         'data/notable-people.json',
-        'data/media.json'
+        'data/media.json',
+        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'GDP Power Blocs' }
     ];
 
     let eventSets = [];
 
     /**
-     * Load all event sets from JSON files
+     * Load all event sets from JSON files and CSV files
      * @returns {Promise<Array>} Array of event sets
      */
     async function loadAllEventSets() {
         try {
-            const promises = DATA_FILES.map(file =>
-                fetch(file).then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to load ${file}`);
-                    }
-                    return response.json();
-                })
-            );
+            const promises = DATA_FILES.map(file => {
+                if (typeof file === 'string') {
+                    // JSON file
+                    return fetch(file).then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Failed to load ${file}`);
+                        }
+                        return response.json();
+                    });
+                } else if (file.type === 'csv') {
+                    // CSV file
+                    return fetch(file.path).then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Failed to load ${file.path}`);
+                        }
+                        return response.text();
+                    }).then(text => processGDPCSV(text, file.name));
+                }
+            });
 
             eventSets = await Promise.all(promises);
 
-            // Process dates for each event set
-            eventSets.forEach(processEventSet);
+            // Process dates for each event set (skip GDP blocs as they're already processed)
+            eventSets.forEach(eventSet => {
+                if (eventSet.type !== 'gdp-blocs') {
+                    processEventSet(eventSet);
+                }
+            });
 
             return eventSets;
         } catch (error) {
             console.error('Error loading event sets:', error);
             throw error;
         }
+    }
+
+    /**
+     * Process GDP CSV data
+     * @param {string} csvText - Raw CSV text
+     * @param {string} name - Name for this event set
+     * @returns {Object} Processed GDP blocs data
+     */
+    function processGDPCSV(csvText, name) {
+        const lines = csvText.trim().split('\n');
+        const headers = lines[0].split(',').map(h => h.trim());
+        const blocNames = headers.slice(1); // Skip 'Year' column
+
+        // Initialize data structure
+        const blocData = {};
+        blocNames.forEach(bloc => {
+            blocData[bloc] = [];
+        });
+
+        // Parse each row
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',').map(v => v.trim());
+            const year = parseInt(values[0]);
+
+            blocNames.forEach((bloc, idx) => {
+                const gdpPercent = parseFloat(values[idx + 1]);
+                blocData[bloc].push({
+                    year: year,
+                    gdpPercent: gdpPercent
+                });
+            });
+        }
+
+        return {
+            name: name,
+            color: '#16a085', // Teal base color
+            type: 'gdp-blocs',
+            blocs: blocData,
+            blocList: blocNames
+        };
     }
 
     /**

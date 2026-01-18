@@ -18,7 +18,8 @@ const Controls = (function() {
             selectedEventSets.add(set.name);
             eventSetSettings[set.name] = {
                 color: set.color,
-                maxRows: 3 // Default to 3 rows for non-people bands
+                maxRows: 3, // Default to 3 rows for non-people bands
+                height: set.type === 'gdp-blocs' ? 100 : undefined // Default height for GDP blocs
             };
         });
 
@@ -91,16 +92,27 @@ const Controls = (function() {
             limitRow.className = 'setting-row';
 
             const limitLabel = document.createElement('label');
-            limitLabel.textContent = eventSet.name === 'People' ? 'Height (rows)' : 'Max rows';
-            limitLabel.className = 'setting-label';
-
             const limitInput = document.createElement('input');
             limitInput.type = 'number';
-            limitInput.min = '1';
-            limitInput.max = '20';
-            limitInput.value = eventSetSettings[eventSet.name].maxRows;
             limitInput.dataset.eventSet = eventSet.name;
-            limitInput.className = 'row-limit-input';
+
+            if (eventSet.type === 'gdp-blocs') {
+                // Height control for GDP blocs
+                limitLabel.textContent = 'Height (px)';
+                limitInput.min = '100';
+                limitInput.max = '500';
+                limitInput.value = eventSetSettings[eventSet.name].height || 100;
+                limitInput.className = 'height-input';
+            } else {
+                // Row limit for other bands
+                limitLabel.textContent = eventSet.name === 'People' ? 'Height (rows)' : 'Max rows';
+                limitInput.min = '1';
+                limitInput.max = '20';
+                limitInput.value = eventSetSettings[eventSet.name].maxRows;
+                limitInput.className = 'row-limit-input';
+            }
+
+            limitLabel.className = 'setting-label';
 
             limitRow.appendChild(limitLabel);
             limitRow.appendChild(limitInput);
@@ -144,6 +156,11 @@ const Controls = (function() {
         // Row limit inputs
         document.querySelectorAll('.row-limit-input').forEach(input => {
             input.addEventListener('input', handleRowLimitChange);
+        });
+
+        // Height inputs for GDP blocs
+        document.querySelectorAll('.height-input').forEach(input => {
+            input.addEventListener('input', handleHeightChange);
         });
 
         // Time range controls - auto-update on change
@@ -228,6 +245,22 @@ const Controls = (function() {
     }
 
     /**
+     * Handle height change for GDP blocs
+     * @param {Event} e - Input event
+     */
+    function handleHeightChange(e) {
+        const eventSetName = e.target.dataset.eventSet;
+        const height = parseInt(e.target.value);
+
+        if (height >= 100 && height <= 500) {
+            eventSetSettings[eventSetName].height = height;
+
+            // Auto-update visualization
+            updateVisualization();
+        }
+    }
+
+    /**
      * Update the visualization with current settings
      */
     function updateVisualization() {
@@ -237,7 +270,8 @@ const Controls = (function() {
             .map(set => ({
                 ...set,
                 color: eventSetSettings[set.name].color,
-                maxRows: eventSetSettings[set.name].maxRows
+                maxRows: eventSetSettings[set.name].maxRows,
+                height: eventSetSettings[set.name].height
             }));
 
         if (selectedSets.length === 0) {

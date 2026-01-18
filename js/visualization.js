@@ -7,11 +7,32 @@ const Visualization = (function() {
     // Font configuration - use PDF-compatible fonts for consistent rendering
     const FONT_FAMILY = 'Helvetica, Arial, sans-serif';
 
+    // GDP Bloc color scheme
+    // Colors chosen to be distinct, with successors having related but distinguishable hues
+    // Order in file: China, Independent Indian States, India, British Empire,
+    //                NATO + Aligned, US, Russian Empire, USSR + Aligned,
+    //                Japanese Empire, Ottoman Empire, Other European Empires, Other, BRICS + Aligned
+    const GDP_BLOC_COLORS = {
+        'China': '#e74c3c',                      // Red (large bloc)
+        'Independent Indian States': '#f39c12',  // Orange (adjacent to China)
+        'India': '#d68910',                      // Darker orange (succeeds Independent Indian, similar but distinct)
+        'British Empire': '#2874a6',             // Dark blue (distinct from India/China)
+        'NATO + Aligned': '#1abc9c',             // Teal (succeeds British, related blue tone but distinct)
+        'US': '#9b59b6',                         // Purple (next to NATO, distinct)
+        'Russian Empire': '#e84393',             // Pink (distinct from others)
+        'USSR + Aligned': '#b03a69',             // Darker pink (succeeds Russian, similar but distinct)
+        'BRICS + Aligned': '#c0392b',            // Dark red (succeeds USSR, distinct but related)
+        'Japanese Empire': '#27ae60',            // Green (distinct from orange India)
+        'Ottoman Empire': '#16a085',             // Dark teal (distinct)
+        'Other European Empires': '#f1c40f',     // Yellow (moved from Japanese, distinct from teal/blue)
+        'Other': '#7f8c8d'                       // Gray (neutral)
+    };
+
     // Configuration
     const config = {
         width: 2400,
         height: 800,
-        startYear: 1775,
+        startYear: 1750,
         endYear: 2025,
         // left = margin (40) + space for band titles (100)
         padding: { top: 60, right: 40, bottom: 60, left: 140, marginLeft: 40 },
@@ -113,6 +134,7 @@ const Visualization = (function() {
         svg.querySelector(':scope > rect').setAttribute('height', finalHeight);
 
         // Now draw timeline axis with correct height
+        // It will be inserted right after background, before all event bands
         drawTimelineAxis();
     }
 
@@ -239,16 +261,307 @@ const Visualization = (function() {
             }
         }
 
-        // Insert axis group after background but before event bands
-        // The background rect is the first child, so insert after it
-        const backgroundRect = svg.querySelector('rect');
+        // Insert axis group after background and defs, but before event bands
+        // Find the background rect (first rect child of SVG)
+        const backgroundRect = svg.querySelector(':scope > rect');
         if (backgroundRect && backgroundRect.nextSibling) {
+            // Insert right after background rect, before any event bands
             svg.insertBefore(axisGroup, backgroundRect.nextSibling);
         } else {
+            // Fallback: append at end
             svg.appendChild(axisGroup);
         }
     }
 
+
+    /**
+     * Darken a hex color by reducing lightness
+     * @param {string} hexColor - Hex color string (e.g., '#e74c3c')
+     * @param {number} amount - Amount to darken (0-1, default 0.3)
+     * @returns {string} Darkened hex color
+     */
+    function darkenColor(hexColor, amount = 0.3) {
+        // Convert hex to RGB
+        const hex = hexColor.replace('#', '');
+        const r = parseInt(hex.substr(0, 2), 16);
+        const g = parseInt(hex.substr(2, 2), 16);
+        const b = parseInt(hex.substr(4, 2), 16);
+
+        // Darken by reducing each component
+        const darkenedR = Math.round(r * (1 - amount));
+        const darkenedG = Math.round(g * (1 - amount));
+        const darkenedB = Math.round(b * (1 - amount));
+
+        // Convert back to hex
+        const toHex = (n) => {
+            const hex = n.toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+        };
+
+        return `#${toHex(darkenedR)}${toHex(darkenedG)}${toHex(darkenedB)}`;
+    }
+
+    /**
+     * Draw GDP Power Blocs as stacked area chart
+     * @param {SVGElement} bandGroup - SVG group for this band
+     * @param {Object} gdpData - Processed GDP bloc data
+     * @param {number} startY - Y coordinate for top of band
+     * @param {number} bandHeight - Total height allocated to band
+     * @returns {number} - Y coordinate after band
+     */
+    function drawGDPBlocsBand(bandGroup, gdpData, startY, bandHeight) {
+        const { blocs, blocList } = gdpData;
+        const startTimestamp = new Date(config.startYear, 0, 1).getTime();
+        const endTimestamp = new Date(config.endYear, 11, 31).getTime();
+        const timeRange = endTimestamp - startTimestamp;
+        const chartWidth = config.width - config.padding.left - config.padding.right;
+
+        // Get all data points for the first bloc to determine years
+        const allDataPoints = blocs[blocList[0]];
+
+        // Filter to include years within our visible range
+        let visibleDataPoints = allDataPoints.filter(dp =>
+            dp.year >= config.startYear && dp.year < config.endYear
+        );
+
+        // Always extend to endYear + 1 to ensure bands go to the right edge
+        // (the right edge of the year 2025 is actually Jan 1, 2026)
+        if (visibleDataPoints.length > 0) {
+            const lastDataYear = visibleDataPoints[visibleDataPoints.length - 1].year;
+            // Add a synthetic point beyond endYear to reach the right edge
+            visibleDataPoints = [...visibleDataPoints, {
+                year: config.endYear + 1,
+                gdpPercent: visibleDataPoints[visibleDataPoints.length - 1].gdpPercent
+            }];
+        }
+
+        // Store all bloc points for label placement later
+        const allBlocPoints = [];
+
+        // For each bloc, create stacked areas (from bottom to top)
+        blocList.forEach((blocName, blocIndex) => {
+            const points = [];
+
+            // Build the top edge of this bloc's region
+            visibleDataPoints.forEach((dataPoint, idx) => {
+                const year = dataPoint.year;
+
+                // Calculate X position (time-aligned)
+                const timestamp = new Date(year, 0, 1).getTime();
+                const x = config.padding.left +
+                          ((timestamp - startTimestamp) / timeRange) * chartWidth;
+
+                // Get GDP data for this year (use last available if year is synthetic)
+                const dataIndex = allDataPoints.findIndex(d => d.year === year);
+                const actualIndex = dataIndex >= 0 ? dataIndex : allDataPoints.length - 1;
+
+                // Calculate Y position (stacked from bottom)
+                // Sum all previous blocs' GDP percentages at this time point
+                let stackedPercent = 0;
+                for (let i = 0; i < blocIndex; i++) {
+                    stackedPercent += blocs[blocList[i]][actualIndex].gdpPercent;
+                }
+
+                // Current bloc's GDP percentage
+                const currentBlocGDP = blocs[blocName][actualIndex].gdpPercent;
+
+                // Top edge of this bloc's region (lower Y value = higher on screen)
+                const topY = startY + bandHeight - ((stackedPercent + currentBlocGDP) * bandHeight / 100);
+
+                points.push({ x, y: topY, year, gdpPercent: currentBlocGDP, stackedPercent });
+            });
+
+            // Build bottom edge (in reverse order for closed path)
+            const bottomPoints = [];
+            visibleDataPoints.forEach((dataPoint, idx) => {
+                const year = dataPoint.year;
+                const timestamp = new Date(year, 0, 1).getTime();
+                const x = config.padding.left +
+                          ((timestamp - startTimestamp) / timeRange) * chartWidth;
+
+                // Get GDP data for this year (use last available if year is synthetic)
+                const dataIndex = allDataPoints.findIndex(d => d.year === year);
+                const actualIndex = dataIndex >= 0 ? dataIndex : allDataPoints.length - 1;
+
+                // Bottom edge is the top of the stack below this bloc
+                let stackedPercent = 0;
+                for (let i = 0; i < blocIndex; i++) {
+                    stackedPercent += blocs[blocList[i]][actualIndex].gdpPercent;
+                }
+
+                const bottomY = startY + bandHeight - (stackedPercent * bandHeight / 100);
+                bottomPoints.unshift({ x, y: bottomY });
+            });
+
+            // Create path with linear interpolation between decade points
+            let pathData = '';
+            if (points.length > 0) {
+                pathData = `M ${points[0].x},${points[0].y}`;
+                for (let i = 1; i < points.length; i++) {
+                    pathData += ` L ${points[i].x},${points[i].y}`;
+                }
+                // Connect to bottom edge
+                for (let i = 0; i < bottomPoints.length; i++) {
+                    pathData += ` L ${bottomPoints[i].x},${bottomPoints[i].y}`;
+                }
+                pathData += ' Z'; // Close path
+            }
+
+            if (pathData) {
+                const path = createSVGElement('path', {
+                    d: pathData,
+                    fill: GDP_BLOC_COLORS[blocName] || '#95a5a6',
+                    'fill-opacity': 0.4,
+                    stroke: GDP_BLOC_COLORS[blocName] || '#95a5a6',
+                    'stroke-width': 1,
+                    'stroke-opacity': 0.6
+                });
+
+                bandGroup.appendChild(path);
+
+                // Store points for later label placement
+                allBlocPoints.push({ blocName, points, bandHeight });
+            }
+        });
+
+        // Place labels for all blocs with collision detection
+        // Priority: smallest blocs first (harder to place)
+        placeAllGDPBlocLabels(bandGroup, allBlocPoints);
+
+        return startY + bandHeight;
+    }
+
+    /**
+     * Place labels for all GDP blocs with two-phase algorithm
+     * Phase 1: Label each bloc at its peak (smallest first)
+     * Phase 2: Repeatedly add labels at points furthest from existing labels (weighted by bloc size)
+     * @param {SVGElement} bandGroup - SVG group for labels
+     * @param {Array} allBlocPoints - Array of {blocName, points, bandHeight}
+     */
+    function placeAllGDPBlocLabels(bandGroup, allBlocPoints) {
+        const placedLabels = []; // Track placed label bounding boxes
+        const minBoundary = 3; // 3px boundary around each label (when possible)
+        const chartRight = config.width - config.padding.right;
+
+        // Store bloc data sorted by peak GDP within visible range
+        const blocData = allBlocPoints.map(({ blocName, points, bandHeight }) => {
+            let peakGDP = 0;
+            points.forEach(point => {
+                // Only consider points within visible range
+                if (point.year >= config.startYear && point.year <= config.endYear) {
+                    if (point.gdpPercent > peakGDP) {
+                        peakGDP = point.gdpPercent;
+                    }
+                }
+            });
+            return { blocName, points, bandHeight, peakGDP };
+        }).sort((a, b) => a.peakGDP - b.peakGDP);
+
+        // Helper function to place a label
+        function placeLabel(blocName, x, y, blocPixelHeight) {
+            const labelWidth = blocName.length * 6;
+            const labelHeight = 12;
+            const rightMargin = 10; // 10px margin from right edge
+            const labelRight = x + (labelWidth / 2);
+            const adjustedX = labelRight > (chartRight - rightMargin) ? (chartRight - rightMargin - labelWidth / 2) : x;
+
+            if (blocPixelHeight >= 2) {
+                const text = createSVGElement('text', {
+                    x: adjustedX,
+                    y: y,
+                    'text-anchor': 'middle',
+                    'dominant-baseline': 'middle',
+                    'font-family': FONT_FAMILY,
+                    fill: darkenColor(GDP_BLOC_COLORS[blocName] || '#95a5a6'),
+                    'font-size': '11px',
+                    'font-weight': 'bold',
+                    'opacity': 0.9
+                });
+                text.textContent = blocName;
+                bandGroup.appendChild(text);
+
+                placedLabels.push({
+                    x: adjustedX,
+                    y: y,
+                    width: labelWidth,
+                    height: labelHeight,
+                    blocName: blocName
+                });
+                return true;
+            }
+            return false;
+        }
+
+        // PHASE 1: Label each bloc at its peak within visible range (smallest first)
+        blocData.forEach(({ blocName, points, bandHeight, peakGDP }) => {
+            let peakPoint = null;
+            points.forEach(point => {
+                // Find peak within visible range
+                if (point.year >= config.startYear && point.year <= config.endYear) {
+                    if (point.gdpPercent === peakGDP) {
+                        if (!peakPoint || point.year - config.startYear >= 10) {
+                            peakPoint = point;
+                        }
+                    }
+                }
+            });
+
+            if (peakPoint && peakPoint.year - config.startYear >= 10) {
+                const blocPixelHeight = (peakPoint.gdpPercent / 100) * bandHeight;
+                const centerY = peakPoint.y + (blocPixelHeight / 2);
+                placeLabel(blocName, peakPoint.x, centerY, blocPixelHeight);
+            }
+        });
+
+        // PHASE 2: Add secondary labels (furthest from existing, weighted by size)
+        // Do multiple rounds, cycling through blocs smallest first
+        const maxSecondaryLabels = 20; // Limit total secondary labels
+        for (let round = 0; round < maxSecondaryLabels; round++) {
+            let labelPlaced = false;
+
+            for (const { blocName, points, bandHeight } of blocData) {
+                // Find the best position for a new label
+                let bestPoint = null;
+                let bestScore = -Infinity;
+
+                points.forEach(point => {
+                    const { year, gdpPercent } = point;
+                    if (gdpPercent < 5) return; // Secondary labels only when >5%
+                    if (year - config.startYear < 10) return; // Too close to start
+
+                    // Calculate distance to nearest existing label of this bloc
+                    let minDistToOwnLabel = Infinity;
+                    for (const placed of placedLabels) {
+                        if (placed.blocName === blocName) {
+                            const dist = Math.abs(point.x - placed.x);
+                            minDistToOwnLabel = Math.min(minDistToOwnLabel, dist);
+                        }
+                    }
+
+                    // Score: distance * size weight (prefer large sections far from labels)
+                    const sizeWeight = gdpPercent / 100;
+                    const score = minDistToOwnLabel * sizeWeight;
+
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestPoint = point;
+                    }
+                });
+
+                // Place label if we found a good spot and it's far enough
+                if (bestPoint && bestScore > 100) { // Minimum distance threshold
+                    const blocPixelHeight = (bestPoint.gdpPercent / 100) * bandHeight;
+                    const centerY = bestPoint.y + (blocPixelHeight / 2);
+                    if (placeLabel(blocName, bestPoint.x, centerY, blocPixelHeight)) {
+                        labelPlaced = true;
+                    }
+                }
+            }
+
+            // Stop if no labels were placed this round
+            if (!labelPlaced) break;
+        }
+    }
 
     /**
      * Draw all event bands (separate sections for each event set)
@@ -282,25 +595,34 @@ const Visualization = (function() {
         // Append group to SVG early so getBBox() works for text measurement
         svg.appendChild(bandGroup);
 
-        // Use special rendering for "People"
-        const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
-        const topPadding = 8;
-        const bottomPadding = 8;
-        const fontSize = 12;
-        // startY should be baseline position, accounting for text ascent above baseline
-        const startY = y + topPadding + fontSize;
-
         let maxY;
-        if (eventSet.name === "People") {
-            const maxRows = eventSet.maxRows || 999;
-            maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
-        } else {
-            const maxRows = eventSet.maxRows || 999;
-            maxY = drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
-        }
+        let actualHeight;
 
-        // Calculate actual height needed (maxY already includes content, just add bottom padding)
-        const actualHeight = (maxY - y) + bottomPadding;
+        // Use special rendering for GDP Power Blocs
+        if (eventSet.type === 'gdp-blocs') {
+            const bandHeight = eventSet.height || 200; // Default or user-configured
+            maxY = drawGDPBlocsBand(bandGroup, eventSet, y, bandHeight);
+            actualHeight = bandHeight;
+        } else {
+            // Use special rendering for "People"
+            const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
+            const topPadding = 8;
+            const bottomPadding = 8;
+            const fontSize = 12;
+            // startY should be baseline position, accounting for text ascent above baseline
+            const startY = y + topPadding + fontSize;
+
+            if (eventSet.name === "People") {
+                const maxRows = eventSet.maxRows || 999;
+                maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
+            } else {
+                const maxRows = eventSet.maxRows || 999;
+                maxY = drawBandEvents(bandGroup, allEvents, startY, eventSet.color, y, maxRows);
+            }
+
+            // Calculate actual height needed (maxY already includes content, just add bottom padding)
+            actualHeight = (maxY - y) + bottomPadding;
+        }
 
         // Create clipPath for this band with actual height
         // Add to defs section for svg2pdf compatibility (clipPaths must be defined before use)

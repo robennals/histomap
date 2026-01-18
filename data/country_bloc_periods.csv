@@ -12,9 +12,10 @@ ALB,Albania,1920,1940,Other,100
 ALB,Albania,1950,1980,USSR + Aligned,100
 ALB,Albania,1990,2020,Other,100
 ARE,United Arab Emirates,1750,1960,British Empire,100
-ARE,United Arab Emirates,1970,2020,Other,100
+ARE,United Arab Emirates,1970,2020,NATO + Aligned,100
 ARG,Argentina,1750,1800,Spanish Empire,100
-ARG,Argentina,1810,2020,Other,100
+ARG,Argentina,1810,2010,Other,100
+ARG,Argentina,2024,2020,BRICS + Aligned,100
 ARM,Armenia,1990,2020,Other,100
 AUS,Australia,1750,1770,Other,100
 AUS,Australia,1780,1940,British Empire,100
@@ -53,7 +54,9 @@ BLR,Belarus,1990,2020,Other,100
 BOL,Bolivia (Plurinational State of),1750,1810,Spanish Empire,100
 BOL,Bolivia (Plurinational State of),1820,2020,Other,100
 BRA,Brazil,1750,1810,Portuguese Empire,100
-BRA,Brazil,1820,2020,Other,100
+BRA,Brazil,1820,1990,Other,100
+BRA,Brazil,2000,2000,Other,100
+BRA,Brazil,2001,2020,BRICS + Aligned,100
 BRB,Barbados,1750,1950,British Empire,100
 BRB,Barbados,1960,2020,Other,100
 BWA,Botswana,1750,1880,Other,100
@@ -192,7 +195,8 @@ HUN,Hungary,1920,1930,Other,100
 HUN,Hungary,1950,1980,USSR + Aligned,100
 HUN,Hungary,1990,2020,NATO + Aligned,100
 IDN,Indonesia,1750,1940,Dutch Empire,100
-IDN,Indonesia,1950,2020,Other,100
+IDN,Indonesia,1950,2010,Other,100
+IDN,Indonesia,2020,2020,Other,100
 IND,India,1750,1750,Independent Indian States,85
 IND,India,1750,1750,British Empire,15
 IND,India,1760,1770,Independent Indian States,70
@@ -209,7 +213,8 @@ IND,India,1860,1940,British Empire,100
 IND,India,1950,2020,India - post independence,100
 IRL,Ireland,1750,1910,British Empire,100
 IRL,Ireland,1920,2020,Other,100
-IRN,Iran (Islamic Republic of),1750,2020,Other,100
+IRN,Iran (Islamic Republic of),1750,1970,Other,100
+IRN,Iran (Islamic Republic of),1980,2020,Other,100
 IRQ,Iraq,1750,1910,Ottoman Empire,100
 IRQ,Iraq,1920,1950,British Empire,100
 IRQ,Iraq,1960,2020,Other,100
@@ -217,17 +222,17 @@ ISL,Iceland,1750,1930,Other,100
 ISL,Iceland,1950,2020,NATO + Aligned,100
 ISR,Israel,1750,1910,Ottoman Empire,100
 ISR,Israel,1920,1940,British Empire,100
-ISR,Israel,1950,2020,Other,100
+ISR,Israel,1950,2020,NATO + Aligned,100
 ITA,Italy,1750,1930,Other,100
 ITA,Italy,1950,2020,NATO + Aligned,100
 JAM,Jamaica,1750,1950,British Empire,100
 JAM,Jamaica,1960,2020,Other,100
 JOR,Jordan,1750,1910,Ottoman Empire,100
 JOR,Jordan,1920,1940,British Empire,100
-JOR,Jordan,1950,2020,Other,100
+JOR,Jordan,1950,2020,NATO + Aligned,100
 JPN,Japan,1750,1860,Other,100
 JPN,Japan,1870,1940,Japanese Empire,100
-JPN,Japan,1950,2020,Other,100
+JPN,Japan,1950,2020,NATO + Aligned,100
 KAZ,Kazakhstan,1990,2020,Other,100
 KEN,Kenya,1750,1880,Other,100
 KEN,Kenya,1890,1950,British Empire,100
@@ -240,10 +245,10 @@ KHM,Cambodia,1980,1980,USSR + Aligned,100
 KHM,Cambodia,1990,2020,Other,100
 KOR,Republic of Korea,1750,1890,Other,100
 KOR,Republic of Korea,1900,1940,Japanese Empire,100
-KOR,Republic of Korea,1950,2020,Other,100
+KOR,Republic of Korea,1950,2020,NATO + Aligned,100
 KWT,Kuwait,1750,1890,Ottoman Empire,100
 KWT,Kuwait,1900,1950,British Empire,100
-KWT,Kuwait,1960,2020,Other,100
+KWT,Kuwait,1960,2020,NATO + Aligned,100
 LAO,Lao People's DR,1750,1880,Other,100
 LAO,Lao People's DR,1890,1940,French Empire,100
 LAO,Lao People's DR,1950,1970,Other,100
@@ -347,7 +352,7 @@ PER,Peru,1750,1810,Spanish Empire,100
 PER,Peru,1820,2020,Other,100
 PHL,Philippines,1750,1880,Spanish Empire,100
 PHL,Philippines,1890,1940,US,100
-PHL,Philippines,1950,2020,Other,100
+PHL,Philippines,1950,2020,NATO + Aligned,100
 POL,Poland,1750,1910,Other,100
 POL,Poland,1920,1930,Other,100
 POL,Poland,1950,1980,USSR + Aligned,100
@@ -367,18 +372,20 @@ PSE,State of Palestine,1920,1940,British Empire,100
 PSE,State of Palestine,1950,2020,Other,100
 QAT,Qatar,1750,1860,Ottoman Empire,100
 QAT,Qatar,1870,1950,British Empire,100
-QAT,Qatar,1960,2020,Other,100
+QAT,Qatar,1960,2020,NATO + Aligned,100
 ROU,Romania,1750,1850,Ottoman Empire,100
 ROU,Romania,1860,1930,Other,100
 ROU,Romania,1950,1980,USSR + Aligned,100
 ROU,Romania,1990,2020,NATO + Aligned,100
-RUS,Russian Federation,1990,2020,Other,100
+RUS,Russian Federation,1990,2000,Other,100
+RUS,Russian Federation,2001,2020,BRICS + Aligned,100
 RWA,Rwanda,1750,1870,Other,100
 RWA,Rwanda,1880,1910,German Empire,100
 RWA,Rwanda,1920,1950,Belgian Empire,100
 RWA,Rwanda,1960,2020,Other,100
 SAU,Saudi Arabia,1750,1910,Ottoman Empire,100
-SAU,Saudi Arabia,1920,2020,Other,100
+SAU,Saudi Arabia,1920,1950,Other,100
+SAU,Saudi Arabia,1960,2020,NATO + Aligned,100
 SDN,Sudan (Former),1750,1810,Ottoman Empire,100
 SDN,Sudan (Former),1820,1880,Ottoman Empire,100
 SDN,Sudan (Former),1890,1950,British Empire,100
@@ -388,7 +395,7 @@ SEN,Senegal,1830,1950,French Empire,100
 SEN,Senegal,1960,2020,Other,100
 SGP,Singapore,1750,1800,Other,100
 SGP,Singapore,1810,1940,British Empire,100
-SGP,Singapore,1950,2020,Other,100
+SGP,Singapore,1950,2020,NATO + Aligned,100
 SLE,Sierra Leone,1750,1780,Other,100
 SLE,Sierra Leone,1790,1950,British Empire,100
 SLE,Sierra Leone,1960,2020,Other,100
@@ -422,7 +429,8 @@ TGO,Togo,1750,1870,Other,100
 TGO,Togo,1880,1910,German Empire,100
 TGO,Togo,1920,1950,French Empire,100
 TGO,Togo,1960,2020,Other,100
-THA,Thailand,1750,2020,Other,100
+THA,Thailand,1750,1950,Other,100
+THA,Thailand,1960,2020,NATO + Aligned,100
 TJK,Tajikistan,1990,2020,Other,100
 TKM,Turkmenistan,1990,2020,Other,100
 TTO,Trinidad and Tobago,1750,1790,Spanish Empire,100
@@ -432,10 +440,11 @@ TUN,Tunisia,1750,1860,Ottoman Empire,100
 TUN,Tunisia,1870,1950,French Empire,100
 TUN,Tunisia,1960,2020,Other,100
 TUR,Turkey,1750,1910,Ottoman Empire,100
-TUR,Turkey,1920,2020,Other,100
+TUR,Turkey,1920,2000,Other,100
+TUR,Turkey,2010,2020,Other,100
 TWN,"Taiwan, Province of China",1750,1880,Other,100
 TWN,"Taiwan, Province of China",1890,1940,Japanese Empire,100
-TWN,"Taiwan, Province of China",1950,2020,Other,100
+TWN,"Taiwan, Province of China",1950,2020,NATO + Aligned,100
 TZA,U.R. of Tanzania: Mainland,1750,1870,Other,100
 TZA,U.R. of Tanzania: Mainland,1880,1910,German Empire,100
 TZA,U.R. of Tanzania: Mainland,1920,1950,British Empire,100
@@ -466,7 +475,8 @@ YUG,Former Yugoslavia,1990,1990,Other,100
 ZAF,South Africa,1750,1780,Dutch Empire,100
 ZAF,South Africa,1790,1940,British Empire,100
 ZAF,South Africa,1950,1990,Other,100
-ZAF,South Africa,2000,2020,Other,100
+ZAF,South Africa,2000,2009,Other,100
+ZAF,South Africa,2010,2020,BRICS + Aligned,100
 ZMB,Zambia,1750,1880,Other,100
 ZMB,Zambia,1890,1950,British Empire,100
 ZMB,Zambia,1960,2020,Other,100
