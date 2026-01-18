@@ -8,7 +8,7 @@ const DataLoader = (function() {
         'data/historical-events.json',
         'data/notable-people.json',
         'data/media.json',
-        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'GDP Power Blocs' }
+        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'Blocs' }
     ];
 
     let eventSets = [];
