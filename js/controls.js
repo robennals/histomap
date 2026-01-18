@@ -34,13 +34,24 @@ const Controls = (function() {
         const container = document.getElementById('event-set-selector');
         container.innerHTML = '';
 
-        eventSets.forEach(eventSet => {
+        eventSets.forEach((eventSet, index) => {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'event-set-item';
+            itemDiv.draggable = true;
+            itemDiv.dataset.eventSet = eventSet.name;
+            itemDiv.dataset.index = index;
+
+            // Add drag handle
+            const dragHandle = document.createElement('div');
+            dragHandle.className = 'drag-handle';
+            dragHandle.innerHTML = '☰';
+            dragHandle.title = 'Drag to reorder';
 
             // Header with checkbox and expand button
             const headerDiv = document.createElement('div');
             headerDiv.className = 'event-set-header';
+
+            headerDiv.appendChild(dragHandle);
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -163,6 +174,14 @@ const Controls = (function() {
             input.addEventListener('input', handleHeightChange);
         });
 
+        // Drag and drop for reordering
+        document.querySelectorAll('.event-set-item').forEach(item => {
+            item.addEventListener('dragstart', handleDragStart);
+            item.addEventListener('dragover', handleDragOver);
+            item.addEventListener('drop', handleDrop);
+            item.addEventListener('dragend', handleDragEnd);
+        });
+
         // Time range controls - auto-update on change
         document.getElementById('start-year').addEventListener('input', updateVisualization);
         document.getElementById('end-year').addEventListener('input', updateVisualization);
@@ -258,6 +277,78 @@ const Controls = (function() {
             // Auto-update visualization
             updateVisualization();
         }
+    }
+
+    let draggedItem = null;
+
+    /**
+     * Handle drag start
+     * @param {Event} e - Drag event
+     */
+    function handleDragStart(e) {
+        draggedItem = e.currentTarget;
+        e.currentTarget.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', e.currentTarget.innerHTML);
+    }
+
+    /**
+     * Handle drag over
+     * @param {Event} e - Drag event
+     */
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = 'move';
+
+        const targetItem = e.currentTarget;
+        if (draggedItem !== targetItem) {
+            const container = targetItem.parentNode;
+            const allItems = [...container.querySelectorAll('.event-set-item')];
+            const draggedIndex = allItems.indexOf(draggedItem);
+            const targetIndex = allItems.indexOf(targetItem);
+
+            if (draggedIndex < targetIndex) {
+                targetItem.parentNode.insertBefore(draggedItem, targetItem.nextSibling);
+            } else {
+                targetItem.parentNode.insertBefore(draggedItem, targetItem);
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Handle drop
+     * @param {Event} e - Drag event
+     */
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+
+        // Update the eventSets array order based on DOM order
+        const container = document.getElementById('event-set-selector');
+        const items = [...container.querySelectorAll('.event-set-item')];
+        const newOrder = items.map(item => item.dataset.eventSet);
+
+        // Reorder eventSets array
+        eventSets = newOrder.map(name => eventSets.find(set => set.name === name));
+
+        // Update visualization with new order
+        updateVisualization();
+
+        return false;
+    }
+
+    /**
+     * Handle drag end
+     * @param {Event} e - Drag event
+     */
+    function handleDragEnd(e) {
+        e.currentTarget.classList.remove('dragging');
+        draggedItem = null;
     }
 
     /**

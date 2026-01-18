@@ -165,6 +165,13 @@ header h1 {
     border-radius: 6px;
     overflow: hidden;
     background: #fafafa;
+    cursor: move;
+    transition: all 0.2s ease;
+}
+
+.event-set-item.dragging {
+    opacity: 0.5;
+    border: 2px dashed #3498db;
 }
 
 .event-set-header {
@@ -173,6 +180,23 @@ header h1 {
     padding: 10px 12px;
     gap: 10px;
     background: white;
+}
+
+.drag-handle {
+    cursor: grab;
+    color: #95a5a6;
+    font-size: 16px;
+    user-select: none;
+    padding: 2px 4px;
+    transition: color 0.2s ease;
+}
+
+.drag-handle:hover {
+    color: #3498db;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
 }
 
 .event-set-checkbox {
