@@ -1,0 +1,240 @@
+country,start_decade,end_decade,bloc,priority
+Afghanistan,1820,2010,Other (1.00),0
+Albania,1820,2010,Other (1.00),0
+Algeria,1820,2010,Other (1.00),0
+Angola,1950,2010,Other (1.00),0
+Argentina,1800,2010,Other (1.00),0
+Armenia,1920,1990,USSR + Aligned (1.00),80
+Armenia,1950,2010,Other (1.00),0
+Australia,1820,2010,Other (1.00),0
+Australia,1950,2020,NATO + Aligned (1.00),60
+Austria,1820,2010,Other (1.00),0
+Azerbaijan,1920,1990,USSR + Aligned (1.00),80
+Azerbaijan,1950,2010,Other (1.00),0
+Bahrain,1950,2010,Other (1.00),0
+Bangladesh,1950,2010,Other (1.00),0
+Barbados,1950,2010,Other (1.00),0
+Belarus,1920,1990,USSR + Aligned (1.00),80
+Belarus,1950,2010,Other (1.00),0
+Belgium,1750,2010,Other (1.00),0
+Belgium,1950,2020,NATO + Aligned (1.00),60
+Benin,1950,2010,Other (1.00),0
+Bolivia (Plurinational State of),1820,2010,Other (1.00),0
+Bosnia and Herzegovina,1950,2010,Other (1.00),0
+Botswana,1950,2010,Other (1.00),0
+Brazil,1800,2010,Other (1.00),0
+Bulgaria,1820,2010,Other (1.00),0
+Bulgaria,1920,1990,USSR + Aligned (1.00),80
+Bulgaria,2000,2020,NATO + Aligned (1.00),65
+Burkina Faso,1950,2010,Other (1.00),0
+Burundi,1950,2010,Other (1.00),0
+Cabo Verde,1950,2010,Other (1.00),0
+Cambodia,1820,2010,Other (1.00),0
+Cameroon,1950,2010,Other (1.00),0
+Canada,1820,2010,Other (1.00),0
+Canada,1950,2020,NATO + Aligned (1.00),60
+Central African Republic,1950,2010,Other (1.00),0
+Chad,1950,2010,Other (1.00),0
+Chile,1800,2010,Other (1.00),0
+China,1750,2010,Other (1.00),0
+China,1750,2020,China (1.00),100
+China,1930,1930,China (0.85) / Japanese Empire (0.15),110
+China,1940,1940,China (0.70) / Japanese Empire (0.30),110
+"China, Hong Kong SAR",1820,2010,Other (1.00),0
+Colombia,1800,2010,Other (1.00),0
+Comoros,1950,2010,Other (1.00),0
+Congo,1950,2010,Other (1.00),0
+Costa Rica,1820,2010,Other (1.00),0
+Croatia,1950,2010,Other (1.00),0
+Croatia,2000,2020,NATO + Aligned (1.00),65
+Cuba,1750,2010,Other (1.00),0
+Cuba,1960,1990,USSR + Aligned (1.00),70
+Cyprus,1950,2010,Other (1.00),0
+Czech Republic,1920,1990,USSR + Aligned (1.00),80
+Czech Republic,1950,2010,Other (1.00),0
+Czech Republic,2000,2020,NATO + Aligned (1.00),65
+Czechoslovakia,1820,2010,Other (1.00),0
+Côte d'Ivoire,1880,2010,Other (1.00),0
+D.P.R. of Korea,1820,2010,Other (1.00),0
+D.R. of the Congo,1950,2010,Other (1.00),0
+Denmark,1820,2010,Other (1.00),0
+Denmark,1950,2020,NATO + Aligned (1.00),60
+Djibouti,1950,2010,Other (1.00),0
+Dominica,1820,2010,Other (1.00),0
+Dominican Republic,1950,2010,Other (1.00),0
+Ecuador,1820,2010,Other (1.00),0
+Egypt,1820,2010,Other (1.00),0
+El Salvador,1820,2010,Other (1.00),0
+Equatorial Guinea,1950,2010,Other (1.00),0
+Estonia,1850,2010,Other (1.00),0
+Estonia,1920,1990,USSR + Aligned (1.00),80
+Estonia,2000,2020,NATO + Aligned (1.00),65
+Ethiopia,1820,2010,Other (1.00),0
+Ethiopia,1960,1990,USSR + Aligned (1.00),70
+Finland,1750,2010,Other (1.00),0
+Finland,1950,2020,NATO + Aligned (1.00),60
+Former USSR,1820,2010,Other (1.00),0
+Former USSR,1920,1990,USSR + Aligned (1.00),95
+Former Yugoslavia,1820,2010,Other (1.00),0
+Former Yugoslavia,1820,1990,Other (1.00),50
+France,1750,2010,Other (1.00),0
+France,1750,1940,French Empire (1.00),90
+France,1950,2020,NATO + Aligned (1.00),90
+Gabon,1950,2010,Other (1.00),0
+Gambia,1950,2010,Other (1.00),0
+Georgia,1920,1990,USSR + Aligned (1.00),80
+Georgia,1950,2010,Other (1.00),0
+Germany,1750,2010,Other (1.00),0
+Germany,1950,2020,NATO + Aligned (1.00),60
+Ghana,1870,2010,Other (1.00),0
+Greece,1820,2010,Other (1.00),0
+Greece,1950,2020,NATO + Aligned (1.00),60
+Guatemala,1820,2010,Other (1.00),0
+Guinea,1950,2010,Other (1.00),0
+Guinea-Bissau,1950,2010,Other (1.00),0
+Haiti,1820,2010,Other (1.00),0
+Honduras,1820,2010,Other (1.00),0
+Hungary,1820,2010,Other (1.00),0
+Hungary,1920,1990,USSR + Aligned (1.00),80
+Hungary,2000,2020,NATO + Aligned (1.00),65
+Iceland,1950,2010,Other (1.00),0
+India,1750,2010,Other (1.00),0
+Indonesia,1810,2010,Other (1.00),0
+Iran (Islamic Republic of),1820,2010,Other (1.00),0
+Iraq,1820,2010,Other (1.00),0
+Ireland,1820,2010,Other (1.00),0
+Israel,1950,2010,Other (1.00),0
+Italy,1750,2010,Other (1.00),0
+Italy,1950,2020,NATO + Aligned (1.00),60
+Jamaica,1820,2010,Other (1.00),0
+Japan,1750,2010,Other (1.00),0
+Japan,1750,1940,Japanese Empire (1.00),90
+Japan,1950,2020,NATO + Aligned (1.00),60
+Japan,1950,2020,NATO + Aligned (1.00),90
+Jordan,1820,2010,Other (1.00),0
+Kazakhstan,1920,1990,USSR + Aligned (1.00),80
+Kazakhstan,1950,2010,Other (1.00),0
+Kenya,1950,2010,Other (1.00),0
+Kuwait,1950,2010,Other (1.00),0
+Kyrgyzstan,1920,1990,USSR + Aligned (1.00),80
+Kyrgyzstan,1950,2010,Other (1.00),0
+Lao People's DR,1820,2010,Other (1.00),0
+Lao People's DR,1960,1990,USSR + Aligned (1.00),70
+Latvia,1920,1990,USSR + Aligned (1.00),80
+Latvia,1950,2010,Other (1.00),0
+Latvia,2000,2020,NATO + Aligned (1.00),65
+Lebanon,1820,2010,Other (1.00),0
+Lesotho,1950,2010,Other (1.00),0
+Liberia,1950,2010,Other (1.00),0
+Libya,1820,2010,Other (1.00),0
+Libya,1960,1990,USSR + Aligned (1.00),70
+Lithuania,1920,1990,USSR + Aligned (1.00),80
+Lithuania,1950,2010,Other (1.00),0
+Lithuania,2000,2020,NATO + Aligned (1.00),65
+Luxembourg,1950,2010,Other (1.00),0
+Luxembourg,1950,2020,NATO + Aligned (1.00),60
+Madagascar,1820,2010,Other (1.00),0
+Malawi,1950,2010,Other (1.00),0
+Malaysia,1820,2010,Other (1.00),0
+Mali,1950,2010,Other (1.00),0
+Malta,1950,2010,Other (1.00),0
+Mauritania,1950,2010,Other (1.00),0
+Mauritius,1950,2010,Other (1.00),0
+Mexico,1750,2010,Other (1.00),0
+Mongolia,1820,2010,Other (1.00),0
+Mongolia,1960,1990,USSR + Aligned (1.00),70
+Montenegro,1950,2010,Other (1.00),0
+Morocco,1820,2010,Other (1.00),0
+Mozambique,1820,2010,Other (1.00),0
+Myanmar,1820,2010,Other (1.00),0
+Namibia,1950,2010,Other (1.00),0
+Nepal,1820,2010,Other (1.00),0
+Netherlands,1750,2010,Other (1.00),0
+Netherlands,1950,2020,NATO + Aligned (1.00),60
+New Zealand,1820,2010,Other (1.00),0
+New Zealand,1950,2020,NATO + Aligned (1.00),60
+Nicaragua,1820,2010,Other (1.00),0
+Niger,1950,2010,Other (1.00),0
+Nigeria,1950,2010,Other (1.00),0
+Norway,1820,2010,Other (1.00),0
+Norway,1950,2020,NATO + Aligned (1.00),60
+Oman,1820,2010,Other (1.00),0
+Pakistan,1950,2010,Other (1.00),0
+Panama,1850,2010,Other (1.00),0
+Paraguay,1820,2010,Other (1.00),0
+Peru,1750,2010,Other (1.00),0
+Philippines,1820,2010,Other (1.00),0
+Poland,1750,2010,Other (1.00),0
+Poland,1920,1990,USSR + Aligned (1.00),80
+Poland,2000,2020,NATO + Aligned (1.00),65
+Portugal,1750,2010,Other (1.00),0
+Portugal,1950,2020,NATO + Aligned (1.00),60
+Puerto Rico,1750,1890,Spanish Empire (1.00),80
+Puerto Rico,1820,2010,Other (1.00),0
+Puerto Rico,1900,2020,US (1.00),80
+Qatar,1950,2010,Other (1.00),0
+Republic of Korea,1820,2010,Other (1.00),0
+Republic of Korea,1950,2020,NATO + Aligned (1.00),60
+Republic of Moldova,1920,1990,USSR + Aligned (1.00),80
+Republic of Moldova,1950,2010,Other (1.00),0
+Romania,1820,2010,Other (1.00),0
+Romania,1920,1990,USSR + Aligned (1.00),80
+Romania,2000,2020,NATO + Aligned (1.00),65
+Russian Federation,1920,1990,USSR + Aligned (1.00),80
+Russian Federation,1950,2010,Other (1.00),0
+Rwanda,1950,2010,Other (1.00),0
+Saint Lucia,1950,2010,Other (1.00),0
+Sao Tome and Principe,1950,2010,Other (1.00),0
+Saudi Arabia,1820,2010,Other (1.00),0
+Senegal,1950,2010,Other (1.00),0
+Serbia,1950,2010,Other (1.00),0
+Seychelles,1950,2010,Other (1.00),0
+Sierra Leone,1950,2010,Other (1.00),0
+Singapore,1820,2010,Other (1.00),0
+Slovakia,1920,1990,USSR + Aligned (1.00),80
+Slovakia,1950,2010,Other (1.00),0
+Slovakia,2000,2020,NATO + Aligned (1.00),65
+Slovenia,1950,2010,Other (1.00),0
+Slovenia,2000,2020,NATO + Aligned (1.00),65
+South Africa,1750,2010,Other (1.00),0
+Spain,1750,2010,Other (1.00),0
+Spain,1950,2020,NATO + Aligned (1.00),60
+Sri Lanka,1820,2010,Other (1.00),0
+State of Palestine,1820,2010,Other (1.00),0
+Sudan (Former),1820,2010,Other (1.00),0
+Swaziland,1950,2010,Other (1.00),0
+Sweden,1750,2010,Other (1.00),0
+Sweden,1950,2020,NATO + Aligned (1.00),60
+Switzerland,1820,2010,Other (1.00),0
+Syrian Arab Republic,1820,2010,Other (1.00),0
+TFYR of Macedonia,1950,2010,Other (1.00),0
+"Taiwan, Province of China",1820,2010,Other (1.00),0
+Tajikistan,1920,1990,USSR + Aligned (1.00),80
+Tajikistan,1950,2010,Other (1.00),0
+Thailand,1820,2010,Other (1.00),0
+Togo,1950,2010,Other (1.00),0
+Trinidad and Tobago,1820,2010,Other (1.00),0
+Tunisia,1820,2010,Other (1.00),0
+Turkey,1750,2010,Other (1.00),0
+Turkey,1950,2020,NATO + Aligned (1.00),60
+Turkmenistan,1920,1990,USSR + Aligned (1.00),80
+Turkmenistan,1950,2010,Other (1.00),0
+U.R. of Tanzania: Mainland,1950,2010,Other (1.00),0
+Uganda,1950,2010,Other (1.00),0
+Ukraine,1920,1990,USSR + Aligned (1.00),80
+Ukraine,1950,2010,Other (1.00),0
+United Arab Emirates,1950,2010,Other (1.00),0
+United Kingdom,1750,2010,Other (1.00),0
+United Kingdom,1750,1940,British Empire (1.00),90
+United Kingdom,1950,2020,UK (1.00),90
+United States,1750,2020,US (1.00),100
+United States,1770,2010,Other (1.00),0
+Uruguay,1800,2010,Other (1.00),0
+Uzbekistan,1920,1990,USSR + Aligned (1.00),80
+Uzbekistan,1950,2010,Other (1.00),0
+Venezuela (Bolivarian Republic of),1800,2010,Other (1.00),0
+Viet Nam,1820,2010,Other (1.00),0
+Vietnam,1960,1990,USSR + Aligned (1.00),70
+Yemen,1820,2010,Other (1.00),0
+Zambia,1950,2010,Other (1.00),0
+Zimbabwe,1950,2010,Other (1.00),0

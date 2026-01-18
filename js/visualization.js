@@ -13,7 +13,8 @@ const Visualization = (function() {
         height: 800,
         startYear: 1775,
         endYear: 2025,
-        padding: { top: 60, right: 40, bottom: 60, left: 140 },
+        // left = margin (40) + space for band titles (100)
+        padding: { top: 60, right: 40, bottom: 60, left: 140, marginLeft: 40 },
         bandHeights: {
             half: 60,
             normal: 120,

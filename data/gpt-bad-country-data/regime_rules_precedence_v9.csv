@@ -1,0 +1,81 @@
+country,start_decade,end_decade,bloc,priority
+Armenia,1920,1990,USSR + Aligned (1.00),80
+Australia,1750,1940,British Empire (1.00),85
+Australia,1950,2020,NATO + Aligned (1.00),60
+Australia,1950,2020,NATO + Aligned (1.00),65
+Azerbaijan,1920,1990,USSR + Aligned (1.00),80
+Belarus,1920,1990,USSR + Aligned (1.00),80
+Belgium,1950,2020,NATO + Aligned (1.00),60
+Bulgaria,1920,1990,USSR + Aligned (1.00),80
+Bulgaria,2000,2020,NATO + Aligned (1.00),65
+Canada,1750,1940,British Empire (1.00),85
+Canada,1950,2020,NATO + Aligned (1.00),60
+Canada,1950,2020,NATO + Aligned (1.00),65
+China,1750,2020,China (1.00),100
+China,1930,1930,China (0.85) / Japanese Empire (0.15),110
+China,1940,1940,China (0.70) / Japanese Empire (0.30),110
+Croatia,2000,2020,NATO + Aligned (1.00),65
+Cuba,1960,1990,USSR + Aligned (1.00),70
+Czech Republic,1920,1990,USSR + Aligned (1.00),80
+Czech Republic,2000,2020,NATO + Aligned (1.00),65
+Denmark,1950,2020,NATO + Aligned (1.00),60
+Egypt,1880,1940,British Empire (1.00),85
+Estonia,1920,1990,USSR + Aligned (1.00),80
+Estonia,2000,2020,NATO + Aligned (1.00),65
+Ethiopia,1960,1990,USSR + Aligned (1.00),70
+Finland,1950,2020,NATO + Aligned (1.00),60
+Former USSR,1920,1990,USSR + Aligned (1.00),95
+France,1750,1940,French Empire (1.00),90
+France,1950,2020,NATO + Aligned (1.00),90
+Georgia,1920,1990,USSR + Aligned (1.00),80
+Germany,1950,2020,NATO + Aligned (1.00),60
+Greece,1950,2020,NATO + Aligned (1.00),60
+Hong Kong,1840,1940,British Empire (1.00),85
+Hungary,1920,1990,USSR + Aligned (1.00),80
+Hungary,2000,2020,NATO + Aligned (1.00),65
+India,1750,1940,British Empire (1.00),85
+Ireland,1750,1940,British Empire (1.00),85
+Italy,1950,2020,NATO + Aligned (1.00),60
+Japan,1750,1940,Japanese Empire (1.00),90
+Japan,1950,2020,NATO + Aligned (1.00),60
+Japan,1950,2020,NATO + Aligned (1.00),90
+Kazakhstan,1920,1990,USSR + Aligned (1.00),80
+Kyrgyzstan,1920,1990,USSR + Aligned (1.00),80
+Lao People's DR,1960,1990,USSR + Aligned (1.00),70
+Latvia,1920,1990,USSR + Aligned (1.00),80
+Latvia,2000,2020,NATO + Aligned (1.00),65
+Libya,1960,1990,USSR + Aligned (1.00),70
+Lithuania,1920,1990,USSR + Aligned (1.00),80
+Lithuania,2000,2020,NATO + Aligned (1.00),65
+Luxembourg,1950,2020,NATO + Aligned (1.00),60
+Mongolia,1960,1990,USSR + Aligned (1.00),70
+Netherlands,1950,2020,NATO + Aligned (1.00),60
+New Zealand,1750,1940,British Empire (1.00),85
+New Zealand,1950,2020,NATO + Aligned (1.00),60
+New Zealand,1950,2020,NATO + Aligned (1.00),65
+Norway,1950,2020,NATO + Aligned (1.00),60
+Poland,1920,1990,USSR + Aligned (1.00),80
+Poland,2000,2020,NATO + Aligned (1.00),65
+Portugal,1950,2020,NATO + Aligned (1.00),60
+Puerto Rico,1750,1890,Spanish Empire (1.00),80
+Puerto Rico,1900,2020,US (1.00),80
+Republic of Korea,1950,2020,NATO + Aligned (1.00),60
+Republic of Moldova,1920,1990,USSR + Aligned (1.00),80
+Romania,1920,1990,USSR + Aligned (1.00),80
+Romania,2000,2020,NATO + Aligned (1.00),65
+Russian Federation,1920,1990,USSR + Aligned (1.00),80
+Slovakia,1920,1990,USSR + Aligned (1.00),80
+Slovakia,2000,2020,NATO + Aligned (1.00),65
+Slovenia,2000,2020,NATO + Aligned (1.00),65
+South Africa,1900,1940,British Empire (1.00),85
+Spain,1950,2020,NATO + Aligned (1.00),60
+Sweden,1950,2020,NATO + Aligned (1.00),60
+Tajikistan,1920,1990,USSR + Aligned (1.00),80
+Turkey,1950,2020,NATO + Aligned (1.00),60
+Turkmenistan,1920,1990,USSR + Aligned (1.00),80
+Ukraine,1920,1990,USSR + Aligned (1.00),80
+United Kingdom,1750,1940,British Empire (1.00),90
+United Kingdom,1950,2020,UK (1.00),90
+United States,1750,2020,US (1.00),100
+Uzbekistan,1920,1990,USSR + Aligned (1.00),80
+Vietnam,1960,1990,USSR + Aligned (1.00),70
