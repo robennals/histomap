@@ -9,12 +9,6 @@
       "priority": 2
     },
     {
-      "name": "Revolutionary Era",
-      "start": "1765-01-01",
-      "end": "1789-04-30",
-      "priority": 1
-    },
-    {
       "name": "Early Republic",
       "start": "1789-04-30",
       "end": "1815-12-24",
@@ -30,25 +24,19 @@
       "name": "Jacksonian Democracy",
       "start": "1829-03-04",
       "end": "1841-03-04",
-      "priority": 2
+      "priority": 3
     },
     {
       "name": "Antebellum Period",
       "start": "1815-01-01",
       "end": "1861-04-12",
-      "priority": 2
+      "priority": 3
     },
     {
       "name": "Westward Expansion",
       "start": "1803-05-02",
       "end": "1890-12-29",
       "priority": 2
-    },
-    {
-      "name": "Civil War",
-      "start": "1861-04-12",
-      "end": "1865-05-09",
-      "priority": 1
     },
     {
       "name": "Reconstruction",
@@ -117,12 +105,6 @@
       "priority": 2
     },
     {
-      "name": "War on Terror",
-      "start": "2001-09-11",
-      "end": "2021-08-30",
-      "priority": 2
-    },
-    {
       "name": "Great Recession",
       "start": "2007-12-01",
       "end": "2009-06-01",
@@ -138,6 +120,96 @@
       "start": "2020-03-11",
       "end": "2023-05-05",
       "priority": 1
+    },
+    {
+      "name": "Trail of Tears",
+      "start": "1838-01-01",
+      "end": "1839-12-31",
+      "priority": 2
+    },
+    {
+      "name": "California Gold Rush",
+      "start": "1848-01-24",
+      "end": "1855-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Revolutionary War",
+      "start": "1775-04-19",
+      "end": "1783-09-03",
+      "priority": 1
+    },
+    {
+      "name": "War of 1812",
+      "start": "1812-06-18",
+      "end": "1815-02-18",
+      "priority": 1
+    },
+    {
+      "name": "Texas Revolution",
+      "start": "1835-10-02",
+      "end": "1836-04-21",
+      "priority": 3
+    },
+    {
+      "name": "Mexican-American War",
+      "start": "1846-04-25",
+      "end": "1848-02-02",
+      "priority": 1
+    },
+    {
+      "name": "Civil War",
+      "start": "1861-04-12",
+      "end": "1865-05-09",
+      "priority": 1
+    },
+    {
+      "name": "Spanish-American War",
+      "start": "1898-04-21",
+      "end": "1898-08-13",
+      "priority": 3
+    },
+    {
+      "name": "World War I",
+      "start": "1917-04-06",
+      "end": "1918-11-11",
+      "priority": 1
+    },
+    {
+      "name": "World War II",
+      "start": "1941-12-07",
+      "end": "1945-09-02",
+      "priority": 1
+    },
+    {
+      "name": "Korean War",
+      "start": "1950-06-25",
+      "end": "1953-07-27",
+      "priority": 2
+    },
+    {
+      "name": "Vietnam War",
+      "start": "1955-11-01",
+      "end": "1975-04-30",
+      "priority": 1
+    },
+    {
+      "name": "Gulf War",
+      "start": "1990-08-02",
+      "end": "1991-02-28",
+      "priority": 2
+    },
+    {
+      "name": "Afghanistan War",
+      "start": "2001-10-07",
+      "end": "2021-08-30",
+      "priority": 2
+    },
+    {
+      "name": "Iraq War",
+      "start": "2003-03-20",
+      "end": "2011-12-15",
+      "priority": 2
     }
   ]
 }

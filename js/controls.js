@@ -116,7 +116,7 @@ const Controls = (function() {
             if (eventSet.type === 'gdp-blocs') {
                 // Height control for GDP blocs
                 limitLabel.textContent = 'Height (px)';
-                limitInput.min = '100';
+                limitInput.min = '50';
                 limitInput.max = '500';
                 limitInput.step = '10';
                 limitInput.value = eventSetSettings[eventSet.name].height || 100;
@@ -279,7 +279,7 @@ const Controls = (function() {
         const eventSetName = e.target.dataset.eventSet;
         const height = parseInt(e.target.value);
 
-        if (height >= 100 && height <= 500) {
+        if (height >= 50 && height <= 500) {
             eventSetSettings[eventSetName].height = height;
 
             // Auto-update visualization

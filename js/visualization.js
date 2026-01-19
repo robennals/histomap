@@ -734,6 +734,10 @@ const Visualization = (function() {
         const textGap = 20; // Minimum gap between text labels horizontally
         const charWidth = 6.5; // Estimated character width
 
+        // Calculate minimum horizontal gap (1 year in pixels)
+        const oneYearInPixels = chartWidth / (config.endYear - config.startYear);
+        const minTimelineGap = oneYearInPixels; // Timelines must have at least 1 year separation
+
         // Generate unique colors for each person
         // Colors with maximum hue spacing - each adjacent color is ~180° apart on color wheel
         const colors = [
@@ -893,9 +897,10 @@ const Visualization = (function() {
                 }
 
                 // Step 1: Check if timeline line position overlaps with other timeline lines
+                // Timelines must have at least 1 year separation to be on the same line
                 let hasLineOverlap = false;
                 for (const placed of placedItems) {
-                    const horizontalOverlap = (startX < placed.endX) && (endX > placed.startX);
+                    const horizontalOverlap = (startX < placed.endX + minTimelineGap) && (endX + minTimelineGap > placed.startX);
                     const verticalGap = Math.abs(lineY - placed.lineY);
 
                     if (horizontalOverlap && verticalGap < lineGap) {

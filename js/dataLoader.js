@@ -4,14 +4,14 @@
 const DataLoader = (function() {
     // List of available data files
     const DATA_FILES = [
-        'data/wars.json',
-        'data/historical-events.json',
+        // 'data/wars.json',
+        // 'data/historical-events.json',
+        'data/eras.json',
+        'data/presidents.json',
         'data/notable-people.json',
         'data/media.json',
-        'data/presidents.json',
-        'data/eras.json',
         'data/technology.json',
-        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'Blocs' }
+        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'Powers' }
     ];
 
     let eventSets = [];
