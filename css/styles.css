@@ -35,28 +35,6 @@ body {
     overflow: hidden;
 }
 
-/* Header - Compact */
-header {
-    text-align: center;
-    margin-bottom: 15px;
-    padding: 8px;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-shrink: 0;
-}
-
-header h1 {
-    font-size: 1.4em;
-    color: #2c3e50;
-    font-weight: 600;
-    margin: 0;
-}
-
 /* Main Content Layout */
 .main-content {
     position: relative;
@@ -64,6 +42,56 @@ header h1 {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+}
+
+/* Footer */
+footer {
+    margin-top: 15px;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-info {
+    flex: 1;
+}
+
+.footer-info p {
+    margin: 0;
+    font-size: 0.85em;
+    color: #555;
+}
+
+.footer-info a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.footer-info a:hover {
+    text-decoration: underline;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+footer .btn,
+footer .toggle-controls-btn {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    margin-bottom: 0;
 }
 
 /* Toggle Button */
@@ -382,8 +410,12 @@ svg text {
         right: -100%;
     }
 
-    .toggle-controls-btn {
-        top: 10px;
-        right: 10px;
+    .footer-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-info {
+        text-align: center;
     }
 }

@@ -197,9 +197,6 @@ const Controls = (function() {
         // Dimension controls - auto-update on change
         document.getElementById('width').addEventListener('input', updateVisualization);
 
-        // Update visualization button
-        document.getElementById('update-viz').addEventListener('click', updateVisualization);
-
         // Export PDF button
         document.getElementById('export-pdf').addEventListener('click', () => {
             PDFExport.exportToPDF();

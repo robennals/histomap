@@ -11,7 +11,7 @@ const DataLoader = (function() {
         'data/notable-people.json',
         'data/media.json',
         'data/technology.json',
-        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'Powers' }
+        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'World Power' }
     ];
 
     let eventSets = [];

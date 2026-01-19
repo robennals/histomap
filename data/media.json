@@ -189,6 +189,12 @@
       "priority": 1
     },
     {
+      "name": "Of Mice and Men",
+      "start": "1933-01-01",
+      "end": "1933-12-31",
+      "priority": 2
+    },
+    {
       "name": "Gone with the Wind",
       "start": "1861-01-01",
       "end": "1873-12-31",
@@ -199,6 +205,18 @@
       "start": "1933-01-01",
       "end": "1935-12-31",
       "priority": 1
+    },
+    {
+      "name": "The Thin Man",
+      "start": "1934-12-25",
+      "end": "1934-12-26",
+      "priority": 3
+    },
+    {
+      "name": "Our Town",
+      "start": "1938-01-01",
+      "end": "1938-12-31",
+      "priority": 2
     },
     {
       "name": "Catcher in the Rye",
@@ -213,10 +231,28 @@
       "priority": 2
     },
     {
+      "name": "Casablanca",
+      "start": "1941-12-01",
+      "end": "1941-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Saving Private Ryan",
+      "start": "1944-06-06",
+      "end": "1944-06-13",
+      "priority": 1
+    },
+    {
       "name": "Catch-22",
       "start": "1944-01-01",
       "end": "1944-12-31",
       "priority": 2
+    },
+    {
+      "name": "Band of Brothers",
+      "start": "1944-06-06",
+      "end": "1945-05-08",
+      "priority": 1
     },
     {
       "name": "Slaughterhouse-Five",
@@ -229,6 +265,24 @@
       "start": "1945-01-01",
       "end": "1955-12-31",
       "priority": 1
+    },
+    {
+      "name": "It's a Wonderful Life",
+      "start": "1945-12-24",
+      "end": "1946-01-01",
+      "priority": 1
+    },
+    {
+      "name": "A Streetcar Named Desire",
+      "start": "1947-05-01",
+      "end": "1947-09-30",
+      "priority": 2
+    },
+    {
+      "name": "Death of a Salesman",
+      "start": "1949-01-01",
+      "end": "1949-12-31",
+      "priority": 2
     },
     {
       "name": "The Shining",

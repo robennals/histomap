@@ -63,6 +63,12 @@
       "priority": 1
     },
     {
+      "name": "Women's Suffrage Movement",
+      "start": "1848-07-19",
+      "end": "1920-08-18",
+      "priority": 2
+    },
+    {
       "name": "Jazz Age",
       "start": "1918-11-11",
       "end": "1929-10-29",
@@ -90,7 +96,7 @@
       "name": "Post-War Boom",
       "start": "1945-09-02",
       "end": "1973-11-01",
-      "priority": 2
+      "priority": 3
     },
     {
       "name": "Cold War",

@@ -35,7 +35,7 @@ const Visualization = (function() {
         startYear: 1750,
         endYear: 2025,
         // left = margin (40) + space for band titles (100)
-        padding: { top: 60, right: 40, bottom: 60, left: 140, marginLeft: 40 },
+        padding: { top: 100, right: 40, bottom: 60, left: 140, marginLeft: 40 },
         bandHeights: {
             half: 60,
             normal: 120,
@@ -132,6 +132,19 @@ const Visualization = (function() {
 
         // Append SVG to container early so getBBox() works for text measurement
         container.appendChild(svg);
+
+        // Add title at the top
+        const title = createSVGElement('text', {
+            x: config.width / 2,
+            y: 40,
+            'font-family': FONT_FAMILY,
+            'font-size': '32px',
+            'font-weight': 'bold',
+            'text-anchor': 'middle',
+            fill: '#2c3e50'
+        });
+        title.textContent = 'Timeline of US History';
+        svg.appendChild(title);
 
         // Draw event bands and get actual height
         const actualHeight = drawEventBands();
