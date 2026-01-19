@@ -387,11 +387,12 @@ const Controls = (function() {
         // Get dimensions
         const width = parseInt(document.getElementById('width').value);
 
-        // Render visualization (height will be auto-calculated)
-        Visualization.render(selectedSets, {
+        // Render visualization with TimeScale (height will be auto-calculated)
+        Visualization.render(selectedSets, AppState.timeScale, {
             startYear,
             endYear,
-            width
+            width,
+            title: AppState.timelineConfig.title
         });
     }
 

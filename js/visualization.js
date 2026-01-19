@@ -57,19 +57,34 @@ const Visualization = (function() {
 
     let svg = null;
     let selectedEventSets = [];
+    let currentTimeScale = null;
+
+    /**
+     * Format year for display (handles BC/AD)
+     * @param {number} year - Year to format
+     * @returns {string} Formatted year string
+     */
+    function formatYearLabel(year) {
+        if (year < 0) return `${Math.abs(year)} BC`;
+        if (year === 0) return '1 BC/AD';
+        if (year < 1000) return `${year} AD`;
+        return `${year}`;
+    }
 
     /**
      * Initialize visualization with event sets
      * @param {Array} eventSets - Array of event sets to visualize
+     * @param {Object} timeScale - TimeScale instance for year-to-pixel conversion
      * @param {Object} settings - Visualization settings
      */
-    function render(eventSets, settings = {}) {
+    function render(eventSets, timeScale, settings = {}) {
         // Update configuration if settings provided
         if (settings.width) config.width = settings.width;
         if (settings.startYear) config.startYear = settings.startYear;
         if (settings.endYear) config.endYear = settings.endYear;
 
         selectedEventSets = eventSets;
+        currentTimeScale = timeScale;
 
         // Calculate required left padding by measuring actual text width
         // Use a canvas to measure text width accurately
@@ -89,6 +104,10 @@ const Visualization = (function() {
         // So we need to ensure: maxTextWidth + 10 <= 60
         // If text is wider, we need more padding
         config.padding.left = maxTextWidth + 24;
+
+        // Update TimeScale dimensions after padding is calculated
+        const chartWidth = config.width - config.padding.left - config.padding.right;
+        currentTimeScale.updateDimensions(config.padding, chartWidth);
 
         // Calculate total height needed for all bands
         let totalHeight = config.padding.top;
@@ -143,7 +162,7 @@ const Visualization = (function() {
             'text-anchor': 'middle',
             fill: '#2c3e50'
         });
-        title.textContent = 'Timeline of US History';
+        title.textContent = settings.title || 'Timeline of US History';
         svg.appendChild(title);
 
         // Draw event bands and get actual height
@@ -169,12 +188,6 @@ const Visualization = (function() {
     function drawTimelineAxis() {
         const axisGroup = createSVGElement('g', { id: 'timeline-axis' });
 
-        const startTimestamp = new Date(config.startYear, 0, 1).getTime();
-        const endTimestamp = new Date(config.endYear, 11, 31).getTime();
-        const timeRange = endTimestamp - startTimestamp;
-
-        const chartWidth = config.width - config.padding.left - config.padding.right;
-
         // Get actual SVG height
         const actualHeight = parseInt(svg.getAttribute('height'));
 
@@ -189,102 +202,57 @@ const Visualization = (function() {
         });
         axisGroup.appendChild(axisLine);
 
-        // Round start year down to nearest year
-        const startYear = Math.floor(config.startYear);
-        const endYear = config.endYear;
+        // Get ticks from TimeScale
+        const ticks = currentTimeScale.getAxisTicks();
 
-        // Draw lines every year with three levels of prominence
-        for (let year = startYear; year <= endYear; year += 1) {
-            const yearTimestamp = new Date(year, 0, 1).getTime();
-            const x = config.padding.left + ((yearTimestamp - startTimestamp) / timeRange) * chartWidth;
+        // Draw ticks and grid lines
+        ticks.forEach(tick => {
+            const x = currentTimeScale.yearToX(tick.year);
 
-            const is50Year = (year % 50 === 0);
-            const isDecade = (year % 10 === 0);
-
-            if (is50Year) {
-                // Most prominent: 50-year marks
-                const tick = createSVGElement('line', {
+            // Draw vertical grid line
+            if (tick.showGrid) {
+                const gridLine = createSVGElement('line', {
                     x1: x,
-                    y1: config.padding.top - 28,
+                    y1: config.padding.top,
                     x2: x,
-                    y2: config.padding.top - 15,
-                    stroke: '#5a6c7d',
-                    'stroke-width': 2.5
+                    y2: actualHeight - config.padding.bottom,
+                    stroke: tick.color,
+                    'stroke-width': tick.width
                 });
-                axisGroup.appendChild(tick);
+                if (tick.opacity) {
+                    gridLine.setAttribute('stroke-opacity', tick.opacity);
+                }
+                axisGroup.appendChild(gridLine);
+            }
 
-                // Year label (every 50 years)
+            // Draw tick mark
+            if (tick.height > 0) {
+                const tickLine = createSVGElement('line', {
+                    x1: x,
+                    y1: config.padding.top - 20 - tick.height,
+                    x2: x,
+                    y2: config.padding.top - 20,
+                    stroke: tick.color,
+                    'stroke-width': tick.width
+                });
+                axisGroup.appendChild(tickLine);
+            }
+
+            // Draw label
+            if (tick.showLabel) {
                 const label = createSVGElement('text', {
                     x: x,
                     y: config.padding.top - 32,
                     'text-anchor': 'middle',
                     'font-family': FONT_FAMILY,
                     'font-size': '11px',
-                    'font-weight': 'bold',
+                    'font-weight': tick.labelWeight || 'normal',
                     fill: '#7f8c8d'
                 });
-                label.textContent = year;
+                label.textContent = formatYearLabel(tick.year);
                 axisGroup.appendChild(label);
-
-                // Bold vertical grid line (every 50 years)
-                const gridLine = createSVGElement('line', {
-                    x1: x,
-                    y1: config.padding.top,
-                    x2: x,
-                    y2: actualHeight - config.padding.bottom,
-                    stroke: '#95a5a6',
-                    'stroke-width': 2
-                });
-                axisGroup.appendChild(gridLine);
-            } else if (isDecade) {
-                // Medium: decade marks
-                const tick = createSVGElement('line', {
-                    x1: x,
-                    y1: config.padding.top - 23,
-                    x2: x,
-                    y2: config.padding.top - 17,
-                    stroke: '#7f8c8d',
-                    'stroke-width': 1.5
-                });
-                axisGroup.appendChild(tick);
-
-                // Year label (every decade)
-                const label = createSVGElement('text', {
-                    x: x,
-                    y: config.padding.top - 26,
-                    'text-anchor': 'middle',
-                    'font-family': FONT_FAMILY,
-                    'font-size': '11px',
-                    'font-weight': 'normal',
-                    fill: '#7f8c8d'
-                });
-                label.textContent = year;
-                axisGroup.appendChild(label);
-
-                // Moderate vertical grid line (every decade)
-                const gridLine = createSVGElement('line', {
-                    x1: x,
-                    y1: config.padding.top,
-                    x2: x,
-                    y2: actualHeight - config.padding.bottom,
-                    stroke: '#bdc3c7',
-                    'stroke-width': 1
-                });
-                axisGroup.appendChild(gridLine);
-            } else {
-                // Faintest: yearly marks
-                const gridLine = createSVGElement('line', {
-                    x1: x,
-                    y1: config.padding.top,
-                    x2: x,
-                    y2: actualHeight - config.padding.bottom,
-                    stroke: '#e8e8e8',
-                    'stroke-width': 0.5,
-                    'stroke-opacity': 0.6
-                });
-                axisGroup.appendChild(gridLine);
             }
-        }
+        });
 
         // Insert axis group after background and defs, but before event bands
         // Find the background rect (first rect child of SVG)
@@ -336,10 +304,6 @@ const Visualization = (function() {
      */
     function drawGDPBlocsBand(bandGroup, gdpData, startY, bandHeight) {
         const { blocs, blocList } = gdpData;
-        const startTimestamp = new Date(config.startYear, 0, 1).getTime();
-        const endTimestamp = new Date(config.endYear, 11, 31).getTime();
-        const timeRange = endTimestamp - startTimestamp;
-        const chartWidth = config.width - config.padding.left - config.padding.right;
 
         // Get all data points for the first bloc to determine years
         const allDataPoints = blocs[blocList[0]];
@@ -371,10 +335,8 @@ const Visualization = (function() {
             visibleDataPoints.forEach((dataPoint, idx) => {
                 const year = dataPoint.year;
 
-                // Calculate X position (time-aligned)
-                const timestamp = new Date(year, 0, 1).getTime();
-                const x = config.padding.left +
-                          ((timestamp - startTimestamp) / timeRange) * chartWidth;
+                // Calculate X position (time-aligned) using TimeScale
+                const x = currentTimeScale.yearToX(year);
 
                 // Get GDP data for this year (use last available if year is synthetic)
                 const dataIndex = allDataPoints.findIndex(d => d.year === year);
@@ -400,9 +362,9 @@ const Visualization = (function() {
             const bottomPoints = [];
             visibleDataPoints.forEach((dataPoint, idx) => {
                 const year = dataPoint.year;
-                const timestamp = new Date(year, 0, 1).getTime();
-                const x = config.padding.left +
-                          ((timestamp - startTimestamp) / timeRange) * chartWidth;
+
+                // Calculate X position (time-aligned) using TimeScale
+                const x = currentTimeScale.yearToX(year);
 
                 // Get GDP data for this year (use last available if year is synthetic)
                 const dataIndex = allDataPoints.findIndex(d => d.year === year);
@@ -734,11 +696,6 @@ const Visualization = (function() {
      * @returns {number} The maximum Y position used
      */
     function drawPeopleBand(group, events, baseY, baseColor, bandY, maxHeight = 999, isPeopleBand = true, isPresidentsBand = false) {
-        const startTimestamp = new Date(config.startYear, 0, 1).getTime();
-        const endTimestamp = new Date(config.endYear, 11, 31).getTime();
-        const timeRange = endTimestamp - startTimestamp;
-        const chartWidth = config.width - config.padding.left - config.padding.right;
-
         const lineHeight = 3;
         const fontSize = 12;
         const textHeight = fontSize + 4;
@@ -747,9 +704,9 @@ const Visualization = (function() {
         const textGap = 20; // Minimum gap between text labels horizontally
         const charWidth = 6.5; // Estimated character width
 
-        // Calculate minimum horizontal gap (1 year in pixels)
-        const oneYearInPixels = chartWidth / (config.endYear - config.startYear);
-        const minTimelineGap = oneYearInPixels; // Timelines must have at least 1 year separation
+        // Calculate minimum horizontal gap (1 year in pixels using TimeScale)
+        const oneYearWidth = Math.abs(currentTimeScale.yearToX(config.startYear + 1) - currentTimeScale.yearToX(config.startYear));
+        const minTimelineGap = oneYearWidth; // Timelines must have at least 1 year separation
 
         // Generate unique colors for each person
         // Colors with maximum hue spacing - each adjacent color is ~180° apart on color wheel
@@ -826,19 +783,19 @@ const Visualization = (function() {
             const line2Y = baseY + (lineGap * 3); // Space for text labels to not overlap
 
             sortedPeople.forEach((person, index) => {
-                const actualStartX = config.padding.left +
-                    ((person.startTimestamp - startTimestamp) / timeRange) * chartWidth;
+                const startYear = person.startDate.getFullYear();
+                const actualStartX = currentTimeScale.yearToX(startYear);
 
                 let actualEndX = actualStartX;
                 if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
-                    actualEndX = config.padding.left +
-                        ((person.endTimestamp - startTimestamp) / timeRange) * chartWidth;
+                    const endYear = person.endDate.getFullYear();
+                    actualEndX = currentTimeScale.yearToX(endYear);
                 } else if (!person.endDate) {
-                    actualEndX = config.padding.left + chartWidth;
+                    actualEndX = currentTimeScale.yearToX(config.endYear);
                 }
 
                 const startX = Math.max(actualStartX, config.padding.left);
-                const endX = Math.min(actualEndX, config.padding.left + chartWidth);
+                const endX = Math.min(actualEndX, currentTimeScale.yearToX(config.endYear));
                 const lineLength = endX - startX;
                 const textWidth = person.name.length * charWidth;
 
@@ -861,18 +818,18 @@ const Visualization = (function() {
             // Normal layout logic for non-presidents
             sortedPeople.forEach(person => {
             // Calculate the actual timeline position (may be outside visible range)
-            const actualStartX = config.padding.left +
-                ((person.startTimestamp - startTimestamp) / timeRange) * chartWidth;
+            const startYear = person.startDate.getFullYear();
+            const actualStartX = currentTimeScale.yearToX(startYear);
 
             let actualEndX = actualStartX;
             if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
                 // Event has ended
-                actualEndX = config.padding.left +
-                    ((person.endTimestamp - startTimestamp) / timeRange) * chartWidth;
+                const endYear = person.endDate.getFullYear();
+                actualEndX = currentTimeScale.yearToX(endYear);
             } else if (!person.endDate) {
                 if (isPeopleBand) {
                     // Person is still alive, extend line to current end of timeline
-                    actualEndX = config.padding.left + chartWidth;
+                    actualEndX = currentTimeScale.yearToX(config.endYear);
                 } else {
                     // Point event - no line extension
                     actualEndX = actualStartX;
@@ -881,7 +838,7 @@ const Visualization = (function() {
 
             // Clamp the visible line to the visible range
             const startX = Math.max(actualStartX, config.padding.left);
-            const endX = Math.min(actualEndX, config.padding.left + chartWidth);
+            const endX = Math.min(actualEndX, currentTimeScale.yearToX(config.endYear));
 
             const lineLength = endX - startX;
             const textWidth = person.name.length * charWidth;
@@ -889,7 +846,7 @@ const Visualization = (function() {
             // For other events, allow text to extend beyond the event (to the right edge)
             const maxTextX = isPeopleBand ?
                 (startX + lineLength - textWidth) :
-                (config.padding.left + chartWidth - textWidth);
+                (currentTimeScale.yearToX(config.endYear) - textWidth);
 
             // Find Y position and text position together
             let lineY = baseY;
@@ -1122,12 +1079,6 @@ const Visualization = (function() {
      * @returns {number} The maximum Y position used
      */
     function drawBandEvents(group, events, baseY, color, bandY, maxRows = 999) {
-
-        const startTimestamp = new Date(config.startYear, 0, 1).getTime();
-        const endTimestamp = new Date(config.endYear, 11, 31).getTime();
-        const timeRange = endTimestamp - startTimestamp;
-        const chartWidth = config.width - config.padding.left - config.padding.right;
-
         // Track placed events to detect overlaps
         const placedEvents = [];
         // All events use the same size
@@ -1174,14 +1125,12 @@ const Visualization = (function() {
             }
 
             // Calculate actual position (may be outside visible range)
-            const actualStartX = config.padding.left +
-                ((event.startTimestamp - startTimestamp) / timeRange) * chartWidth;
+            const actualStartX = currentTimeScale.yearToX(startYear);
 
             // Calculate end X for duration events
             let actualEndX = actualStartX;
             if (event.endDate && event.endDate.getFullYear() <= config.endYear) {
-                actualEndX = config.padding.left +
-                    ((event.endTimestamp - startTimestamp) / timeRange) * chartWidth;
+                actualEndX = currentTimeScale.yearToX(endYear);
             }
 
             // Clamp to visible range
