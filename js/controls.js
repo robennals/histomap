@@ -18,7 +18,7 @@ const Controls = (function() {
             selectedEventSets.add(set.name);
             // Set default heights based on band type
             let defaultMaxHeight = 80; // Default for most bands
-            if (set.name === 'Media' || set.name === 'Events') {
+            if (set.name === 'Fiction' || set.name === 'Events') {
                 defaultMaxHeight = 60; // Media and Events bands get less height
             }
 

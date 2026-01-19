@@ -626,7 +626,8 @@ const Visualization = (function() {
 
             const maxHeight = eventSet.maxHeight || 999;
             const isPeopleBand = eventSet.name === "People";
-            maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y, maxHeight, isPeopleBand);
+            const isPresidentsBand = eventSet.name === "Presidents";
+            maxY = drawPeopleBand(bandGroup, allEvents, startY, eventSet.color, y, maxHeight, isPeopleBand, isPresidentsBand);
 
             // Calculate actual height needed (maxY already includes content, just add bottom padding)
             actualHeight = (maxY - y) + bottomPadding;
@@ -716,9 +717,10 @@ const Visualization = (function() {
      * @param {number} bandY - Y position of the band
      * @param {number} maxHeight - Maximum height in pixels for this band
      * @param {boolean} isPeopleBand - If true, no end date means "still alive"; if false, no end date means "point event"
+     * @param {boolean} isPresidentsBand - If true, use strict two-line alternating layout
      * @returns {number} The maximum Y position used
      */
-    function drawPeopleBand(group, events, baseY, baseColor, bandY, maxHeight = 999, isPeopleBand = true) {
+    function drawPeopleBand(group, events, baseY, baseColor, bandY, maxHeight = 999, isPeopleBand = true, isPresidentsBand = false) {
         const startTimestamp = new Date(config.startYear, 0, 1).getTime();
         const endTimestamp = new Date(config.endYear, 11, 31).getTime();
         const timeRange = endTimestamp - startTimestamp;
@@ -798,7 +800,49 @@ const Visualization = (function() {
         // Track placed items (we'll draw them after calculating positions)
         const placedItems = [];
 
-        sortedPeople.forEach(person => {
+        // For Presidents band, use simpler alternating two-line layout
+        if (isPresidentsBand) {
+            // Sort presidents chronologically by start date
+            sortedPeople.sort((a, b) => a.startTimestamp - b.startTimestamp);
+
+            const line1Y = baseY;
+            const line2Y = baseY + (lineGap * 3); // Space for text labels to not overlap
+
+            sortedPeople.forEach((person, index) => {
+                const actualStartX = config.padding.left +
+                    ((person.startTimestamp - startTimestamp) / timeRange) * chartWidth;
+
+                let actualEndX = actualStartX;
+                if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
+                    actualEndX = config.padding.left +
+                        ((person.endTimestamp - startTimestamp) / timeRange) * chartWidth;
+                } else if (!person.endDate) {
+                    actualEndX = config.padding.left + chartWidth;
+                }
+
+                const startX = Math.max(actualStartX, config.padding.left);
+                const endX = Math.min(actualEndX, config.padding.left + chartWidth);
+                const lineLength = endX - startX;
+                const textWidth = person.name.length * charWidth;
+
+                // Alternate between two lines
+                const lineY = (index % 2 === 0) ? line1Y : line2Y;
+                const textX = startX;
+
+                // Store position for rendering
+                person.personColor = person.color || colors[index % colors.length];
+                placedItems.push({
+                    person,
+                    lineY,
+                    startX,
+                    endX,
+                    textX,
+                    textWidth
+                });
+            });
+        } else {
+            // Normal layout logic for non-presidents
+            sortedPeople.forEach(person => {
             // Calculate the actual timeline position (may be outside visible range)
             const actualStartX = config.padding.left +
                 ((person.startTimestamp - startTimestamp) / timeRange) * chartWidth;
@@ -848,7 +892,7 @@ const Visualization = (function() {
                     break;
                 }
 
-                // Step 1: Check if line position has any line overlaps
+                // Step 1: Check if timeline line position overlaps with other timeline lines
                 let hasLineOverlap = false;
                 for (const placed of placedItems) {
                     const horizontalOverlap = (startX < placed.endX) && (endX > placed.startX);
@@ -866,12 +910,13 @@ const Visualization = (function() {
                 }
 
                 // Step 2: Try to find horizontal position for text at this Y
+                // Labels only need to avoid other labels, not timelines
                 textX = startX;
                 let foundTextPosition = false;
 
                 // Get all placed items that are vertically close enough for text to overlap
-                // Using 12px instead of full textHeight (16px) allows labels to be closer together
-                const verticalTextOverlapThreshold = 12;
+                // Using 18px allows space for a timeline (with 6px gap) to fit between labels
+                const verticalTextOverlapThreshold = 18;
                 const nearbyItems = placedItems.filter(p => {
                     const verticalGap = Math.abs(lineY - p.lineY);
                     return verticalGap < verticalTextOverlapThreshold;
@@ -907,8 +952,9 @@ const Visualization = (function() {
                 if (foundTextPosition) {
                     foundPosition = true;
                 } else {
-                    // Couldn't find text position, shift line down
-                    lineY += textHeight;
+                    // Couldn't find text position, shift timeline down by lineGap
+                    // This ensures consistent vertical spacing whether avoiding timelines or labels
+                    lineY += lineGap;
                 }
             }
 
@@ -929,13 +975,19 @@ const Visualization = (function() {
                 textX: textX,
                 textWidth: textWidth
             });
-        });
+            }); // End of non-presidents forEach
+        } // End of else block for non-presidents
 
         // Sort placed items by Y position and assign colors intelligently
-        placedItems.sort((a, b) => a.lineY - b.lineY);
+        // Skip sorting for presidents to maintain chronological order
+        if (!isPresidentsBand) {
+            placedItems.sort((a, b) => a.lineY - b.lineY);
+        }
 
         // Assign colors to avoid similar colors for adjacent items
-        placedItems.forEach((item, idx) => {
+        // Presidents already have their colors assigned
+        if (!isPresidentsBand) {
+            placedItems.forEach((item, idx) => {
             // If event already has a color (e.g., presidents with party colors), use it
             if (item.person.color) {
                 item.person.personColor = item.person.color;
@@ -984,7 +1036,8 @@ const Visualization = (function() {
 
                 item.person.personColor = bestColor;
             }
-        });
+            }); // End of color assignment forEach
+        } // End of if (!isPresidentsBand) for color assignment
 
         // Draw all timeline lines first (continuous from start to end)
         placedItems.forEach(item => {

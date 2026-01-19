@@ -8,9 +8,54 @@
       "priority": 2
     },
     {
+      "name": "Coke Smelting",
+      "start": "1709-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Spinning Jenny",
+      "start": "1764-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Flush Toilet",
+      "start": "1775-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Iron Bridge",
+      "start": "1779-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Power Loom",
+      "start": "1785-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Gas Lighting",
+      "start": "1792-01-01",
+      "priority": 2
+    },
+    {
       "name": "Cotton Gin",
       "start": "1793-03-14",
       "priority": 2
+    },
+    {
+      "name": "Battery",
+      "start": "1800-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Machine Tools",
+      "start": "1800-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Food Can",
+      "start": "1810-01-01",
+      "priority": 3
     },
     {
       "name": "Steamboat",
@@ -18,13 +63,53 @@
       "priority": 2
     },
     {
-      "name": "Locomotive",
+      "name": "Steam Train",
       "start": "1825-09-27",
+      "priority": 2
+    },
+    {
+      "name": "Refrigerator",
+      "start": "1834-01-01",
       "priority": 2
     },
     {
       "name": "Telegraph",
       "start": "1837-09-04",
+      "priority": 2
+    },
+    {
+      "name": "Vulcanized Rubber",
+      "start": "1839-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Ford Model T",
+      "start": "1908-01-01",
+      "priority": 2
+    },
+    { 
+      "name": "Antibiotics",
+      "start": "1928-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Sythetic Plastic",
+      "start": "1907-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Frozen Food",
+      "start": "1920-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Radar",
+      "start": "1935-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Petrol Engine",
+      "start": "1876-01-01",
       "priority": 2
     },
     {
@@ -48,11 +133,6 @@
       "priority": 2
     },
     {
-      "name": "Transcontinental Railroad",
-      "start": "1869-05-10",
-      "priority": 1
-    },
-    {
       "name": "Telephone",
       "start": "1876-03-10",
       "priority": 1
@@ -71,6 +151,11 @@
       "name": "Skyscraper",
       "start": "1885-01-01",
       "priority": 2
+    },
+    {
+      "name": "Dishwasher",
+      "start": "1886-01-01",
+      "priority": 3
     },
     {
       "name": "Motion Pictures",
@@ -93,11 +178,6 @@
       "priority": 1
     },
     {
-      "name": "Commercial Radio Broadcasting",
-      "start": "1920-11-02",
-      "priority": 2
-    },
-    {
       "name": "Television",
       "start": "1927-09-07",
       "priority": 2
@@ -113,7 +193,12 @@
       "priority": 1
     },
     {
-      "name": "Electronic Computer (ENIAC)",
+      "name": "Microwave Oven",
+      "start": "1945-10-08",
+      "priority": 3
+    },
+    {
+      "name": "Electronic Computer",
       "start": "1946-02-14",
       "priority": 1
     },
@@ -288,8 +373,8 @@
       "priority": 1
     },
     {
-      "name": "ChatGPT",
-      "start": "2022-11-30",
+      "name": "GPT3",
+      "start": "2020-06-01",
       "priority": 1
     }
   ]
