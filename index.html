@@ -3,11 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timeline of US History</title>
+    <title>Histomap - Interactive Historical Timeline</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
+        <!-- Top Toolbar -->
+        <header class="toolbar">
+            <div class="toolbar-content">
+                <div class="toolbar-left">
+                    <h1 class="app-title">Histomap</h1>
+                    <div class="timeline-selector">
+                        <label for="timeline-select">Timeline:</label>
+                        <select id="timeline-select">
+                            <option value="us" selected>US History (1750-2025)</option>
+                            <option value="world" disabled>World History (20,000 BC - Today)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <button id="toggle-controls" class="btn-toolbar">Settings</button>
+                    <button id="export-pdf" class="btn-toolbar">Export PDF</button>
+                </div>
+            </div>
+        </header>
+
         <div class="main-content">
 
             <!-- Controls Panel (slide-in drawer) -->
@@ -61,13 +81,7 @@
 
         <footer>
             <div class="footer-content">
-                <div class="footer-info">
-                    <p>World power data from the <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank">Maddison Project Database</a></p>
-                </div>
-                <div class="footer-actions">
-                    <button id="toggle-controls" class="toggle-controls-btn">Settings</button>
-                    <button id="export-pdf" class="btn btn-secondary">Export as PDF</button>
-                </div>
+                <p id="data-attribution">World power data from the <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank">Maddison Project Database</a></p>
             </div>
         </footer>
     </div>
