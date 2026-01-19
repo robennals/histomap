@@ -2,40 +2,62 @@
 // Handles loading and managing event set data
 
 const DataLoader = (function() {
-    // List of available data files
-    const DATA_FILES = [
-        // 'data/wars.json',
-        // 'data/historical-events.json',
-        'data/eras.json',
-        'data/presidents.json',
-        'data/notable-people.json',
-        'data/media.json',
-        'data/technology.json',
-        { type: 'csv', path: 'data/bloc_gdp_summary.csv', name: 'World Power' }
-    ];
-
     let eventSets = [];
 
     /**
+     * Get data files list based on path
+     * @param {string} path - Data path (e.g., 'data/us/' or 'data/world/')
+     * @returns {Array} Array of file paths/objects
+     */
+    function getDataFilesForPath(path) {
+        const base = path.endsWith('/') ? path : path + '/';
+
+        if (path.includes('world')) {
+            return [
+                `${base}eras.json`,
+                `${base}notable-people.json`,
+                `${base}technology.json`,
+                `${base}media.json`,
+                `${base}world-power.json`
+            ];
+        } else {
+            // US timeline
+            return [
+                `${base}eras.json`,
+                `${base}presidents.json`,
+                `${base}notable-people.json`,
+                `${base}media.json`,
+                `${base}technology.json`,
+                { type: 'csv', path: `${base}bloc_gdp_summary.csv`, name: 'World Power' }
+            ];
+        }
+    }
+
+    /**
      * Load all event sets from JSON files and CSV files
+     * @param {string} dataPath - Path to data directory (default: 'data/us/')
      * @returns {Promise<Array>} Array of event sets
      */
-    async function loadAllEventSets() {
+    async function loadAllEventSets(dataPath = 'data/us/') {
         try {
+            const DATA_FILES = getDataFilesForPath(dataPath);
+
             const promises = DATA_FILES.map(file => {
+                const filePath = typeof file === 'string' ? file : file.path;
+
                 if (typeof file === 'string') {
                     // JSON file
-                    return fetch(file).then(response => {
+                    return fetch(filePath).then(response => {
                         if (!response.ok) {
-                            throw new Error(`Failed to load ${file}`);
+                            throw new Error(`Failed to load ${filePath}`);
                         }
                         return response.json();
                     });
                 } else if (file.type === 'csv') {
                     // CSV file
-                    return fetch(file.path).then(response => {
+                    return fetch(filePath).then(response => {
                         if (!response.ok) {
-                            throw new Error(`Failed to load ${file.path}`);
+                            throw new Error(`Failed to load ${filePath}`);
                         }
                         return response.text();
                     }).then(text => processGDPCSV(text, file.name));
@@ -99,26 +121,36 @@ const DataLoader = (function() {
     }
 
     /**
-     * Process an event set - convert date strings to Date objects
+     * Extract year from ISO date string (handles negative years for BC)
+     * @param {string} dateString - ISO date string (e.g., "1776-07-04" or "-500-01-01")
+     * @returns {number} Year as integer (negative for BC)
+     */
+    function extractYear(dateString) {
+        const match = dateString.match(/^(-?\d+)-/);
+        return match ? parseInt(match[1]) : 0;
+    }
+
+    /**
+     * Process an event set - convert date strings to Date objects and extract years
      * @param {Object} eventSet - The event set to process
      */
     function processEventSet(eventSet) {
         eventSet.events.forEach(event => {
-            // Convert start date string to Date object
+            // Extract numeric year (handles negative for BC)
+            event.startYear = extractYear(event.start);
+            event.endYear = event.end ? extractYear(event.end) : null;
+
+            // Keep Date objects for compatibility (unreliable for BC but kept for legacy)
             event.startDate = new Date(event.start);
+            event.endDate = event.end ? new Date(event.end) : null;
 
-            // Convert end date if it exists
-            if (event.end) {
-                event.endDate = new Date(event.end);
-            }
-
-            // Add timestamp for easier calculations
-            event.startTimestamp = event.startDate.getTime();
-            event.endTimestamp = event.endDate ? event.endDate.getTime() : null;
+            // Use year values for timestamp calculations (works for BC)
+            event.startTimestamp = event.startYear;
+            event.endTimestamp = event.endYear;
         });
 
-        // Sort events by start date
-        eventSet.events.sort((a, b) => a.startTimestamp - b.startTimestamp);
+        // Sort events by start year
+        eventSet.events.sort((a, b) => a.startYear - b.startYear);
     }
 
     /**

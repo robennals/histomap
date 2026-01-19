@@ -35,6 +35,94 @@ body {
     overflow: hidden;
 }
 
+/* Toolbar */
+.toolbar {
+    background: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.toolbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.app-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.timeline-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.timeline-selector label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+}
+
+.timeline-selector select {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 260px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.timeline-selector select:hover:not(:disabled) {
+    border-color: #3498db;
+}
+
+.timeline-selector select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.toolbar-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-toolbar {
+    padding: 6px 16px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-toolbar:hover {
+    background: #2980b9;
+}
+
+.btn-toolbar:active {
+    background: #21618c;
+}
+
 /* Main Content Layout */
 .main-content {
     position: relative;
@@ -46,8 +134,8 @@ body {
 
 /* Footer */
 footer {
-    margin-top: 15px;
-    padding: 12px;
+    margin-top: 10px;
+    padding: 8px 12px;
     background: white;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -55,60 +143,22 @@ footer {
 }
 
 .footer-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    text-align: center;
 }
 
-.footer-info {
-    flex: 1;
-}
-
-.footer-info p {
+.footer-content p {
     margin: 0;
     font-size: 0.85em;
     color: #555;
 }
 
-.footer-info a {
+.footer-content a {
     color: #3498db;
     text-decoration: none;
 }
 
-.footer-info a:hover {
+.footer-content a:hover {
     text-decoration: underline;
-}
-
-.footer-actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-footer .btn,
-footer .toggle-controls-btn {
-    width: auto;
-    padding: 6px 12px;
-    font-size: 0.9em;
-    margin-bottom: 0;
-}
-
-/* Toggle Button */
-.toggle-controls-btn {
-    padding: 6px 12px;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.toggle-controls-btn:hover {
-    background: #2980b9;
 }
 
 /* Controls Panel - Slide-in Drawer */

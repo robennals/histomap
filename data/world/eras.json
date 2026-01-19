@@ -1,0 +1,162 @@
+{
+  "name": "Eras",
+  "color": "#9b59b6",
+  "events": [
+    {
+      "name": "Upper Paleolithic",
+      "start": "-20000-01-01",
+      "end": "-10000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Neolithic Revolution",
+      "start": "-10000-01-01",
+      "end": "-6000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Bronze Age",
+      "start": "-3300-01-01",
+      "end": "-1200-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Iron Age",
+      "start": "-1200-01-01",
+      "end": "-600-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Classical Antiquity",
+      "start": "-800-01-01",
+      "end": "476-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Axial Age",
+      "start": "-800-01-01",
+      "end": "-200-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Roman Empire",
+      "start": "-27-01-01",
+      "end": "476-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Early Middle Ages",
+      "start": "476-01-01",
+      "end": "1000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Islamic Golden Age",
+      "start": "750-01-01",
+      "end": "1258-01-01",
+      "priority": 2
+    },
+    {
+      "name": "High Middle Ages",
+      "start": "1000-01-01",
+      "end": "1300-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Late Middle Ages",
+      "start": "1300-01-01",
+      "end": "1500-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Renaissance",
+      "start": "1300-01-01",
+      "end": "1600-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Age of Discovery",
+      "start": "1400-01-01",
+      "end": "1600-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Protestant Reformation",
+      "start": "1517-01-01",
+      "end": "1648-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Scientific Revolution",
+      "start": "1550-01-01",
+      "end": "1700-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Enlightenment",
+      "start": "1650-01-01",
+      "end": "1800-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Industrial Revolution",
+      "start": "1760-01-01",
+      "end": "1840-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Age of Imperialism",
+      "start": "1800-01-01",
+      "end": "1914-08-01",
+      "priority": 2
+    },
+    {
+      "name": "World War I",
+      "start": "1914-07-28",
+      "end": "1918-11-11",
+      "priority": 1
+    },
+    {
+      "name": "Interwar Period",
+      "start": "1918-11-11",
+      "end": "1939-09-01",
+      "priority": 2
+    },
+    {
+      "name": "World War II",
+      "start": "1939-09-01",
+      "end": "1945-09-02",
+      "priority": 1
+    },
+    {
+      "name": "Cold War",
+      "start": "1947-03-12",
+      "end": "1991-12-26",
+      "priority": 1
+    },
+    {
+      "name": "Decolonization",
+      "start": "1945-01-01",
+      "end": "1975-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Space Age",
+      "start": "1957-10-04",
+      "end": "1991-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Information Age",
+      "start": "1970-01-01",
+      "end": "2025-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Digital Revolution",
+      "start": "1990-01-01",
+      "end": "2025-01-01",
+      "priority": 2
+    }
+  ]
+}

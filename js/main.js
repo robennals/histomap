@@ -10,10 +10,31 @@ const AppState = {
 };
 
 /**
+ * Get timeline ID from URL query parameter
+ * @returns {string} Timeline ID ('us' or 'world')
+ */
+function getTimelineFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const timeline = params.get('timeline');
+    return TimelineConfig.isValidTimelineId(timeline) ? timeline : 'us';
+}
+
+/**
+ * Update URL with current timeline
+ * @param {string} timelineId - Timeline ID to set in URL
+ */
+function updateURL(timelineId) {
+    const url = new URL(window.location);
+    url.searchParams.set('timeline', timelineId);
+    window.history.pushState({}, '', url);
+}
+
+/**
  * Initialize a specific timeline
  * @param {string} timelineId - ID of timeline to initialize ('us' or 'world')
+ * @param {boolean} updateUrl - Whether to update the URL (default: true)
  */
-async function initializeTimeline(timelineId) {
+async function initializeTimeline(timelineId, updateUrl = true) {
     try {
         // Show loading state
         const container = document.getElementById('svg-container');
@@ -25,6 +46,17 @@ async function initializeTimeline(timelineId) {
         AppState.timelineConfig = config;
 
         console.log(`Initializing ${config.name}...`);
+
+        // Update URL if requested
+        if (updateUrl) {
+            updateURL(timelineId);
+        }
+
+        // Update dropdown to match
+        const timelineSelect = document.getElementById('timeline-select');
+        if (timelineSelect && timelineSelect.value !== timelineId) {
+            timelineSelect.value = timelineId;
+        }
 
         // Load event sets for this timeline
         AppState.eventSets = await DataLoader.loadAllEventSets(config.dataPath);
@@ -60,6 +92,23 @@ async function initializeTimeline(timelineId) {
 
 // Initialize app when DOM is ready
 (async function() {
-    // Start with US timeline
-    await initializeTimeline('us');
+    // Set up timeline selector event listener
+    const timelineSelect = document.getElementById('timeline-select');
+    if (timelineSelect) {
+        timelineSelect.addEventListener('change', async (event) => {
+            const selectedTimeline = event.target.value;
+            console.log(`Switching to ${selectedTimeline} timeline...`);
+            await initializeTimeline(selectedTimeline);
+        });
+    }
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', async () => {
+        const timelineId = getTimelineFromURL();
+        await initializeTimeline(timelineId, false); // Don't update URL again
+    });
+
+    // Start with timeline from URL (or default to US)
+    const initialTimeline = getTimelineFromURL();
+    await initializeTimeline(initialTimeline, false); // Don't update URL on initial load
 })();

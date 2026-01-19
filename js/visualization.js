@@ -310,7 +310,7 @@ const Visualization = (function() {
 
         // Filter to include years within our visible range
         let visibleDataPoints = allDataPoints.filter(dp =>
-            dp.year >= config.startYear && dp.year < config.endYear
+            dp.year >= currentTimeScale.startYear && dp.year < currentTimeScale.endYear
         );
 
         // Always extend to endYear + 1 to ensure bands go to the right edge
@@ -319,7 +319,7 @@ const Visualization = (function() {
             const lastDataYear = visibleDataPoints[visibleDataPoints.length - 1].year;
             // Add a synthetic point beyond endYear to reach the right edge
             visibleDataPoints = [...visibleDataPoints, {
-                year: config.endYear + 1,
+                year: currentTimeScale.endYear + 1,
                 gdpPercent: visibleDataPoints[visibleDataPoints.length - 1].gdpPercent
             }];
         }
@@ -435,7 +435,7 @@ const Visualization = (function() {
             let peakGDP = 0;
             points.forEach(point => {
                 // Only consider points within visible range
-                if (point.year >= config.startYear && point.year <= config.endYear) {
+                if (point.year >= currentTimeScale.startYear && point.year <= currentTimeScale.endYear) {
                     if (point.gdpPercent > peakGDP) {
                         peakGDP = point.gdpPercent;
                     }
@@ -484,16 +484,16 @@ const Visualization = (function() {
             let peakPoint = null;
             points.forEach(point => {
                 // Find peak within visible range
-                if (point.year >= config.startYear && point.year <= config.endYear) {
+                if (point.year >= currentTimeScale.startYear && point.year <= currentTimeScale.endYear) {
                     if (point.gdpPercent === peakGDP) {
-                        if (!peakPoint || point.year - config.startYear >= 10) {
+                        if (!peakPoint || point.year - currentTimeScale.startYear >= 10) {
                             peakPoint = point;
                         }
                     }
                 }
             });
 
-            if (peakPoint && peakPoint.year - config.startYear >= 10) {
+            if (peakPoint && peakPoint.year - currentTimeScale.startYear >= 10) {
                 const blocPixelHeight = (peakPoint.gdpPercent / 100) * bandHeight;
                 const centerY = peakPoint.y + (blocPixelHeight / 2);
                 placeLabel(blocName, peakPoint.x, centerY, blocPixelHeight);
@@ -514,7 +514,7 @@ const Visualization = (function() {
                 points.forEach(point => {
                     const { year, gdpPercent } = point;
                     if (gdpPercent < 5) return; // Secondary labels only when >5%
-                    if (year - config.startYear < 10) return; // Too close to start
+                    if (year - currentTimeScale.startYear < 10) return; // Too close to start
 
                     // Calculate distance to nearest existing label of this bloc
                     let minDistToOwnLabel = Infinity;
@@ -736,14 +736,13 @@ const Visualization = (function() {
         // Filter events within time range (include if they overlap with visible range)
         const visiblePeople = [];
         events.forEach((event) => {
-            const startYear = event.startDate.getFullYear();
+            const startYear = event.startYear;
             // For people without end date, they're "still alive" - extend to endYear
             // For non-people without end date, it's a point event - use startYear
-            const endYear = event.endDate ? event.endDate.getFullYear() :
-                            (isPeopleBand ? config.endYear : startYear);
+            const endYear = event.endYear || (isPeopleBand ? currentTimeScale.endYear : startYear);
 
             // Include event if it overlaps with the visible time range
-            if (endYear >= config.startYear && startYear <= config.endYear) {
+            if (endYear >= currentTimeScale.startYear && startYear <= currentTimeScale.endYear) {
                 visiblePeople.push(event);
             }
         });
@@ -783,19 +782,18 @@ const Visualization = (function() {
             const line2Y = baseY + (lineGap * 3); // Space for text labels to not overlap
 
             sortedPeople.forEach((person, index) => {
-                const startYear = person.startDate.getFullYear();
+                const startYear = person.startYear;
                 const actualStartX = currentTimeScale.yearToX(startYear);
 
                 let actualEndX = actualStartX;
-                if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
-                    const endYear = person.endDate.getFullYear();
-                    actualEndX = currentTimeScale.yearToX(endYear);
-                } else if (!person.endDate) {
-                    actualEndX = currentTimeScale.yearToX(config.endYear);
+                if (person.endYear && person.endYear <= currentTimeScale.endYear) {
+                    actualEndX = currentTimeScale.yearToX(person.endYear);
+                } else if (!person.endYear) {
+                    actualEndX = currentTimeScale.yearToX(currentTimeScale.endYear);
                 }
 
                 const startX = Math.max(actualStartX, config.padding.left);
-                const endX = Math.min(actualEndX, currentTimeScale.yearToX(config.endYear));
+                const endX = Math.min(actualEndX, currentTimeScale.yearToX(currentTimeScale.endYear));
                 const lineLength = endX - startX;
                 const textWidth = person.name.length * charWidth;
 
@@ -818,18 +816,17 @@ const Visualization = (function() {
             // Normal layout logic for non-presidents
             sortedPeople.forEach(person => {
             // Calculate the actual timeline position (may be outside visible range)
-            const startYear = person.startDate.getFullYear();
+            const startYear = person.startYear;
             const actualStartX = currentTimeScale.yearToX(startYear);
 
             let actualEndX = actualStartX;
-            if (person.endDate && person.endDate.getFullYear() <= config.endYear) {
+            if (person.endYear && person.endYear <= currentTimeScale.endYear) {
                 // Event has ended
-                const endYear = person.endDate.getFullYear();
-                actualEndX = currentTimeScale.yearToX(endYear);
-            } else if (!person.endDate) {
+                actualEndX = currentTimeScale.yearToX(person.endYear);
+            } else if (!person.endYear) {
                 if (isPeopleBand) {
                     // Person is still alive, extend line to current end of timeline
-                    actualEndX = currentTimeScale.yearToX(config.endYear);
+                    actualEndX = currentTimeScale.yearToX(currentTimeScale.endYear);
                 } else {
                     // Point event - no line extension
                     actualEndX = actualStartX;
@@ -838,7 +835,7 @@ const Visualization = (function() {
 
             // Clamp the visible line to the visible range
             const startX = Math.max(actualStartX, config.padding.left);
-            const endX = Math.min(actualEndX, currentTimeScale.yearToX(config.endYear));
+            const endX = Math.min(actualEndX, currentTimeScale.yearToX(currentTimeScale.endYear));
 
             const lineLength = endX - startX;
             const textWidth = person.name.length * charWidth;
@@ -846,7 +843,7 @@ const Visualization = (function() {
             // For other events, allow text to extend beyond the event (to the right edge)
             const maxTextX = isPeopleBand ?
                 (startX + lineLength - textWidth) :
-                (currentTimeScale.yearToX(config.endYear) - textWidth);
+                (currentTimeScale.yearToX(currentTimeScale.endYear) - textWidth);
 
             // Find Y position and text position together
             let lineY = baseY;
@@ -1116,11 +1113,11 @@ const Visualization = (function() {
 
         sortedEvents.forEach(event => {
             // Only draw events that overlap with the visible time range
-            const startYear = event.startDate.getFullYear();
-            const endYear = event.endDate ? event.endDate.getFullYear() : startYear;
+            const startYear = event.startYear;
+            const endYear = event.endYear || startYear;
 
             // Skip if event doesn't overlap with visible range
-            if (endYear < config.startYear || startYear > config.endYear) {
+            if (endYear < currentTimeScale.startYear || startYear > currentTimeScale.endYear) {
                 return;
             }
 
@@ -1129,7 +1126,7 @@ const Visualization = (function() {
 
             // Calculate end X for duration events
             let actualEndX = actualStartX;
-            if (event.endDate && event.endDate.getFullYear() <= config.endYear) {
+            if (endYear && endYear <= currentTimeScale.endYear) {
                 actualEndX = currentTimeScale.yearToX(endYear);
             }
 
@@ -1212,7 +1209,7 @@ const Visualization = (function() {
             group.appendChild(label);
 
             // Draw underline beneath text extending for the duration
-            if (event.endDate && event.endDate.getFullYear() <= config.endYear) {
+            if (endYear && endYear <= currentTimeScale.endYear) {
                 const underlineY = labelY + 2; // Close to bottom of text
                 const underline = createSVGElement('line', {
                     x1: labelStartX,

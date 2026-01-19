@@ -162,31 +162,96 @@ const TimeScale = (function() {
          * @returns {Array} Array of tick objects
          */
         getLogTicks() {
-            // Key historical years that make sense on log scale
-            const majorYears = [
-                -20000, -10000, -5000, -3000, -2000, -1000, -500,
-                0, 500, 1000, 1500, 1800, 1900, 1950, 1975, 2000, 2015, 2025
-            ];
+            const ticks = [];
 
-            return majorYears
-                .filter(y => y >= this.startYear && y <= this.endYear)
-                .map(year => {
-                    const isPrimaryTick = (
-                        year === -20000 || year === -10000 ||
-                        year === -5000 || year === 0 ||
-                        year === 1000 || year === 2000
-                    );
+            // Helper function to interpolate between two hex colors
+            const interpolateColor = (startColor, endColor, factor) => {
+                // Expand 3-char hex to 6-char hex if needed
+                const expandHex = (hex) => {
+                    const h = hex.slice(1);
+                    if (h.length === 3) {
+                        return '#' + h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+                    }
+                    return hex;
+                };
 
-                    return {
-                        year,
-                        showLabel: true,
-                        showGrid: true,
-                        height: isPrimaryTick ? 13 : 8,
-                        width: isPrimaryTick ? 2 : 1,
-                        color: isPrimaryTick ? '#5a6c7d' : '#bdc3c7',
-                        labelWeight: isPrimaryTick ? 'bold' : 'normal'
-                    };
+                startColor = expandHex(startColor);
+                endColor = expandHex(endColor);
+
+                // Parse hex colors
+                const start = parseInt(startColor.slice(1), 16);
+                const end = parseInt(endColor.slice(1), 16);
+
+                // Extract RGB components
+                const startR = (start >> 16) & 0xff;
+                const startG = (start >> 8) & 0xff;
+                const startB = start & 0xff;
+
+                const endR = (end >> 16) & 0xff;
+                const endG = (end >> 8) & 0xff;
+                const endB = end & 0xff;
+
+                // Interpolate each component
+                const r = Math.round(startR + (endR - startR) * factor);
+                const g = Math.round(startG + (endG - startG) * factor);
+                const b = Math.round(startB + (endB - startB) * factor);
+
+                // Convert back to hex with proper padding
+                const toHex = (n) => ('0' + n.toString(16)).slice(-2);
+                return '#' + toHex(r) + toHex(g) + toHex(b);
+            };
+
+            // Generate decade gridlines (every 10 years)
+            const startDecade = Math.floor(this.startYear / 10) * 10;
+            const endDecade = Math.ceil(this.endYear / 10) * 10;
+
+            for (let year = startDecade; year <= endDecade; year += 10) {
+                if (year < this.startYear || year > this.endYear) continue;
+
+                // Calculate position factor (0 at start, 1 at end)
+                const yearRange = this.endYear - this.startYear;
+                const positionFactor = (year - this.startYear) / yearRange;
+
+                // Check if this is a century or millennium
+                const isMillennium = (year % 1000 === 0);
+                const isCentury = (year % 100 === 0);
+                const isHalfMillennium = false;
+
+                // Show labels for millennia, and centuries from 1000 onwards (but not 2001-2025)
+                const showLabel = isMillennium || (isCentury && year >= 1000 && year <= 2000);
+
+                // Different styling for millennia, centuries, and decades
+                let width, color, height;
+                if (isMillennium || isHalfMillennium) {
+                    width = 2;
+                    color = '#ccc';
+                    height = showLabel ? 13 : 0;
+                } else if (isCentury) {
+                    width = 1;
+                    // Interpolate from #eee (past) to #ddd (present)
+                    color = interpolateColor('#eee', '#ddd', positionFactor);
+                    height = showLabel ? 6 : 0;
+                } else {
+                    // Decade lines - interpolate from #e3e3e3 (past) to #d0d0d0 (present)
+                    width = 0.5;
+                    color = interpolateColor('#e3e3e3', '#d0d0d0', positionFactor);
+                    height = 0;
+                }
+
+                ticks.push({
+                    year,
+                    showLabel: showLabel,
+                    showGrid: true,
+                    height: height,
+                    width: width,
+                    color: color,
+                    opacity: isCentury || isMillennium ? 1.0 : 0.5,
+                    labelWeight: isMillennium || isHalfMillennium ? 'bold' : 'normal'
                 });
+            }
+
+            // Sort by year
+            return ticks.sort((a, b) => a.year - b.year);
         }
 
         /**
