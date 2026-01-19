@@ -39,6 +39,12 @@
       "priority": 2
     },
     {
+      "name": "Wild West",
+      "start": "1865-01-01",
+      "end": "1895-12-31",
+      "priority": 2
+    },
+    {
       "name": "Reconstruction",
       "start": "1865-05-09",
       "end": "1877-03-31",
@@ -55,6 +61,12 @@
       "start": "1896-01-01",
       "end": "1920-01-01",
       "priority": 1
+    },
+    {
+      "name": "Jazz Age",
+      "start": "1918-11-11",
+      "end": "1929-10-29",
+      "priority": 2
     },
     {
       "name": "Roaring Twenties",
@@ -90,7 +102,7 @@
       "name": "Civil Rights Movement",
       "start": "1954-05-17",
       "end": "1968-04-11",
-      "priority": 1
+      "priority": 2
     },
     {
       "name": "Stagflation",

@@ -39,6 +39,12 @@
       "priority": 2
     },
     {
+      "name": "The Alamo",
+      "start": "1836-02-23",
+      "end": "1836-03-06",
+      "priority": 1
+    },
+    {
       "name": "Amistad",
       "start": "1839-01-01",
       "end": "1841-12-31",
@@ -48,6 +54,12 @@
       "name": "Uncle Tom's Cabin",
       "start": "1850-01-01",
       "end": "1852-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Dances with Wolves",
+      "start": "1863-01-01",
+      "end": "1865-12-31",
       "priority": 2
     },
     {
@@ -75,9 +87,39 @@
       "priority": 2
     },
     {
+      "name": "Glory",
+      "start": "1863-01-01",
+      "end": "1863-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Gettysburg",
+      "start": "1863-07-01",
+      "end": "1863-07-03",
+      "priority": 1
+    },
+    {
+      "name": "Lincoln",
+      "start": "1865-01-01",
+      "end": "1865-04-15",
+      "priority": 1
+    },
+    {
+      "name": "Cold Mountain",
+      "start": "1864-01-01",
+      "end": "1865-12-31",
+      "priority": 2
+    },
+    {
       "name": "Call of the Wild",
       "start": "1897-01-01",
       "end": "1897-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Newsies",
+      "start": "1899-01-01",
+      "end": "1899-12-31",
       "priority": 2
     },
     {
@@ -87,10 +129,58 @@
       "priority": 2
     },
     {
+      "name": "The Jungle",
+      "start": "1906-01-01",
+      "end": "1906-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Ragtime",
+      "start": "1906-01-01",
+      "end": "1914-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Titanic",
+      "start": "1912-04-14",
+      "end": "1912-04-15",
+      "priority": 1
+    },
+    {
+      "name": "Show Boat",
+      "start": "1887-01-01",
+      "end": "1927-12-31",
+      "priority": 2
+    },
+    {
+      "name": "The Age of Innocence",
+      "start": "1870-01-01",
+      "end": "1900-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Main Street",
+      "start": "1912-01-01",
+      "end": "1920-12-31",
+      "priority": 2
+    },
+    {
       "name": "Great Gatsby",
       "start": "1922-01-01",
       "end": "1922-12-31",
       "priority": 1
+    },
+    {
+      "name": "Chicago",
+      "start": "1924-01-01",
+      "end": "1924-12-31",
+      "priority": 2
+    },
+    {
+      "name": "An American Tragedy",
+      "start": "1906-01-01",
+      "end": "1925-12-31",
+      "priority": 2
     },
     {
       "name": "Grapes of Wrath",
@@ -153,15 +243,75 @@
       "priority": 2
     },
     {
-      "name": "Jurassic Park",
-      "start": "1993-06-11",
-      "end": "1993-06-13",
-      "priority": 2
-    },
-    {
       "name": "Mad Men",
       "start": "1960-03-01",
       "end": "1970-11-01",
+      "priority": 2
+    },
+    {
+      "name": "American Graffiti",
+      "start": "1962-09-01",
+      "end": "1962-09-02",
+      "priority": 2
+    },
+    {
+      "name": "Dirty Dancing",
+      "start": "1963-08-01",
+      "end": "1963-08-31",
+      "priority": 2
+    },
+    {
+      "name": "The Outsiders",
+      "start": "1965-01-01",
+      "end": "1965-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Forrest Gump",
+      "start": "1951-01-01",
+      "end": "1982-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Platoon",
+      "start": "1967-09-01",
+      "end": "1968-01-31",
+      "priority": 1
+    },
+    {
+      "name": "All the President's Men",
+      "start": "1972-06-17",
+      "end": "1973-06-01",
+      "priority": 1
+    },
+    {
+      "name": "Rocky",
+      "start": "1975-11-25",
+      "end": "1976-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Taxi Driver",
+      "start": "1976-01-01",
+      "end": "1976-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Saturday Night Fever",
+      "start": "1977-12-01",
+      "end": "1977-12-31",
+      "priority": 2
+    },
+    {
+      "name": "Goodfellas",
+      "start": "1955-01-01",
+      "end": "1980-12-31",
+      "priority": 1
+    },
+    {
+      "name": "Do the Right Thing",
+      "start": "1989-07-01",
+      "end": "1989-07-02",
       "priority": 2
     },
     {
@@ -186,7 +336,7 @@
       "name": "Little House on the Prairie",
       "start": "1874-01-01",
       "end": "1875-12-31",
-      "priority": 2
+      "priority": 1
     },
     {
       "name": "West Side Story",

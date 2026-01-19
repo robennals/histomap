@@ -25,7 +25,7 @@ const Controls = (function() {
             eventSetSettings[set.name] = {
                 color: set.color,
                 maxHeight: set.type === 'gdp-blocs' ? undefined : defaultMaxHeight,
-                height: set.type === 'gdp-blocs' ? 100 : undefined // Height for GDP blocs
+                height: set.type === 'gdp-blocs' ? 80 : undefined // Height for GDP blocs
             };
         });
 
@@ -119,7 +119,7 @@ const Controls = (function() {
                 limitInput.min = '50';
                 limitInput.max = '500';
                 limitInput.step = '10';
-                limitInput.value = eventSetSettings[eventSet.name].height || 100;
+                limitInput.value = eventSetSettings[eventSet.name].height || 80;
                 limitInput.className = 'height-input';
             } else {
                 // Max height for other bands
