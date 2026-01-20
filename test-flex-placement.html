@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flex Placement Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .test { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background: #d4edda; }
+        .fail { background: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>Flexible Placement Algorithm Test</h1>
+    <div id="results"></div>
+
+    <script src="js/timelineConfig.js"></script>
+    <script src="js/timeScale.js"></script>
+    <script>
+        const results = document.getElementById('results');
+
+        function log(message, isPass) {
+            const div = document.createElement('div');
+            div.className = 'test ' + (isPass ? 'pass' : 'fail');
+            div.textContent = message;
+            results.appendChild(div);
+        }
+
+        // Setup
+        const config = TimelineConfig.getConfig('world');
+        const padding = { top: 100, right: 40, bottom: 60, left: 140 };
+        const chartWidth = 3000 - padding.left - padding.right;
+        const timeScale = new TimeScale(config, padding, chartWidth);
+
+        log('Timeline range: ' + config.startYear + ' to ' + config.endYear, true);
+        log('Chart width: ' + chartWidth + 'px', true);
+
+        // Test events with flexible placement
+        const testEvents = [
+            { name: "Plow", startYear: -3000, flexStartYear: -4000, flexEndYear: -2500 },
+            { name: "Calendar", startYear: -3000, flexStartYear: -3200, flexEndYear: -2800 },
+            { name: "Papyrus", startYear: -3000, flexStartYear: -3200, flexEndYear: -2800 },
+            { name: "Mathematics", startYear: -3000, flexStartYear: -3500, flexEndYear: -2500 }
+        ];
+
+        log('\n--- Testing Visibility ---', true);
+
+        // Test 1: Check if events are within visible range
+        testEvents.forEach(event => {
+            const inRange = event.flexEndYear >= config.startYear && event.flexStartYear <= config.endYear;
+            log(`${event.name} (${event.flexStartYear} to ${event.flexEndYear}): ${inRange ? 'VISIBLE' : 'HIDDEN'}`, inRange);
+        });
+
+        log('\n--- Testing Flexible Placement ---', true);
+
+        // Test 2: Simulate placement algorithm
+        const placedEvents = [];
+        const baseY = 100;
+        const verticalSpacing = 16;
+        const dotOffset = 8;
+        const labelPadding = 20;
+
+        testEvents.forEach(event => {
+            // Check visibility (use flex range for visibility check)
+            if (event.flexEndYear < config.startYear || event.flexStartYear > config.endYear) {
+                log(`${event.name}: SKIPPED (outside visible range)`, false);
+                return;
+            }
+
+            // Try to find optimal position
+            let displayYear = event.startYear;
+            const testPositions = [];
+            for (let i = 0; i <= 9; i++) {
+                const factor = i / 9;
+                const testYear = event.flexStartYear + (event.flexEndYear - event.flexStartYear) * factor;
+                testPositions.push(testYear);
+            }
+
+            let bestYear = event.startYear;
+            let minOverlap = Infinity;
+            const charWidth = 6;
+            const estimatedLabelWidth = event.name.length * charWidth;
+
+            for (const testYear of testPositions) {
+                const testX = timeScale.yearToX(testYear);
+                const testLabelStartX = testX + dotOffset;
+                const testLabelEndX = testLabelStartX + estimatedLabelWidth;
+
+                let overlapScore = 0;
+                for (const placed of placedEvents) {
+                    const textOverlapX = (testLabelStartX <= placed.labelEndX + labelPadding) &&
+                                        (testLabelEndX >= placed.labelStartX - labelPadding);
+                    if (textOverlapX && Math.abs(placed.labelY - baseY) < verticalSpacing) {
+                        overlapScore += 1;
+                    }
+                }
+
+                if (overlapScore < minOverlap) {
+                    minOverlap = overlapScore;
+                    bestYear = testYear;
+                }
+            }
+
+            displayYear = bestYear;
+            const actualStartX = timeScale.yearToX(displayYear);
+            const labelStartX = actualStartX + dotOffset;
+            const labelEndX = labelStartX + estimatedLabelWidth;
+
+            // Check if this position would work without going to another row
+            let needsNewRow = false;
+            for (const placed of placedEvents) {
+                const textOverlapX = (labelStartX <= placed.labelEndX + labelPadding) &&
+                                    (labelEndX >= placed.labelStartX - labelPadding);
+                if (textOverlapX && Math.abs(placed.labelY - baseY) < verticalSpacing) {
+                    needsNewRow = true;
+                    break;
+                }
+            }
+
+            placedEvents.push({
+                name: event.name,
+                x: actualStartX,
+                endX: actualStartX,
+                labelY: needsNewRow ? baseY + verticalSpacing : baseY,
+                labelStartX: labelStartX,
+                labelEndX: labelEndX
+            });
+
+            const xPos = Math.round(actualStartX);
+            const yearDiff = Math.round(displayYear - event.startYear);
+            log(`${event.name}: placed at year ${displayYear} (x=${xPos}px, shifted ${yearDiff} years, ${needsNewRow ? 'row 2' : 'row 1'}, overlap=${minOverlap})`, !needsNewRow || minOverlap === 0);
+        });
+
+        log('\n--- Final Layout ---', true);
+        placedEvents.forEach(placed => {
+            const row = Math.round((placed.labelY - baseY) / verticalSpacing) + 1;
+            log(`${placed.name}: x=${Math.round(placed.x)}px, row ${row}`, true);
+        });
+    </script>
+</body>
+</html>

@@ -814,9 +814,12 @@ const Visualization = (function() {
             });
         } else {
             // Normal layout logic for non-presidents
-            sortedPeople.forEach(person => {
+            sortedPeople.forEach((person, personIndex) => {
+            // Determine display year: use manual override if present, otherwise use start year
+            let displayYear = person.displayYear || person.startYear;
+
             // Calculate the actual timeline position (may be outside visible range)
-            const startYear = person.startYear;
+            const startYear = displayYear;
             const actualStartX = currentTimeScale.yearToX(startYear);
 
             let actualEndX = actualStartX;
@@ -1113,16 +1116,22 @@ const Visualization = (function() {
 
         sortedEvents.forEach(event => {
             // Only draw events that overlap with the visible time range
-            const startYear = event.startYear;
-            const endYear = event.endYear || startYear;
+            const checkStartYear = event.displayYear || event.startYear;
+            const checkEndYear = event.endYear || checkStartYear;
 
             // Skip if event doesn't overlap with visible range
-            if (endYear < currentTimeScale.startYear || startYear > currentTimeScale.endYear) {
+            if (checkEndYear < currentTimeScale.startYear || checkStartYear > currentTimeScale.endYear) {
                 return;
             }
 
+            const startYear = event.startYear;
+            const endYear = event.endYear || startYear;
+
+            // Use manual display year if provided, otherwise use start year
+            const displayYear = event.displayYear || event.startYear;
+
             // Calculate actual position (may be outside visible range)
-            const actualStartX = currentTimeScale.yearToX(startYear);
+            const actualStartX = currentTimeScale.yearToX(displayYear);
 
             // Calculate end X for duration events
             let actualEndX = actualStartX;
@@ -1174,7 +1183,14 @@ const Visualization = (function() {
             // Check if this event exceeds the max row limit
             const rowNumber = Math.floor((labelY - baseY) / verticalSpacing) + 1;
             if (rowNumber > maxRows) {
+                if (event.name === 'Plow') {
+                    console.log('Plow SKIPPED - exceeds maxRows:', { rowNumber, maxRows });
+                }
                 return; // Skip this event - it exceeds the row limit
+            }
+
+            if (event.name === 'Plow') {
+                console.log('Plow RENDERED at:', { displayYear, x: actualStartX, labelY, rowNumber });
             }
 
             // Record this event's position

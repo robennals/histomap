@@ -140,6 +140,13 @@ const DataLoader = (function() {
             event.startYear = extractYear(event.start);
             event.endYear = event.end ? extractYear(event.end) : null;
 
+            // Extract flexible placement range if provided
+            event.flexStartYear = event.flexStart ? extractYear(event.flexStart) : null;
+            event.flexEndYear = event.flexEnd ? extractYear(event.flexEnd) : null;
+
+            // Extract manual display year if provided (overrides automatic placement)
+            event.displayYear = event.display ? extractYear(event.display) : null;
+
             // Keep Date objects for compatibility (unreliable for BC but kept for legacy)
             event.startDate = new Date(event.start);
             event.endDate = event.end ? new Date(event.end) : null;
