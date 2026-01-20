@@ -7,7 +7,7 @@
     {"name": "Sumer", "start": "-4500-01-01", "end": "-1900-01-01", "priority": 2},
     {"name": "Akkadian Empire", "start": "-2334-01-01", "end": "-2154-01-01", "priority": 2},
     {"name": "Babylonian Empire", "start": "-1895-01-01", "end": "-539-01-01", "priority": 2},
-    {"name": "Assyrian Empire", "start": "-2500-01-01", "end": "-609-01-01", "priority": 2},
+    {"name": "Assyrian Empire", "start": "-1400-01-01", "end": "-609-01-01", "priority": 2},
     {"name": "Ancient Greece", "start": "-800-01-01", "end": "-146-01-01", "priority": 1},
     {"name": "Persian Empire", "start": "-550-01-01", "end": "-330-01-01", "priority": 1},
     {"name": "Macedonian Empire", "start": "-334-01-01", "end": "-323-01-01", "priority": 2},
