@@ -6,157 +6,183 @@
       "name": "Upper Paleolithic",
       "start": "-20000-01-01",
       "end": "-10000-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Upper_Paleolithic"
     },
     {
       "name": "Neolithic Revolution",
       "start": "-10000-01-01",
       "end": "-6000-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Neolithic_Revolution"
     },
     {
       "name": "Bronze Age",
       "start": "-3300-01-01",
       "end": "-1200-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Bronze_Age"
     },
     {
       "name": "Iron Age",
       "start": "-1200-01-01",
       "end": "-600-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Iron_Age"
     },
     {
       "name": "Classical Antiquity",
       "start": "-800-01-01",
       "end": "476-12-31",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Classical_Antiquity"
     },
     {
       "name": "Axial Age",
       "start": "-800-01-01",
       "end": "-200-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Axial_Age"
     },
     {
       "name": "Roman Empire",
       "start": "-27-01-01",
       "end": "476-12-31",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Roman_Empire"
     },
     {
       "name": "Early Middle Ages",
       "start": "476-01-01",
       "end": "1000-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Early_Middle_Ages"
     },
     {
       "name": "Islamic Golden Age",
       "start": "750-01-01",
       "end": "1258-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Islamic_Golden_Age"
     },
     {
       "name": "High Middle Ages",
       "start": "1000-01-01",
       "end": "1300-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "High_Middle_Ages"
     },
     {
       "name": "Late Middle Ages",
       "start": "1300-01-01",
       "end": "1500-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Late_Middle_Ages"
     },
     {
       "name": "Renaissance",
       "start": "1300-01-01",
       "end": "1600-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Renaissance"
     },
     {
       "name": "Age of Discovery",
       "start": "1400-01-01",
       "end": "1600-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Age_of_Discovery"
     },
     {
       "name": "Protestant Reformation",
       "start": "1517-01-01",
       "end": "1648-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Protestant_Reformation"
     },
     {
       "name": "Scientific Revolution",
       "start": "1550-01-01",
       "end": "1700-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Scientific_Revolution"
     },
     {
       "name": "Enlightenment",
       "start": "1650-01-01",
       "end": "1800-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Enlightenment"
     },
     {
       "name": "Industrial Revolution",
       "start": "1760-01-01",
       "end": "1840-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Industrial_Revolution"
     },
     {
       "name": "Age of Imperialism",
       "start": "1800-01-01",
       "end": "1914-08-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Age_of_Imperialism"
     },
     {
       "name": "World War I",
       "start": "1914-07-28",
       "end": "1918-11-11",
-      "priority": 1
+      "priority": 1,
+      "wiki": "World_War_I"
     },
     {
       "name": "Interwar Period",
       "start": "1918-11-11",
       "end": "1939-09-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Interwar_Period"
     },
     {
       "name": "World War II",
       "start": "1939-09-01",
       "end": "1945-09-02",
-      "priority": 1
+      "priority": 1,
+      "wiki": "World_War_II"
     },
     {
       "name": "Cold War",
       "start": "1947-03-12",
       "end": "1991-12-26",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Cold_War"
     },
     {
       "name": "Decolonization",
       "start": "1945-01-01",
       "end": "1975-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Decolonization"
     },
     {
       "name": "Space Age",
       "start": "1957-10-04",
       "end": "1991-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Space_Age"
     },
     {
       "name": "Information Age",
       "start": "1970-01-01",
       "end": "2025-01-01",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Information_Age"
     },
     {
       "name": "Digital Revolution",
       "start": "1990-01-01",
       "end": "2025-01-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Digital_Revolution"
     }
   ]
 }

@@ -6,312 +6,365 @@
       "name": "Benjamin Franklin",
       "start": "1706-01-17",
       "end": "1790-04-17",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Benjamin_Franklin"
     },
     {
       "name": "Alexander Hamilton",
       "start": "1755-01-11",
       "end": "1804-07-12",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Alexander_Hamilton"
     },
     {
       "name": "Daniel Boone",
       "start": "1734-11-02",
       "end": "1820-09-26",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Daniel_Boone"
     },
     {
       "name": "Paul Revere",
       "start": "1735-01-01",
       "end": "1818-05-10",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Paul_Revere"
     },
     {
       "name": "Benedict Arnold",
       "start": "1741-01-14",
       "end": "1801-06-14",
-      "priority": 3
+      "priority": 3,
+      "wiki": "Benedict_Arnold"
     },
     {
       "name": "John Paul Jones",
       "start": "1747-07-06",
       "end": "1792-07-18",
-      "priority": 3
+      "priority": 3,
+      "wiki": "John_Paul_Jones"
     },
     {
       "name": "Betsy Ross",
       "start": "1752-01-01",
       "end": "1836-01-30",
-      "priority": 3
+      "priority": 3,
+      "wiki": "Betsy_Ross"
     },
     {
       "name": "Noah Webster",
       "start": "1758-10-16",
       "end": "1843-05-28",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Noah_Webster"
     },
     {
       "name": "Washington Irving",
       "start": "1783-04-03",
       "end": "1859-11-28",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Washington_Irving"
     },
     {
       "name": "John James Audubon",
       "start": "1785-04-26",
       "end": "1851-01-27",
-      "priority": 3
+      "priority": 3,
+      "wiki": "John_James_Audubon"
     },
     {
       "name": "William Clark",
       "start": "1770-08-01",
       "end": "1838-09-01",
-      "priority": 2
+      "priority": 2,
+      "wiki": "William_Clark"
     },
     {
       "name": "Meriwether Lewis",
       "start": "1774-08-18",
       "end": "1809-10-11",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Meriwether_Lewis"
     },
     {
       "name": "Sacagawea",
       "start": "1788-05-01",
       "end": "1812-12-20",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Sacagawea"
     },
     {
       "name": "James Fenimore Cooper",
       "start": "1789-09-15",
       "end": "1851-09-14",
-      "priority": 3
+      "priority": 3,
+      "wiki": "James_Fenimore_Cooper"
     },
     {
       "name": "Edgar Allan Poe",
       "start": "1809-01-19",
       "end": "1849-10-07",
-      "priority": 3
+      "priority": 3,
+      "wiki": "Edgar_Allan_Poe"
     },
     {
       "name": "Frederick Douglass",
       "start": "1818-02-14",
       "end": "1895-02-20",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Frederick_Douglass"
     },
     {
       "name": "Harriet Tubman",
       "start": "1822-03-10",
       "end": "1913-03-10",
-      "priority": 3
+      "priority": 3,
+      "wiki": "Harriet_Tubman"
     },
     {
       "name": "Emily Dickinson",
       "start": "1830-12-10",
       "end": "1886-05-15",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Emily_Dickinson"
     },
     {
       "name": "Cornelius Vanderbilt",
       "start": "1794-05-27",
       "end": "1877-01-04",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Cornelius_Vanderbilt"
     },
     {
       "name": "Mark Twain",
       "start": "1835-11-30",
       "end": "1910-04-21",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Mark_Twain"
     },
     {
       "name": "Andrew Carnegie",
       "start": "1835-11-25",
       "end": "1919-08-11",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Andrew_Carnegie"
     },
     {
       "name": "J.P. Morgan",
       "start": "1837-04-17",
       "end": "1913-03-31",
-      "priority": 2
+      "priority": 2,
+      "wiki": "J.P._Morgan"
     },
     {
       "name": "John D. Rockefeller",
       "start": "1839-07-08",
       "end": "1937-05-23",
-      "priority": 2
+      "priority": 2,
+      "wiki": "John_D._Rockefeller"
     },
     {
       "name": "Thomas Edison",
       "start": "1847-02-11",
       "end": "1931-10-18",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Thomas_Edison"
     },
     {
       "name": "Billy the Kid",
       "start": "1859-11-23",
       "end": "1881-07-14",
-      "priority": 3
+      "priority": 3,
+      "wiki": "Billy_the_Kid"
     },
     {
       "name": "Henry Ford",
       "start": "1863-07-30",
       "end": "1947-04-07",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Henry_Ford"
     },
     {
       "name": "Wright Brothers (Orville)",
       "start": "1871-08-19",
       "end": "1948-01-30",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Orville"
     },
     {
       "name": "Albert Einstein",
       "start": "1879-03-14",
       "end": "1955-04-18",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Albert_Einstein"
     },
     {
       "name": "Harry Houdini",
       "start": "1874-03-24",
       "end": "1926-10-31",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Harry_Houdini"
     },
     {
       "name": "Eleanor Roosevelt",
       "start": "1884-10-11",
       "end": "1962-11-07",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Eleanor_Roosevelt"
     },
     {
       "name": "Charlie Chaplin",
       "start": "1889-04-16",
       "end": "1977-12-25",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Charlie_Chaplin"
     },
     {
       "name": "Babe Ruth",
       "start": "1895-02-06",
       "end": "1948-08-16",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Babe_Ruth"
     },
     {
       "name": "F. Scott Fitzgerald",
       "start": "1896-09-24",
       "end": "1940-12-21",
-      "priority": 2
+      "priority": 2,
+      "wiki": "F._Scott_Fitzgerald"
     },
     {
       "name": "Amelia Earhart",
       "start": "1897-07-24",
       "end": "1937-07-02",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Amelia_Earhart"
     },
     {
       "name": "Al Capone",
       "start": "1899-01-17",
       "end": "1947-01-25",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Al_Capone"
     },
     {
       "name": "Ernest Hemingway",
       "start": "1899-07-21",
       "end": "1961-07-02",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Ernest_Hemingway"
     },
     {
       "name": "Louis Armstrong",
       "start": "1901-08-04",
       "end": "1971-07-06",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Louis_Armstrong"
     },
     {
       "name": "Walt Disney",
       "start": "1901-12-05",
       "end": "1966-12-15",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Walt_Disney"
     },
     {
       "name": "Frank Sinatra",
       "start": "1915-12-12",
       "end": "1998-05-14",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Frank_Sinatra"
     },
     {
       "name": "Marilyn Monroe",
       "start": "1926-06-01",
       "end": "1962-08-04",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Marilyn_Monroe"
     },
     {
       "name": "Rosa Parks",
       "start": "1913-02-04",
       "end": "2005-10-24",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Rosa_Parks"
     },
     {
       "name": "Martin Luther King Jr.",
       "start": "1929-01-15",
       "end": "1968-04-04",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Martin_Luther_King_Jr."
     },
     {
       "name": "Neil Armstrong",
       "start": "1930-08-05",
       "end": "2012-08-25",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Neil_Armstrong"
     },
     {
       "name": "Evel Knievel",
       "start": "1938-10-17",
       "end": "2007-11-30",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Evel_Knievel"
     },
     {
       "name": "Muhammad Ali",
       "start": "1942-01-17",
       "end": "2016-06-03",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Muhammad_Ali"
     },
     {
       "name": "Steve Jobs",
       "start": "1955-02-24",
       "end": "2011-10-05",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Steve_Jobs"
     },
     {
       "name": "Noam Chomsky",
       "start": "1928-12-07",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Noam_Chomsky"
     },
     {
       "name": "Clint Eastwood",
       "start": "1930-05-31",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Clint_Eastwood"
     },
     {
       "name": "Willie Nelson",
       "start": "1933-04-29",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Willie_Nelson"
     },
     {
       "name": "Jane Goodall",
       "start": "1934-04-03",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Jane_Goodall"
     },
     {
       "name": "Bob Dylan",
       "start": "1941-05-24",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Bob_Dylan"
     },
     {
       "name": "Paul McCartney",
       "start": "1942-06-18",
-      "priority": 1
+      "priority": 1,
+      "wiki": "Paul_McCartney"
     },
     {
       "name": "Mick Jagger",
       "start": "1943-07-26",
-      "priority": 2
+      "priority": 2,
+      "wiki": "Mick_Jagger"
     }
   ]
 }
