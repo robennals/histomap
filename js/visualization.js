@@ -1046,11 +1046,9 @@ const Visualization = (function() {
 
             // Add click handler for Wikipedia links
             if (item.person.wiki) {
-                console.log('Adding click handler for:', item.person.name, 'with wiki:', item.person.wiki);
                 text.setAttribute('class', 'event-label');
                 text.style.cursor = 'pointer';
                 text.addEventListener('click', (e) => {
-                    console.log('Clicked on:', item.person.name, 'wiki:', item.person.wiki, 'event:', e);
                     window.openWikiModal(item.person.name, item.person.wiki);
                 });
             }
@@ -1240,11 +1238,9 @@ const Visualization = (function() {
 
             // Add click handler for Wikipedia links
             if (event.wiki) {
-                console.log('Adding click handler for:', event.name, 'with wiki:', event.wiki);
                 label.setAttribute('class', 'event-label');
                 label.style.cursor = 'pointer';
                 label.addEventListener('click', (e) => {
-                    console.log('Clicked on:', event.name, 'wiki:', event.wiki, 'event:', e);
                     window.openWikiModal(event.name, event.wiki);
                 });
             }

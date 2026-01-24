@@ -1,0 +1,32 @@
+{
+  "name": "Eras",
+  "color": "#95a5a6",
+  "events": [
+    {"name": "Roman Britain", "wiki": "Roman_Britain", "start": "-43-01-01", "end": "410-01-01", "priority": 1},
+    {"name": "Anglo-Saxon Period", "wiki": "Anglo-Saxon_England", "start": "410-01-01", "end": "1066-01-01", "priority": 1},
+    {"name": "Viking Age", "wiki": "Viking_Age", "start": "793-06-08", "end": "1066-09-25", "priority": 1},
+    {"name": "Norman Conquest", "wiki": "Norman_Conquest", "start": "1066-10-14", "end": "1154-01-01", "priority": 1},
+    {"name": "The Anarchy", "wiki": "The_Anarchy", "start": "1135-12-22", "end": "1153-11-06", "priority": 1},
+    {"name": "Plantagenet Era", "wiki": "House_of_Plantagenet", "start": "1154-01-01", "end": "1485-08-22", "priority": 1},
+    {"name": "Hundred Years' War", "wiki": "Hundred_Years%27_War", "start": "1337-01-01", "end": "1453-10-19", "priority": 1},
+    {"name": "Wars of the Roses", "wiki": "Wars_of_the_Roses", "start": "1455-05-22", "end": "1487-06-16", "priority": 1},
+    {"name": "Tudor Period", "wiki": "Tudor_period", "start": "1485-08-22", "end": "1603-03-24", "priority": 1},
+    {"name": "Stuart Period", "wiki": "Stuart_period", "start": "1603-03-24", "end": "1714-08-01", "priority": 1},
+    {"name": "English Civil War", "wiki": "English_Civil_War", "start": "1642-08-22", "end": "1651-09-03", "priority": 1},
+    {"name": "Georgian Era", "wiki": "Georgian_era", "start": "1714-08-01", "end": "1837-06-20", "priority": 1},
+    {"name": "Seven Years' War", "wiki": "Seven_Years%27_War", "start": "1756-01-01", "end": "1763-02-10", "priority": 2},
+    {"name": "American Revolution", "wiki": "American_Revolutionary_War", "start": "1775-04-19", "end": "1783-09-03", "priority": 1},
+    {"name": "Napoleonic Wars", "wiki": "Napoleonic_Wars", "start": "1803-05-18", "end": "1815-06-18", "priority": 1},
+    {"name": "Crimean War", "wiki": "Crimean_War", "start": "1853-10-16", "end": "1856-03-30", "priority": 2},
+    {"name": "Victorian Era", "wiki": "Victorian_era", "start": "1837-06-20", "end": "1901-01-22", "priority": 1},
+    {"name": "Edwardian Era", "wiki": "Edwardian_era", "start": "1901-01-22", "end": "1910-05-06", "priority": 1},
+    {"name": "Second Boer War", "wiki": "Second_Boer_War", "start": "1899-10-11", "end": "1902-05-31", "priority": 2},
+    {"name": "World War I", "wiki": "World_War_I", "start": "1914-07-28", "end": "1918-11-11", "priority": 1},
+    {"name": "Interwar Period", "wiki": "Interwar_period", "start": "1918-11-11", "end": "1939-09-01", "priority": 2},
+    {"name": "World War II", "wiki": "World_War_II", "start": "1939-09-01", "end": "1945-09-02", "priority": 1},
+    {"name": "Post-War Britain", "wiki": "Post-war_Britain", "start": "1945-09-02", "end": "1979-05-04", "priority": 2},
+    {"name": "Thatcher Era", "wiki": "Thatcherism", "start": "1979-05-04", "end": "1990-11-28", "priority": 2},
+    {"name": "Falklands War", "wiki": "Falklands_War", "start": "1982-04-02", "end": "1982-06-14", "priority": 2},
+    {"name": "Modern Britain", "wiki": "Modern_history_of_the_United_Kingdom", "start": "1990-11-28", "end": "2025-01-01", "priority": 2}
+  ]
+}

@@ -20,6 +20,16 @@ const DataLoader = (function() {
                 `${base}media.json`,
                 `${base}world-power.json`
             ];
+        } else if (path.includes('british')) {
+            return [
+                `${base}eras.json`,
+                `${base}monarchs.json`,
+                `${base}notable-people.json`,
+                `${base}events.json`,
+                `${base}stories.json`,
+                `${base}technology.json`,
+                { type: 'csv', path: `${base}world_power.csv`, name: 'World Power' }
+            ];
         } else {
             // US timeline
             return [

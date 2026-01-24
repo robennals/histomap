@@ -26,6 +26,20 @@ const TimelineConfig = (function() {
                 referenceYear: 2500,  // Future reference to avoid compressing present
                 base: 2              // Doubling periods take equal space
             }
+        },
+        british: {
+            id: 'british',
+            name: 'British History',
+            title: 'Timeline of British History',
+            startYear: -100,
+            endYear: 2025,
+            scale: 'logarithmic',
+            dataPath: 'data/british/',
+            defaultWidth: 3000,
+            logConfig: {
+                referenceYear: 2500,  // Future reference to avoid compressing present
+                base: 2              // Doubling periods take equal space
+            }
         }
     };
 

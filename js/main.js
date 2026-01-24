@@ -96,16 +96,12 @@ async function initializeTimeline(timelineId, updateUrl = true) {
  * @param {string} wikiSlug - Wikipedia page slug
  */
 window.openWikiModal = function(eventName, wikiSlug) {
-    console.log('openWikiModal called:', eventName, wikiSlug);
     const modal = document.getElementById('wiki-modal');
     const iframe = document.getElementById('wiki-iframe');
     const title = document.getElementById('wiki-modal-title');
 
-    console.log('Modal elements:', { modal, iframe, title });
-
     // Construct Wikipedia URL
     const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSlug}`;
-    console.log('Wikipedia URL:', wikiUrl);
 
     // Update modal content
     title.textContent = eventName;
@@ -113,7 +109,6 @@ window.openWikiModal = function(eventName, wikiSlug) {
 
     // Show modal
     modal.classList.add('show');
-    console.log('Modal should be visible now');
 };
 
 /**
@@ -175,9 +170,4 @@ function closeWikiModal() {
     // Start with timeline from URL (or default to US)
     const initialTimeline = getTimelineFromURL();
     await initializeTimeline(initialTimeline, false); // Don't update URL on initial load
-
-    // Debug: Add global click handler to see what's receiving clicks
-    document.addEventListener('click', (e) => {
-        console.log('Global click:', e.target, 'tagName:', e.target.tagName, 'class:', e.target.getAttribute('class'));
-    });
 })();
