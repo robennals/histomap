@@ -634,7 +634,8 @@ const Visualization = (function() {
             'fill-opacity': 0.05,
             stroke: eventSet.color,
             'stroke-width': 1,
-            'stroke-opacity': 0.2
+            'stroke-opacity': 0.2,
+            'pointer-events': 'none'
         });
         bandGroup.appendChild(background);
 
@@ -1023,7 +1024,8 @@ const Visualization = (function() {
                 y2: item.lineY,
                 stroke: item.person.personColor,
                 'stroke-width': lineHeight,
-                'stroke-opacity': 0.7
+                'stroke-opacity': 0.7,
+                'pointer-events': 'none'
             });
             group.appendChild(line);
         });
@@ -1041,6 +1043,18 @@ const Visualization = (function() {
                 'fill-opacity': 1
             });
             text.textContent = item.person.name;
+
+            // Add click handler for Wikipedia links
+            if (item.person.wiki) {
+                console.log('Adding click handler for:', item.person.name, 'with wiki:', item.person.wiki);
+                text.setAttribute('class', 'event-label');
+                text.style.cursor = 'pointer';
+                text.addEventListener('click', (e) => {
+                    console.log('Clicked on:', item.person.name, 'wiki:', item.person.wiki, 'event:', e);
+                    window.openWikiModal(item.person.name, item.person.wiki);
+                });
+            }
+
             group.appendChild(text);
             textElements.push({ text, item });
         });
@@ -1055,7 +1069,8 @@ const Visualization = (function() {
                 width: bbox.width + 4,
                 height: fontSize - 2,
                 fill: 'white',
-                'fill-opacity': 0.8
+                'fill-opacity': 0.8,
+                'pointer-events': 'none'
             });
             group.insertBefore(textBg, text);
         });
@@ -1222,6 +1237,18 @@ const Visualization = (function() {
                 'fill-opacity': opacity
             });
             label.textContent = event.name;
+
+            // Add click handler for Wikipedia links
+            if (event.wiki) {
+                console.log('Adding click handler for:', event.name, 'with wiki:', event.wiki);
+                label.setAttribute('class', 'event-label');
+                label.style.cursor = 'pointer';
+                label.addEventListener('click', (e) => {
+                    console.log('Clicked on:', event.name, 'wiki:', event.wiki, 'event:', e);
+                    window.openWikiModal(event.name, event.wiki);
+                });
+            }
+
             group.appendChild(label);
 
             // Draw underline beneath text extending for the duration

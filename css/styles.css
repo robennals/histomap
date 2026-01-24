@@ -451,6 +451,98 @@ input[type="number"] {
 /* SVG Text Styling */
 svg text {
     user-select: none;
+    pointer-events: none;
+}
+
+svg text.event-label {
+    pointer-events: all !important;
+}
+
+/* Event hover effects */
+svg text.event-label {
+    cursor: pointer !important;
+    transition: fill-opacity 0.2s ease;
+    pointer-events: all !important;
+}
+
+svg text.event-label:hover {
+    fill-opacity: 0.6 !important;
+}
+
+/* Wikipedia Modal */
+.wiki-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.2s ease;
+}
+
+.wiki-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wiki-modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 1200px;
+    height: 85%;
+    max-height: 800px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease;
+}
+
+.wiki-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.wiki-modal-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.wiki-modal-body {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.wiki-modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Responsive Design */
@@ -467,5 +559,10 @@ svg text {
 
     .footer-info {
         text-align: center;
+    }
+
+    .wiki-modal-content {
+        width: 95%;
+        height: 90%;
     }
 }

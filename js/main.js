@@ -90,6 +90,46 @@ async function initializeTimeline(timelineId, updateUrl = true) {
     }
 }
 
+/**
+ * Open Wikipedia modal for an event
+ * @param {string} eventName - Name of the event
+ * @param {string} wikiSlug - Wikipedia page slug
+ */
+window.openWikiModal = function(eventName, wikiSlug) {
+    console.log('openWikiModal called:', eventName, wikiSlug);
+    const modal = document.getElementById('wiki-modal');
+    const iframe = document.getElementById('wiki-iframe');
+    const title = document.getElementById('wiki-modal-title');
+
+    console.log('Modal elements:', { modal, iframe, title });
+
+    // Construct Wikipedia URL
+    const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSlug}`;
+    console.log('Wikipedia URL:', wikiUrl);
+
+    // Update modal content
+    title.textContent = eventName;
+    iframe.src = wikiUrl;
+
+    // Show modal
+    modal.classList.add('show');
+    console.log('Modal should be visible now');
+};
+
+/**
+ * Close Wikipedia modal
+ */
+function closeWikiModal() {
+    const modal = document.getElementById('wiki-modal');
+    const iframe = document.getElementById('wiki-iframe');
+
+    // Hide modal
+    modal.classList.remove('show');
+
+    // Clear iframe to stop loading
+    iframe.src = '';
+}
+
 // Initialize app when DOM is ready
 (async function() {
     // Set up timeline selector event listener
@@ -102,6 +142,30 @@ async function initializeTimeline(timelineId, updateUrl = true) {
         });
     }
 
+    // Set up Wikipedia modal event listeners
+    const wikiModal = document.getElementById('wiki-modal');
+    const wikiModalClose = document.getElementById('wiki-modal-close');
+
+    if (wikiModalClose) {
+        wikiModalClose.addEventListener('click', closeWikiModal);
+    }
+
+    if (wikiModal) {
+        // Close modal when clicking outside the content
+        wikiModal.addEventListener('click', (event) => {
+            if (event.target === wikiModal) {
+                closeWikiModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && wikiModal.classList.contains('show')) {
+                closeWikiModal();
+            }
+        });
+    }
+
     // Handle browser back/forward buttons
     window.addEventListener('popstate', async () => {
         const timelineId = getTimelineFromURL();
@@ -111,4 +175,9 @@ async function initializeTimeline(timelineId, updateUrl = true) {
     // Start with timeline from URL (or default to US)
     const initialTimeline = getTimelineFromURL();
     await initializeTimeline(initialTimeline, false); // Don't update URL on initial load
+
+    // Debug: Add global click handler to see what's receiving clicks
+    document.addEventListener('click', (e) => {
+        console.log('Global click:', e.target, 'tagName:', e.target.tagName, 'class:', e.target.getAttribute('class'));
+    });
 })();
