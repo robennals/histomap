@@ -8,7 +8,7 @@
       "end": "1797-03-04",
       "color": "#95a5a6",
       "priority": 1,
-      "wiki": "Washington"
+      "wiki": "George_Washington"
     },
     {
       "name": "J. Adams",
@@ -16,7 +16,7 @@
       "end": "1801-03-04",
       "color": "#D4A574",
       "priority": 2,
-      "wiki": "J._Adams"
+      "wiki": "John_Adams"
     },
     {
       "name": "Jefferson",
@@ -24,7 +24,7 @@
       "end": "1809-03-04",
       "color": "#3498db",
       "priority": 1,
-      "wiki": "Jefferson"
+      "wiki": "Thomas_Jefferson"
     },
     {
       "name": "Madison",
@@ -32,7 +32,7 @@
       "end": "1817-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Madison"
+      "wiki": "James_Madison"
     },
     {
       "name": "Monroe",
@@ -40,7 +40,7 @@
       "end": "1825-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Monroe"
+      "wiki": "James_Monroe"
     },
     {
       "name": "JQ Adams",
@@ -48,7 +48,7 @@
       "end": "1829-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "JQ_Adams"
+      "wiki": "John_Quincy_Adams"
     },
     {
       "name": "Jackson",
@@ -56,7 +56,7 @@
       "end": "1837-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Jackson"
+      "wiki": "Andrew_Jackson"
     },
     {
       "name": "Van Buren",
@@ -64,7 +64,7 @@
       "end": "1841-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Van_Buren"
+      "wiki": "Martin_Van_Buren"
     },
     {
       "name": "Tyler",
@@ -72,7 +72,7 @@
       "end": "1845-03-04",
       "color": "#D4A574",
       "priority": 2,
-      "wiki": "Tyler"
+      "wiki": "John_Tyler"
     },
     {
       "name": "Polk",
@@ -80,7 +80,7 @@
       "end": "1849-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Polk"
+      "wiki": "James_K._Polk"
     },
     {
       "name": "Taylor",
@@ -88,7 +88,7 @@
       "end": "1850-07-09",
       "color": "#D4A574",
       "priority": 3,
-      "wiki": "Taylor"
+      "wiki": "Zachary_Taylor"
     },
     {
       "name": "Fillmore",
@@ -96,7 +96,7 @@
       "end": "1853-03-04",
       "color": "#D4A574",
       "priority": 2,
-      "wiki": "Fillmore"
+      "wiki": "Millard_Fillmore"
     },
     {
       "name": "Pierce",
@@ -104,7 +104,7 @@
       "end": "1857-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Pierce"
+      "wiki": "Franklin_Pierce"
     },
     {
       "name": "Buchanan",
@@ -112,7 +112,7 @@
       "end": "1861-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Buchanan"
+      "wiki": "James_Buchanan"
     },
     {
       "name": "Lincoln",
@@ -120,7 +120,7 @@
       "end": "1865-04-15",
       "color": "#e74c3c",
       "priority": 1,
-      "wiki": "Lincoln"
+      "wiki": "Abraham_Lincoln"
     },
     {
       "name": "A. Johnson",
@@ -128,7 +128,7 @@
       "end": "1869-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "A._Johnson"
+      "wiki": "Andrew_Johnson"
     },
     {
       "name": "Grant",
@@ -136,7 +136,7 @@
       "end": "1877-03-04",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Grant"
+      "wiki": "Ulysses_S._Grant"
     },
     {
       "name": "Hayes",
@@ -144,7 +144,7 @@
       "end": "1881-03-04",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Hayes"
+      "wiki": "Rutherford_B._Hayes"
     },
     {
       "name": "Garfield",
@@ -152,7 +152,7 @@
       "end": "1881-09-19",
       "color": "#e74c3c",
       "priority": 3,
-      "wiki": "Garfield"
+      "wiki": "James_A._Garfield"
     },
     {
       "name": "Arthur",
@@ -160,7 +160,7 @@
       "end": "1885-03-04",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Arthur"
+      "wiki": "Chester_A._Arthur"
     },
     {
       "name": "Cleveland",
@@ -168,7 +168,7 @@
       "end": "1889-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Cleveland"
+      "wiki": "Grover_Cleveland"
     },
     {
       "name": "B. Harrison",
@@ -176,7 +176,7 @@
       "end": "1893-03-04",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "B._Harrison"
+      "wiki": "Benjamin_Harrison"
     },
     {
       "name": "Cleveland",
@@ -184,7 +184,7 @@
       "end": "1897-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Cleveland"
+      "wiki": "Grover_Cleveland"
     },
     {
       "name": "McKinley",
@@ -192,7 +192,7 @@
       "end": "1901-09-14",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "McKinley"
+      "wiki": "William_McKinley"
     },
     {
       "name": "T. Roosevelt",
@@ -200,7 +200,7 @@
       "end": "1909-03-04",
       "color": "#e74c3c",
       "priority": 1,
-      "wiki": "T._Roosevelt"
+      "wiki": "Theodore_Roosevelt"
     },
     {
       "name": "Taft",
@@ -208,7 +208,7 @@
       "end": "1913-03-04",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Taft"
+      "wiki": "William_Howard_Taft"
     },
     {
       "name": "Wilson",
@@ -216,7 +216,7 @@
       "end": "1921-03-04",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Wilson"
+      "wiki": "Woodrow_Wilson"
     },
     {
       "name": "Harding",
@@ -224,7 +224,7 @@
       "end": "1923-08-02",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Harding"
+      "wiki": "Warren_G._Harding"
     },
     {
       "name": "Coolidge",
@@ -232,7 +232,7 @@
       "end": "1929-03-04",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Coolidge"
+      "wiki": "Calvin_Coolidge"
     },
     {
       "name": "Hoover",
@@ -240,7 +240,7 @@
       "end": "1933-03-04",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Hoover"
+      "wiki": "Herbert_Hoover"
     },
     {
       "name": "FD Roosevelt",
@@ -248,7 +248,7 @@
       "end": "1945-04-12",
       "color": "#3498db",
       "priority": 1,
-      "wiki": "FD_Roosevelt"
+      "wiki": "Franklin_D._Roosevelt"
     },
     {
       "name": "Truman",
@@ -256,7 +256,7 @@
       "end": "1953-01-20",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Truman"
+      "wiki": "Harry_S._Truman"
     },
     {
       "name": "Eisenhower",
@@ -264,7 +264,7 @@
       "end": "1961-01-20",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Eisenhower"
+      "wiki": "Dwight_D._Eisenhower"
     },
     {
       "name": "Kennedy",
@@ -272,7 +272,7 @@
       "end": "1963-11-22",
       "color": "#3498db",
       "priority": 1,
-      "wiki": "Kennedy"
+      "wiki": "John_F._Kennedy"
     },
     {
       "name": "LB Johnson",
@@ -280,7 +280,7 @@
       "end": "1969-01-20",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "LB_Johnson"
+      "wiki": "Lyndon_B._Johnson"
     },
     {
       "name": "Nixon",
@@ -288,7 +288,7 @@
       "end": "1974-08-09",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Nixon"
+      "wiki": "Richard_Nixon"
     },
     {
       "name": "Ford",
@@ -296,7 +296,7 @@
       "end": "1977-01-20",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Ford"
+      "wiki": "Gerald_Ford"
     },
     {
       "name": "Carter",
@@ -304,7 +304,7 @@
       "end": "1981-01-20",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Carter"
+      "wiki": "Jimmy_Carter"
     },
     {
       "name": "Reagan",
@@ -312,7 +312,7 @@
       "end": "1989-01-20",
       "color": "#e74c3c",
       "priority": 1,
-      "wiki": "Reagan"
+      "wiki": "Ronald_Reagan"
     },
     {
       "name": "GHW Bush",
@@ -320,7 +320,7 @@
       "end": "1993-01-20",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "GHW_Bush"
+      "wiki": "George_H._W._Bush"
     },
     {
       "name": "Clinton",
@@ -328,7 +328,7 @@
       "end": "2001-01-20",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Clinton"
+      "wiki": "Bill_Clinton"
     },
     {
       "name": "GW Bush",
@@ -336,7 +336,7 @@
       "end": "2009-01-20",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "GW_Bush"
+      "wiki": "George_W._Bush"
     },
     {
       "name": "Obama",
@@ -344,7 +344,7 @@
       "end": "2017-01-20",
       "color": "#3498db",
       "priority": 1,
-      "wiki": "Obama"
+      "wiki": "Barack_Obama"
     },
     {
       "name": "Trump",
@@ -352,7 +352,7 @@
       "end": "2021-01-20",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Trump"
+      "wiki": "Donald_Trump"
     },
     {
       "name": "Biden",
@@ -360,14 +360,14 @@
       "end": "2025-01-20",
       "color": "#3498db",
       "priority": 2,
-      "wiki": "Biden"
+      "wiki": "Joe_Biden"
     },
     {
       "name": "Trump",
       "start": "2025-01-20",
       "color": "#e74c3c",
       "priority": 2,
-      "wiki": "Trump"
+      "wiki": "Donald_Trump"
     }
   ]
 }
