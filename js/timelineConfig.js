@@ -17,13 +17,13 @@ const TimelineConfig = (function() {
             id: 'world',
             name: 'World History',
             title: 'Timeline of World History',
-            startYear: -4000,
+            startYear: -3500,
             endYear: 2025,
             scale: 'logarithmic',
             dataPath: 'data/world/',
             defaultWidth: 3000,
             logConfig: {
-                referenceYear: 2500,  // Future reference to avoid compressing present
+                referenceYear: 2600,  // Far future reference to reduce present skew
                 base: 2              // Doubling periods take equal space
             }
         },
@@ -37,7 +37,7 @@ const TimelineConfig = (function() {
             dataPath: 'data/british/',
             defaultWidth: 3000,
             logConfig: {
-                referenceYear: 2500,  // Future reference to avoid compressing present
+                referenceYear: 2200,  // Far future reference to reduce present skew
                 base: 2              // Doubling periods take equal space
             }
         }
