@@ -1,0 +1,246 @@
+{
+  "name": "Life Forms",
+  "color": "#27ae60",
+  "events": [
+    {
+      "name": "Prokaryotes",
+      "wiki": "Prokaryote",
+      "start": "-3500000000-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Eukaryotes",
+      "wiki": "Eukaryote",
+      "start": "-2000000000-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Multicellular Life",
+      "wiki": "Multicellular_organism",
+      "start": "-1200000000-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Animals",
+      "wiki": "Animal",
+      "start": "-600000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Fungi",
+      "wiki": "Fungus",
+      "start": "-900000000-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Land Plants",
+      "wiki": "Land_plant",
+      "start": "-470000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Ferns",
+      "wiki": "Fern",
+      "start": "-360000000-01-01",
+      "priority": 3
+    },
+    {
+      "name": "Insects",
+      "wiki": "Insect",
+      "start": "-400000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Amphibians",
+      "wiki": "Amphibian",
+      "start": "-370000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Vertebrates",
+      "wiki": "Vertebrate",
+      "start": "-500000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Reptiles",
+      "wiki": "Reptile",
+      "start": "-320000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Dinosaurs",
+      "wiki": "Dinosaur",
+      "start": "-230000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Mammals",
+      "wiki": "Mammal",
+      "start": "-200000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Birds",
+      "wiki": "Bird",
+      "start": "-160000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Flowering Plants",
+      "wiki": "Flowering_plant",
+      "start": "-130000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Placental Mammals",
+      "wiki": "Placentalia",
+      "start": "-100000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Marsupials",
+      "wiki": "Marsupial",
+      "start": "-100000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Grasses",
+      "wiki": "Poaceae",
+      "start": "-66000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Primates",
+      "wiki": "Primate",
+      "start": "-55000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Bats",
+      "wiki": "Bat",
+      "start": "-52000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Whales",
+      "wiki": "Whale",
+      "start": "-50000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Elephants",
+      "wiki": "Elephant",
+      "start": "-40000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Cats",
+      "wiki": "Felidae",
+      "start": "-35000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Dogs",
+      "wiki": "Canidae",
+      "start": "-35000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Horses",
+      "wiki": "Horse",
+      "start": "-35000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Rodents",
+      "wiki": "Rodent",
+      "start": "-33000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Apes",
+      "wiki": "Ape",
+      "start": "-25000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Pinnipeds",
+      "wiki": "Pinniped",
+      "start": "-25000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Bears",
+      "wiki": "Bear",
+      "start": "-20000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Great Apes",
+      "wiki": "Hominidae",
+      "start": "-15000000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Orangutans",
+      "wiki": "Orangutan",
+      "start": "-12000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Gorillas",
+      "wiki": "Gorilla",
+      "start": "-10000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Chimpanzees",
+      "wiki": "Chimpanzee",
+      "start": "-7000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Hominins",
+      "wiki": "Hominini",
+      "start": "-6000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Australopithecus",
+      "wiki": "Australopithecus",
+      "start": "-4000000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Homo",
+      "wiki": "Homo",
+      "start": "-2800000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Homo erectus",
+      "wiki": "Homo_erectus",
+      "start": "-1900000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Neanderthals",
+      "wiki": "Neanderthal",
+      "start": "-400000-01-01",
+      "priority": 2
+    },
+    {
+      "name": "Woolly Mammoth",
+      "wiki": "Woolly_mammoth",
+      "start": "-400000-01-01",
+      "priority": 1
+    },
+    {
+      "name": "Homo sapiens",
+      "wiki": "Homo_sapiens",
+      "start": "-300000-01-01",
+      "priority": 1
+    }
+  ]
+}

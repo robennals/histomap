@@ -1,0 +1,33 @@
+{
+  "name": "Eras",
+  "color": "#9b59b6",
+  "events": [
+    {"name": "Cosmic History", "wiki": "Chronology_of_the_universe", "start": "-13800000000-01-01", "end": "-4500000000-01-01", "priority": 1},
+    {"name": "Hadean", "wiki": "Hadean", "start": "-4500000000-01-01", "end": "-4000000000-01-01", "priority": 1},
+    {"name": "Archean", "wiki": "Archean", "start": "-4000000000-01-01", "end": "-2500000000-01-01", "priority": 1},
+    {"name": "Huronian Glaciation", "wiki": "Huronian_glaciation", "start": "-2400000000-01-01", "end": "-2100000000-01-01", "priority": 3},
+    {"name": "Kaigas Glaciation", "wiki": "Kaigas_glaciation", "start": "-2400000000-01-01", "end": "-2200000000-01-01", "priority": 3},
+    {"name": "Proterozoic", "wiki": "Proterozoic", "start": "-2500000000-01-01", "end": "-540000000-01-01", "priority": 1},
+    {"name": "Cryogenian", "wiki": "Cryogenian", "start": "-720000000-01-01", "end": "-640000000-01-01", "priority": 2},
+    {"name": "Sturtian Glaciation", "wiki": "Sturtian_glaciation", "start": "-720000000-01-01", "end": "-660000000-01-01", "priority": 3},
+    {"name": "Marinoan Glaciation", "wiki": "Marinoan_glaciation", "start": "-650000000-01-01", "end": "-640000000-01-01", "priority": 3},
+    {"name": "Precambrian", "wiki": "Precambrian", "start": "-4500000000-01-01", "end": "-540000000-01-01", "priority": 2},
+    {"name": "Paleozoic", "wiki": "Paleozoic", "start": "-540000000-01-01", "end": "-250000000-01-01", "priority": 2},
+    {"name": "Andean-Saharan Glaciation", "wiki": "Andean-Saharan_glaciation", "start": "-460000000-01-01", "end": "-420000000-01-01", "priority": 3},
+    {"name": "Late Paleozoic Ice Age", "wiki": "Late_Paleozoic_icehouse", "start": "-360000000-01-01", "end": "-260000000-01-01", "priority": 3},
+    {"name": "Antarctic Glaciation", "wiki": "Antarctic_ice_sheet", "start": "-34000000-01-01", "end": "-1-01-01", "priority": 3},
+    {"name": "Mesozoic", "wiki": "Mesozoic", "start": "-250000000-01-01", "end": "-65000000-01-01", "priority": 2},
+    {"name": "Triassic", "wiki": "Triassic", "start": "-250000000-01-01", "end": "-200000000-01-01", "priority": 2},
+    {"name": "Jurassic", "wiki": "Jurassic", "start": "-200000000-01-01", "end": "-145000000-01-01", "priority": 2},
+    {"name": "Cretaceous", "wiki": "Cretaceous", "start": "-145000000-01-01", "end": "-65000000-01-01", "priority": 2},
+    {"name": "Cenozoic", "wiki": "Cenozoic", "start": "-65000000-01-01", "end": "-1-01-01", "priority": 1},
+    {"name": "Paleogene", "wiki": "Paleogene", "start": "-65000000-01-01", "end": "-23000000-01-01", "priority": 2},
+    {"name": "Neogene", "wiki": "Neogene", "start": "-23000000-01-01", "end": "-3000000-01-01", "priority": 2},
+    {"name": "Quaternary", "wiki": "Quaternary", "start": "-3000000-01-01", "end": "-1-01-01", "priority": 2},
+    {"name": "Quaternary Glaciation", "wiki": "Quaternary_glaciation", "start": "-3000000-01-01", "end": "-1-01-01", "priority": 3},
+    {"name": "Pleistocene", "wiki": "Pleistocene", "start": "-3000000-01-01", "end": "-10000-01-01", "priority": 2},
+    {"name": "Last Glacial Period", "wiki": "Last_Glacial_Period", "start": "-115000-01-01", "end": "-10000-01-01", "priority": 3},
+    {"name": "Last Glacial Maximum", "wiki": "Last_Glacial_Maximum", "start": "-26000-01-01", "end": "-20000-01-01", "priority": 3},
+    {"name": "Holocene", "wiki": "Holocene", "start": "-10000-01-01", "end": "-1-01-01", "priority": 2}
+  ]
+}
