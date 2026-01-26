@@ -58,6 +58,24 @@ async function initializeTimeline(timelineId, updateUrl = true) {
             timelineSelect.value = timelineId;
         }
 
+        // Sync controls to the selected timeline defaults
+        const startInput = document.getElementById('start-year');
+        const endInput = document.getElementById('end-year');
+        const widthInput = document.getElementById('width');
+
+        if (startInput && endInput) {
+            startInput.value = config.startYear;
+            endInput.value = config.endYear;
+            startInput.min = config.startYear;
+            startInput.max = config.endYear;
+            endInput.min = config.startYear;
+            endInput.max = config.endYear;
+        }
+
+        if (widthInput) {
+            widthInput.value = config.defaultWidth;
+        }
+
         // Load event sets for this timeline
         AppState.eventSets = await DataLoader.loadAllEventSets(config.dataPath);
         console.log('Loaded event sets:', AppState.eventSets);

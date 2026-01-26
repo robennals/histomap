@@ -65,10 +65,30 @@ const Visualization = (function() {
      * @returns {string} Formatted year string
      */
     function formatYearLabel(year) {
-        if (year < 0) return `${Math.abs(year)} BC`;
-        if (year === 0) return '1 BC/AD';
-        if (year < 1000) return `${year} AD`;
-        return `${year}`;
+        const normalizedYear = year === 0 ? 1 : year;
+        const absYear = Math.abs(normalizedYear);
+        const formatWithSuffix = (value, suffix) => {
+            const rounded = value % 1 === 0 ? value.toFixed(0) : value.toFixed(1);
+            return `${rounded.replace(/\\.0$/, '')}${suffix}`;
+        };
+
+        if (normalizedYear < 0) {
+            if (absYear >= 900_000_000) {
+                return `${formatWithSuffix(absYear / 1_000_000_000, 'B')} BC`;
+            }
+            if (absYear >= 1_000_000) {
+                return `${formatWithSuffix(absYear / 1_000_000, 'M')} BC`;
+            }
+            return `${absYear} BC`;
+        }
+        if (normalizedYear >= 900_000_000) {
+            return `${formatWithSuffix(absYear / 1_000_000_000, 'B')} AD`;
+        }
+        if (normalizedYear >= 1_000_000) {
+            return `${formatWithSuffix(absYear / 1_000_000, 'M')} AD`;
+        }
+        if (normalizedYear < 1000) return `${normalizedYear} AD`;
+        return `${normalizedYear}`;
     }
 
     /**
@@ -590,6 +610,10 @@ const Visualization = (function() {
             const bandHeight = eventSet.height || 200; // Default or user-configured
             maxY = drawGDPBlocsBand(bandGroup, eventSet, y, bandHeight);
             actualHeight = bandHeight;
+        } else if (eventSet.type === 'timeseries-lines') {
+            const bandHeight = eventSet.maxHeight || 140;
+            maxY = drawTimeSeriesLineBand(bandGroup, eventSet, y, bandHeight);
+            actualHeight = bandHeight;
         } else {
             // Use People rendering approach for all bands (allows overlap and compact packing)
             const allEvents = [...eventSet.events].sort((a, b) => a.priority - b.priority);
@@ -637,7 +661,11 @@ const Visualization = (function() {
             'stroke-opacity': 0.2,
             'pointer-events': 'none'
         });
-        bandGroup.appendChild(background);
+        if (bandGroup.firstChild) {
+            bandGroup.insertBefore(background, bandGroup.firstChild);
+        } else {
+            bandGroup.appendChild(background);
+        }
 
         // Band title (outside the clipped group so it's always visible)
         const title = createSVGElement('text', {
@@ -654,6 +682,482 @@ const Visualization = (function() {
         svg.appendChild(title);
 
         return actualHeight;
+    }
+
+    /**
+     * Draw a time series band as a filled area
+     * @param {SVGElement} group - Parent SVG group
+     * @param {Object} seriesSet - Time series event set
+     * @param {number} bandY - Y position of the band
+     * @param {number} bandHeight - Height of the band
+     * @returns {number} The maximum Y position used
+     */
+    function drawTimeSeriesLineBand(group, seriesSet, bandY, bandHeight) {
+        const topPadding = 8;
+        const bottomPadding = 8;
+        const chartTop = bandY + topPadding;
+        const chartBottom = bandY + bandHeight - bottomPadding;
+        const chartLeft = config.padding.left;
+        const chartRight = config.width - config.padding.right;
+
+        const visiblePoints = seriesSet.points
+            .filter(point => point.year >= currentTimeScale.startYear && point.year <= currentTimeScale.endYear)
+            .sort((a, b) => a.year - b.year);
+
+        if (visiblePoints.length === 0) {
+            return bandY + bandHeight;
+        }
+
+        const isClimateBand = seriesSet.name && seriesSet.name.toLowerCase().includes('climate');
+        const recentCutoffYear = -50000000;
+        const recentPanelStartYear = 1825;
+        const recentPanelEndYear = 2025;
+        const hasRecentPanel = isClimateBand &&
+            currentTimeScale.startYear <= recentCutoffYear &&
+            currentTimeScale.endYear >= recentCutoffYear;
+        const cutoffXFull = hasRecentPanel ? currentTimeScale.yearToX(recentCutoffYear) : chartRight;
+        const chartWidth = chartRight - chartLeft;
+        const recentPanelWidth = hasRecentPanel
+            ? Math.max(220, Math.min(360, chartWidth * 0.28))
+            : 0;
+        const panelStartX = hasRecentPanel ? (chartRight - recentPanelWidth) : chartRight;
+
+        const formatAxisValue = (value) => {
+            const rounded = Math.round(value * 10) / 10;
+            return rounded % 1 === 0 ? String(rounded.toFixed(0)) : String(rounded.toFixed(1));
+        };
+
+        const getNiceTicks = (minValue, maxValue, targetTicks = 4) => {
+            const range = maxValue - minValue;
+            if (!Number.isFinite(range) || range <= 0) {
+                return [minValue, maxValue];
+            }
+
+            const roughStep = range / (targetTicks - 1);
+            const power = Math.pow(10, Math.floor(Math.log10(roughStep)));
+            const stepOptions = [1, 2, 5, 10].map(m => m * power);
+            let step = stepOptions[0];
+            for (const option of stepOptions) {
+                if (roughStep <= option) {
+                    step = option;
+                    break;
+                }
+            }
+
+            const tickStart = Math.ceil(minValue / step) * step;
+            const tickEnd = Math.floor(maxValue / step) * step;
+            const ticks = [];
+            for (let value = tickStart; value <= tickEnd + step * 0.5; value += step) {
+                ticks.push(value);
+            }
+
+            if (ticks.length === 0) {
+                return [minValue, maxValue];
+            }
+            return ticks;
+        };
+
+        const seriesStats = new Map();
+        seriesSet.series.forEach(series => {
+            const values = visiblePoints
+                .map(p => p[series.key])
+                .filter(v => Number.isFinite(v));
+            if (values.length === 0) {
+                return;
+            }
+
+            let minValue = Math.min(...values);
+            let maxValue = Math.max(...values);
+            if (minValue === maxValue) {
+                minValue -= 1;
+                maxValue += 1;
+            }
+            const valuePadding = (maxValue - minValue) * 0.05;
+            minValue -= valuePadding;
+            maxValue += valuePadding;
+            seriesStats.set(series.key, { min: minValue, max: maxValue });
+        });
+
+        const tempSeries = seriesSet.series.find(series => series.key === 'temp_c');
+        if (tempSeries && seriesStats.has(tempSeries.key)) {
+            const tempStats = seriesStats.get(tempSeries.key);
+            const toY = (value) => {
+                const t = (value - tempStats.min) / (tempStats.max - tempStats.min);
+                return chartBottom - t * (chartBottom - chartTop);
+            };
+
+            const tickValues = getNiceTicks(tempStats.min, tempStats.max, 4);
+            const ticks = tickValues.map(value => ({ value, y: toY(value) }));
+
+            const leftX = chartLeft + 4;
+            const rightX = hasRecentPanel ? (panelStartX - 4) : (chartRight - 4);
+
+            ticks.forEach(tick => {
+                const tickLabel = formatAxisValue(tick.value);
+
+                const gridLine = createSVGElement('line', {
+                    x1: chartLeft,
+                    x2: chartRight,
+                    y1: tick.y,
+                    y2: tick.y,
+                    stroke: '#cfcfcf',
+                    'stroke-width': 1,
+                    'stroke-opacity': 0.25,
+                    'pointer-events': 'none'
+                });
+                group.appendChild(gridLine);
+
+                const leftTick = createSVGElement('line', {
+                    x1: leftX,
+                    x2: leftX + 6,
+                    y1: tick.y,
+                    y2: tick.y,
+                    stroke: tempSeries.color,
+                    'stroke-width': 1,
+                    'stroke-opacity': 0.6
+                });
+                group.appendChild(leftTick);
+
+                const leftText = createSVGElement('text', {
+                    x: leftX + 8,
+                    y: tick.y + 3,
+                    'font-family': FONT_FAMILY,
+                    'font-size': '10px',
+                    fill: tempSeries.color
+                });
+                leftText.textContent = tickLabel;
+                group.appendChild(leftText);
+
+                const rightTick = createSVGElement('line', {
+                    x1: rightX - 6,
+                    x2: rightX,
+                    y1: tick.y,
+                    y2: tick.y,
+                    stroke: tempSeries.color,
+                    'stroke-width': 1,
+                    'stroke-opacity': 0.6
+                });
+                group.appendChild(rightTick);
+
+                const rightText = createSVGElement('text', {
+                    x: rightX - 8,
+                    y: tick.y + 3,
+                    'text-anchor': 'end',
+                    'font-family': FONT_FAMILY,
+                    'font-size': '10px',
+                    fill: tempSeries.color
+                });
+                rightText.textContent = tickLabel;
+                group.appendChild(rightText);
+            });
+
+            const unitLabelLeft = createSVGElement('text', {
+                x: leftX + 8,
+                y: chartTop + 8,
+                'font-family': FONT_FAMILY,
+                'font-size': '10px',
+                'font-weight': 'bold',
+                fill: tempSeries.color
+            });
+            unitLabelLeft.textContent = tempSeries.unit || '°C';
+            group.appendChild(unitLabelLeft);
+
+            const unitLabelRight = createSVGElement('text', {
+                x: rightX - 8,
+                y: chartTop + 8,
+                'text-anchor': 'end',
+                'font-family': FONT_FAMILY,
+                'font-size': '10px',
+                'font-weight': 'bold',
+                fill: tempSeries.color
+            });
+            unitLabelRight.textContent = tempSeries.unit || '°C';
+            group.appendChild(unitLabelRight);
+        }
+
+        let panelGroup = null;
+        const panelXForYear = (year) => {
+            const denom = (recentPanelEndYear - recentPanelStartYear);
+            const rawT = denom > 0 ? (year - recentPanelStartYear) / denom : 0;
+            const t = Math.min(1, Math.max(0, rawT));
+            return panelStartX + t * (chartRight - panelStartX);
+        };
+
+        const mainXForYear = (year) => {
+            if (!hasRecentPanel) {
+                return currentTimeScale.yearToX(year);
+            }
+            const denom = (cutoffXFull - chartLeft);
+            if (denom <= 0) {
+                return currentTimeScale.yearToX(year);
+            }
+            const xFull = currentTimeScale.yearToX(year);
+            const t = (xFull - chartLeft) / denom;
+            return chartLeft + t * (panelStartX - chartLeft);
+        };
+
+        if (hasRecentPanel) {
+            panelGroup = createSVGElement('g', { class: 'recent-panel' });
+            group.appendChild(panelGroup);
+
+            const panelRect = createSVGElement('rect', {
+                x: panelStartX,
+                y: chartTop,
+                width: chartRight - panelStartX,
+                height: chartBottom - chartTop,
+                fill: '#ffffff',
+                'fill-opacity': 0.45,
+                stroke: '#cfcfcf',
+                'stroke-width': 1,
+                'pointer-events': 'none'
+            });
+            panelGroup.appendChild(panelRect);
+
+            const panelDivider = createSVGElement('line', {
+                x1: panelStartX,
+                x2: panelStartX,
+                y1: chartTop,
+                y2: chartBottom,
+                stroke: '#b5b5b5',
+                'stroke-width': 1,
+                'pointer-events': 'none'
+            });
+            panelGroup.appendChild(panelDivider);
+
+            const panelLabel = createSVGElement('text', {
+                x: panelStartX + 6,
+                y: chartTop + 12,
+                'font-family': FONT_FAMILY,
+                'font-size': '10px',
+                'font-weight': 'bold',
+                fill: '#7f8c8d'
+            });
+            panelLabel.textContent = `Recent climate (${recentPanelStartYear}–${recentPanelEndYear})`;
+            panelGroup.appendChild(panelLabel);
+
+            const panelAxis = createSVGElement('line', {
+                x1: panelStartX,
+                x2: chartRight,
+                y1: chartBottom - 1,
+                y2: chartBottom - 1,
+                stroke: '#b5b5b5',
+                'stroke-width': 1,
+                'pointer-events': 'none'
+            });
+            panelGroup.appendChild(panelAxis);
+
+            const yearTicks = [1825, 1900, 1950, 2000, 2025]
+                .filter(year => year >= recentPanelStartYear && year <= recentPanelEndYear);
+            yearTicks.forEach(year => {
+                const x = panelXForYear(year);
+                const tick = createSVGElement('line', {
+                    x1: x,
+                    x2: x,
+                    y1: chartBottom - 6,
+                    y2: chartBottom - 1,
+                    stroke: '#b5b5b5',
+                    'stroke-width': 1,
+                    'pointer-events': 'none'
+                });
+                panelGroup.appendChild(tick);
+
+                const label = createSVGElement('text', {
+                    x,
+                    y: chartBottom - 8,
+                    'text-anchor': 'middle',
+                    'font-family': FONT_FAMILY,
+                    'font-size': '9px',
+                    fill: '#7f8c8d'
+                });
+                label.textContent = `${year}`;
+                panelGroup.appendChild(label);
+            });
+        }
+
+        seriesSet.series.forEach((series, idx) => {
+            if (!seriesStats.has(series.key)) {
+                return;
+            }
+
+            const stats = seriesStats.get(series.key);
+            const toY = (value) => {
+                const t = (value - stats.min) / (stats.max - stats.min);
+                return chartBottom - t * (chartBottom - chartTop);
+            };
+
+            const mainPoints = visiblePoints.filter(point => !hasRecentPanel || point.year <= recentCutoffYear);
+            const seriesPoints = mainPoints.map(point => {
+                const value = point[series.key];
+                if (!Number.isFinite(value)) {
+                    return null;
+                }
+                const x = mainXForYear(point.year);
+                const y = toY(value);
+                return { x, y };
+            }).filter(Boolean);
+
+            const pathParts = [];
+            seriesPoints.forEach((pt, ptIdx) => {
+                pathParts.push(`${ptIdx === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`);
+            });
+
+            if (pathParts.length > 1) {
+                const linePath = createSVGElement('path', {
+                    d: pathParts.join(' '),
+                    fill: 'none',
+                    stroke: series.color,
+                    'stroke-width': 2,
+                    'stroke-opacity': 0.9,
+                    'pointer-events': 'none'
+                });
+                group.appendChild(linePath);
+            }
+
+            if (hasRecentPanel) {
+                const recentPoints = visiblePoints.filter(point => point.year >= recentPanelStartYear && point.year <= recentPanelEndYear);
+                const recentSeriesPoints = recentPoints.map(point => {
+                    const value = point[series.key];
+                    if (!Number.isFinite(value)) {
+                        return null;
+                    }
+                    const x = panelXForYear(point.year);
+                    const y = toY(value);
+                    return { x, y };
+                }).filter(Boolean);
+
+                const recentPathParts = [];
+                recentSeriesPoints.forEach((pt, ptIdx) => {
+                    recentPathParts.push(`${ptIdx === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`);
+                });
+
+                if (recentPathParts.length > 1) {
+                    const recentPath = createSVGElement('path', {
+                        d: recentPathParts.join(' '),
+                        fill: 'none',
+                        stroke: series.color,
+                        'stroke-width': 2.5,
+                        'stroke-opacity': 0.95,
+                        'pointer-events': 'none'
+                    });
+                    if (panelGroup) {
+                        panelGroup.appendChild(recentPath);
+                    } else {
+                        group.appendChild(recentPath);
+                    }
+                }
+
+                if (recentSeriesPoints.length > 0) {
+                    const firstPoint = recentSeriesPoints[0];
+                    const lastPoint = recentSeriesPoints[recentSeriesPoints.length - 1];
+                    [firstPoint, lastPoint].forEach(point => {
+                        const marker = createSVGElement('circle', {
+                            cx: point.x,
+                            cy: point.y,
+                            r: 2.5,
+                            fill: series.color,
+                            'fill-opacity': 0.9,
+                            'pointer-events': 'none'
+                        });
+                        if (panelGroup) {
+                            panelGroup.appendChild(marker);
+                        } else {
+                            group.appendChild(marker);
+                        }
+                    });
+                }
+            }
+
+            // Add label at right edge
+            const labelX = chartRight + 6;
+            const labelY = chartTop + 12 + (idx * 14);
+            const label = createSVGElement('text', {
+                x: labelX,
+                y: labelY,
+                'font-family': FONT_FAMILY,
+                'font-size': '11px',
+                'font-weight': 'bold',
+                fill: series.color
+            });
+            label.textContent = series.label;
+            group.appendChild(label);
+        });
+
+        if (isClimateBand) {
+            const extinctionEvents = selectedEventSets
+                .filter(set => Array.isArray(set.events))
+                .flatMap(set => set.events)
+                .filter(event => event.type === 'extinction');
+
+            const visibleExtinctions = extinctionEvents
+                .filter(event => event.startYear >= currentTimeScale.startYear && event.startYear <= currentTimeScale.endYear)
+                .sort((a, b) => a.startYear - b.startYear);
+
+            const maxLabelRows = 4;
+            const rowSpacing = 10;
+            const minLabelGap = 30;
+            const lastXByRow = Array.from({ length: maxLabelRows }, () => -Infinity);
+            const charWidth = 5.8;
+
+            visibleExtinctions.forEach((event) => {
+                    const year = event.startYear;
+                    const x = hasRecentPanel && year >= recentPanelStartYear
+                        ? panelXForYear(year)
+                        : mainXForYear(year);
+
+                    const wikiUrl = event.wiki
+                        ? `https://en.wikipedia.org/wiki/${event.wiki}`
+                        : null;
+                    const baseLabel = event.name || event.short || 'Extinction';
+                    const labelText = /extinction/i.test(baseLabel)
+                        ? baseLabel
+                        : `${baseLabel} Extinction`;
+
+                    let rowIndex = lastXByRow.findIndex(lastX => x - lastX >= minLabelGap);
+                    if (rowIndex === -1) {
+                        rowIndex = lastXByRow.indexOf(Math.min(...lastXByRow));
+                    }
+                    const labelY = chartTop + 10 + (rowIndex * rowSpacing);
+                    const estimatedWidth = labelText.length * charWidth;
+                    lastXByRow[rowIndex] = x + estimatedWidth;
+
+                    const line = createSVGElement('line', {
+                        x1: x,
+                        x2: x,
+                        y1: chartTop,
+                        y2: chartBottom,
+                        stroke: '#c0392b',
+                        'stroke-width': 1,
+                        'stroke-opacity': 0.35,
+                        'pointer-events': 'none'
+                    });
+                    const label = createSVGElement('text', {
+                        x: x + 2,
+                        y: labelY,
+                        'font-family': FONT_FAMILY,
+                        'font-size': '9px',
+                        fill: '#c0392b',
+                        'cursor': wikiUrl ? 'pointer' : 'default'
+                    });
+                    label.textContent = labelText;
+
+                    if (wikiUrl) {
+                        const link = createSVGElement('a', {
+                            href: wikiUrl,
+                            target: '_blank',
+                            rel: 'noopener noreferrer'
+                        });
+                        link.setAttributeNS('http://www.w3.org/1999/xlink', 'href', wikiUrl);
+                        link.appendChild(line);
+                        link.appendChild(label);
+                        group.appendChild(link);
+                    } else {
+                        group.appendChild(line);
+                        group.appendChild(label);
+                    }
+                });
+        }
+
+        return bandY + bandHeight;
     }
 
     /**

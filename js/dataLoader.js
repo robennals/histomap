@@ -20,6 +20,13 @@ const DataLoader = (function() {
                 `${base}media.json`,
                 `${base}world-power.json`
             ];
+        } else if (path.includes('earth')) {
+            return [
+                `${base}eras.json`,
+                `${base}life-forms.json`,
+                `${base}events.json`,
+                { type: 'timeseries', path: `${base}climate-temp.csv`, name: 'Climate (Temp & CO₂)' }
+            ];
         } else if (path.includes('british')) {
             return [
                 `${base}eras.json`,
@@ -71,6 +78,13 @@ const DataLoader = (function() {
                         }
                         return response.text();
                     }).then(text => processGDPCSV(text, file.name));
+                } else if (file.type === 'timeseries') {
+                    return fetch(filePath).then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Failed to load ${filePath}`);
+                        }
+                        return response.text();
+                    }).then(text => processTimeSeriesCSV(text, file.name));
                 }
             });
 
@@ -78,10 +92,10 @@ const DataLoader = (function() {
 
             // Process dates for each event set (skip GDP blocs as they're already processed)
             eventSets.forEach(eventSet => {
-                if (eventSet.type !== 'gdp-blocs') {
-                    processEventSet(eventSet);
-                }
-            });
+            if (eventSet.type !== 'gdp-blocs' && eventSet.type !== 'timeseries-lines') {
+                processEventSet(eventSet);
+            }
+        });
 
             return eventSets;
         } catch (error) {
@@ -127,6 +141,57 @@ const DataLoader = (function() {
             type: 'gdp-blocs',
             blocs: blocData,
             blocList: blocNames
+        };
+    }
+
+    /**
+     * Process time series CSV data (year,value)
+     * @param {string} csvText - Raw CSV text
+     * @param {string} name - Name for this event set
+     * @returns {Object} Processed time series data
+     */
+    function processTimeSeriesCSV(csvText, name) {
+        const lines = csvText.trim().split('\n');
+        const headers = lines[0].split(',').map(h => h.trim());
+
+        const yearIdx = headers.indexOf('year');
+        if (yearIdx === -1) {
+            throw new Error(`Time series CSV must include a year column`);
+        }
+
+        const seriesKeys = headers.filter((h, idx) => idx !== yearIdx);
+        if (seriesKeys.length === 0) {
+            throw new Error(`Time series CSV must include at least one data column`);
+        }
+
+        const points = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',').map(v => v.trim());
+            const year = parseInt(values[yearIdx]);
+            if (!Number.isFinite(year)) continue;
+
+            const point = { year };
+            seriesKeys.forEach((key, idx) => {
+                const valueIdx = headers.indexOf(key);
+                const value = parseFloat(values[valueIdx]);
+                if (Number.isFinite(value)) {
+                    point[key] = value;
+                }
+            });
+            points.push(point);
+        }
+
+        const seriesMeta = [
+            { key: 'temp_c', label: 'Temp (°C)', color: '#e67e22', unit: '°C' },
+            { key: 'co2_ppm', label: 'CO₂ (ppm)', color: '#3498db', unit: 'ppm' }
+        ].filter(series => seriesKeys.includes(series.key));
+
+        return {
+            name,
+            color: '#95a5a6',
+            type: 'timeseries-lines',
+            series: seriesMeta,
+            points
         };
     }
 

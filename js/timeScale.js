@@ -104,11 +104,11 @@ const TimeScale = (function() {
          * @returns {Array} Array of tick objects with year, display properties
          */
         getAxisTicks() {
-            if (this.scale === 'linear') {
-                return this.getLinearTicks();
-            } else {
-                return this.getLogTicks();
-            }
+            const ticks = this.scale === 'linear'
+                ? this.getLinearTicks()
+                : this.getLogTicks();
+
+            return ticks.filter(tick => tick.year !== 0);
         }
 
         /**
@@ -117,6 +117,11 @@ const TimeScale = (function() {
          */
         getLinearTicks() {
             const ticks = [];
+
+            const yearRange = this.endYear - this.startYear;
+            if (yearRange > 10000) {
+                return this.getLargeRangeLinearTicks();
+            }
 
             // Generate ticks for every year from start to end
             for (let year = this.startYear; year <= this.endYear; year++) {
@@ -154,7 +159,48 @@ const TimeScale = (function() {
                 ticks.push(tick);
             }
 
+            this.ensureReferenceTick(ticks, 1);
             return ticks;
+        }
+
+        /**
+         * Generate linear scale ticks for very large ranges
+         * @returns {Array} Array of tick objects
+         */
+        getLargeRangeLinearTicks() {
+            const ticks = [];
+            const yearRange = this.endYear - this.startYear;
+            const targetTicks = 12;
+            const roughStep = yearRange / targetTicks;
+            const power = Math.pow(10, Math.floor(Math.log10(roughStep)));
+            const stepOptions = [1, 2, 5, 10].map(m => m * power);
+            let step = stepOptions[0];
+            for (const option of stepOptions) {
+                if (roughStep <= option) {
+                    step = option;
+                    break;
+                }
+            }
+
+            const startTick = Math.floor(this.startYear / step) * step;
+            const endTick = Math.ceil(this.endYear / step) * step;
+
+            for (let year = startTick; year <= endTick; year += step) {
+                if (year < this.startYear || year > this.endYear) continue;
+                ticks.push({
+                    year,
+                    showLabel: true,
+                    showGrid: true,
+                    height: 12,
+                    width: 1.5,
+                    color: '#cfcfcf',
+                    opacity: 1.0,
+                    labelWeight: 'bold'
+                });
+            }
+
+            this.ensureReferenceTick(ticks, 1);
+            return ticks.sort((a, b) => a.year - b.year);
         }
 
         /**
@@ -163,6 +209,13 @@ const TimeScale = (function() {
          */
         getLogTicks() {
             const ticks = [];
+            const yearRange = this.endYear - this.startYear;
+
+            if (yearRange > 50000) {
+                const largeTicks = this.getLargeRangeLogTicks();
+                this.ensureReferenceTick(largeTicks, 1);
+                return largeTicks;
+            }
 
             // Helper function to interpolate between two hex colors
             const interpolateColor = (startColor, endColor, factor) => {
@@ -251,7 +304,132 @@ const TimeScale = (function() {
             }
 
             // Sort by year
-            return ticks.sort((a, b) => a.year - b.year);
+            const sorted = ticks.sort((a, b) => a.year - b.year);
+            this.ensureReferenceTick(sorted, 1);
+            return sorted;
+        }
+
+        /**
+         * Generate logarithmic ticks for very large ranges (e.g., universe timeline)
+         * @returns {Array} Array of tick objects
+         */
+        getLargeRangeLogTicks() {
+            const ticks = [];
+
+            const maxYearsBeforeRef = this.referenceYear - this.startYear;
+            const minYearsBeforeRef = this.referenceYear - this.endYear;
+
+            const maxPower = Math.floor(Math.log10(maxYearsBeforeRef));
+            const minPower = Math.max(0, Math.floor(Math.log10(minYearsBeforeRef)));
+
+            for (let power = minPower; power <= maxPower; power++) {
+                const baseValue = Math.pow(10, power);
+                const yearsBeforeRef = baseValue;
+                if (yearsBeforeRef === 1_000_000_000) {
+                    continue;
+                }
+                const year = this.referenceYear - yearsBeforeRef;
+
+                if (year < this.startYear || year > this.endYear) continue;
+
+                ticks.push({
+                    year,
+                    showLabel: true,
+                    showGrid: true,
+                    height: 12,
+                    width: 1.5,
+                    color: '#cfcfcf',
+                    opacity: 1.0,
+                    labelWeight: 'bold'
+                });
+            }
+
+            // Add billion-year ticks (e.g., 4B, 3B, 2B, 1B BC)
+            for (let billions = 1; billions <= 5; billions++) {
+                const year = -billions * 1_000_000_000;
+                if (year < this.startYear || year > this.endYear) continue;
+                ticks.push({
+                    year,
+                    showLabel: true,
+                    showGrid: true,
+                    height: 12,
+                    width: 1.5,
+                    color: '#cfcfcf',
+                    opacity: 1.0,
+                    labelWeight: 'bold'
+                });
+            }
+
+            // Add 100M-year ticks for more recent deep time (1B to 0)
+            const hundredMillion = 100_000_000;
+            for (let year = -800_000_000; year <= -100_000_000; year += hundredMillion) {
+                if (year < this.startYear || year > this.endYear) continue;
+                ticks.push({
+                    year,
+                    showLabel: true,
+                    showGrid: true,
+                    height: 10,
+                    width: 1,
+                    color: '#d5d5d5',
+                    opacity: 0.9,
+                    labelWeight: 'normal'
+                });
+            }
+
+            // Always include the end year tick for context
+            ticks.push({
+                year: this.endYear,
+                showLabel: true,
+                showGrid: true,
+                height: 12,
+                width: 1.5,
+                color: '#b5b5b5',
+                opacity: 1.0,
+                labelWeight: 'bold'
+            });
+
+            // Always include the start year tick for context
+            ticks.push({
+                year: this.startYear,
+                showLabel: true,
+                showGrid: true,
+                height: 12,
+                width: 1.5,
+                color: '#b5b5b5',
+                opacity: 1.0,
+                labelWeight: 'bold'
+            });
+
+            // De-duplicate ticks by year
+            const uniqueByYear = new Map();
+            ticks.forEach(tick => {
+                if (!uniqueByYear.has(tick.year)) {
+                    uniqueByYear.set(tick.year, tick);
+                }
+            });
+
+            return Array.from(uniqueByYear.values()).sort((a, b) => a.year - b.year);
+        }
+
+        /**
+         * Ensure a specific year tick is present for orientation
+         * @param {Array} ticks - Tick array to mutate
+         * @param {number} year - Year to ensure
+         */
+        ensureReferenceTick(ticks, year) {
+            if (year < this.startYear || year > this.endYear) return;
+            if (ticks.some(t => t.year === year)) return;
+
+            ticks.push({
+                year,
+                showLabel: true,
+                showGrid: true,
+                height: 12,
+                width: 1.5,
+                color: '#b5b5b5',
+                opacity: 1.0,
+                labelWeight: 'bold'
+            });
         }
 
         /**
