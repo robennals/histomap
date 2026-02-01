@@ -1,6 +1,61 @@
 // Main Application Module
 // Initializes and coordinates all modules
 
+// SEO metadata for each timeline
+const SEO_METADATA = {
+    us: {
+        title: 'US History Timeline (1770-2025) - Histomap',
+        description: 'Interactive visualization of US history from the American Revolution to today. Explore presidents, wars, cultural movements, and the rise of American power.'
+    },
+    world: {
+        title: 'World History Timeline (4000 BC - Today) - Histomap',
+        description: 'Six millennia of human civilization in one interactive timeline. Explore the rise and fall of empires, major religions, scientific revolutions, and global conflicts.'
+    },
+    british: {
+        title: 'British History Timeline (100 BC - Today) - Histomap',
+        description: 'Interactive visualization of British history from Roman times to modern day. Explore monarchs, wars, the Industrial Revolution, and cultural transformation.'
+    }
+};
+
+/**
+ * Update page SEO metadata for the current timeline
+ * @param {string} timelineId - Timeline ID
+ */
+function updateSEOMetadata(timelineId) {
+    const metadata = SEO_METADATA[timelineId] || SEO_METADATA.us;
+
+    // Update page title
+    document.title = metadata.title;
+
+    // Update meta description
+    let descMeta = document.querySelector('meta[name="description"]');
+    if (descMeta) {
+        descMeta.setAttribute('content', metadata.description);
+    }
+
+    // Update Open Graph tags
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+        ogTitle.setAttribute('content', metadata.title);
+    }
+
+    let ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) {
+        ogDesc.setAttribute('content', metadata.description);
+    }
+
+    // Update canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+        canonical.setAttribute('href', `https://histomap.robennals.org/${timelineId}`);
+    }
+
+    let ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) {
+        ogUrl.setAttribute('href', `https://histomap.robennals.org/${timelineId}`);
+    }
+}
+
 // Application state
 const AppState = {
     currentTimelineId: 'us',
@@ -51,6 +106,9 @@ async function initializeTimeline(timelineId, updateUrl = true) {
         if (updateUrl) {
             updateURL(timelineId);
         }
+
+        // Update SEO metadata for the timeline
+        updateSEOMetadata(timelineId);
 
         // Update dropdown to match
         const timelineSelect = document.getElementById('timeline-select');

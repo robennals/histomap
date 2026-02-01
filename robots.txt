@@ -1,0 +1,11 @@
+# Robots.txt for Histomap
+# https://histomap.robennals.org
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://histomap.robennals.org/sitemap.xml
+
+# Disallow internal assets that don't need indexing
+Disallow: /node_modules/

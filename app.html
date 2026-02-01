@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histomap - Interactive Historical Timeline</title>
+    <meta name="description" content="Explore history through interactive timelines. Visualize US, World, and British history with GDP data, notable events, and exportable PDFs.">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Histomap - Interactive Historical Timeline">
+    <meta property="og:description" content="Explore history through interactive timelines. Visualize US, World, and British history with GDP data, notable events, and exportable PDFs.">
+    <meta property="og:image" content="https://histomap.robennals.org/assets/og-image.png">
+    <meta property="og:url" content="https://histomap.robennals.org/app">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://histomap.robennals.org/app">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Top Toolbar -->
+        <header class="toolbar">
+            <div class="toolbar-content">
+                <div class="toolbar-left">
+                    <a href="/" class="app-title-link"><h1 class="app-title">Histomap</h1></a>
+                    <div class="timeline-selector">
+                        <label for="timeline-select">Timeline:</label>
+                        <select id="timeline-select">
+                            <option value="us" selected>US History (1770-2025)</option>
+                            <option value="world">World History (4000 BC - Today)</option>
+                            <option value="british">British History (100 BC - Today)</option>
+                            <!-- <option value="earth">History of Planet Earth (4.5B BC - 1 BC)</option> -->
+                        </select>
+                    </div>
+                </div>
+                <div class="toolbar-right">
+                    <button id="toggle-controls" class="btn-toolbar">Settings</button>
+                    <button id="export-pdf" class="btn-toolbar">Export PDF</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+
+            <!-- Controls Panel (slide-in drawer) -->
+            <aside class="controls-panel" id="controls-panel">
+                <div class="controls-header">
+                    <h2>Settings</h2>
+                    <button id="close-controls" class="close-btn">✕</button>
+                </div>
+
+                <div class="controls-body">
+                    <section class="control-section">
+                        <h3>Bands</h3>
+                        <div id="event-set-selector" class="event-sets">
+                            <!-- Event set checkboxes will be dynamically added here -->
+                        </div>
+                    </section>
+
+                    <section class="control-section">
+                        <h3>Time Range</h3>
+                        <div class="time-controls">
+                            <label>
+                                Start Year:
+                                <input type="number" id="start-year" value="1770" min="1000" max="2025">
+                            </label>
+                            <label>
+                                End Year:
+                                <input type="number" id="end-year" value="2025" min="1000" max="2100">
+                            </label>
+                        </div>
+                    </section>
+
+                    <section class="control-section">
+                        <h3>Dimensions</h3>
+                        <div class="dimension-controls">
+                            <label>
+                                Width (px):
+                                <input type="number" id="width" value="2400" min="400" max="5000" step="100">
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </aside>
+
+            <!-- Visualization Area -->
+            <main class="visualization-area">
+                <div id="svg-container">
+                    <!-- SVG will be dynamically created here -->
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <p id="data-attribution">World power data from the <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank">Maddison Project Database</a> | <a href="/about.html">About</a> | <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Wikipedia Modal -->
+    <div id="wiki-modal" class="wiki-modal">
+        <div class="wiki-modal-content">
+            <div class="wiki-modal-header">
+                <h2 id="wiki-modal-title">Wikipedia</h2>
+                <button id="wiki-modal-close" class="close-btn">✕</button>
+            </div>
+            <div class="wiki-modal-body">
+                <iframe id="wiki-iframe" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/svg2pdf.js/dist/svg2pdf.umd.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="js/timelineConfig.js"></script>
+    <script src="js/timeScale.js"></script>
+    <script src="js/dataLoader.js"></script>
+    <script src="js/visualization.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/pdfExport.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

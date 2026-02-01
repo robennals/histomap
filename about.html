@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Histomap - Data Sources & Methodology</title>
+    <meta name="description" content="Learn about Histomap's data sources, methodology, and the Maddison Project Database used for historical GDP visualization.">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="About Histomap - Data Sources & Methodology">
+    <meta property="og:description" content="Learn about Histomap's data sources, methodology, and the Maddison Project Database used for historical GDP visualization.">
+    <meta property="og:image" content="https://histomap.robennals.org/assets/og-image.png">
+    <meta property="og:url" content="https://histomap.robennals.org/about">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://histomap.robennals.org/about">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/" class="navbar-brand">Histomap</a>
+            <div class="navbar-links">
+                <a href="/app.html">Explore Timelines</a>
+                <a href="/about.html">About</a>
+                <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Content -->
+    <main class="about-content">
+        <h1>About Histomap</h1>
+
+        <p>Histomap is an interactive historical timeline visualization tool that renders multiple event layers on a single scrollable timeline. It's designed to help you understand how different aspects of history&mdash;political, cultural, technological, and economic&mdash;interweave over time.</p>
+
+        <p>The project is inspired by John B. Sparks' famous 1931 "Histomap" poster, which visualized 4,000 years of world history in a single striking image. This digital version makes the concept interactive, customizable, and backed by real data.</p>
+
+        <h2>Data Sources</h2>
+
+        <p>The world power visualization uses GDP data from the <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank">Maddison Project Database</a>, one of the most comprehensive sources for historical economic development data.</p>
+
+        <div class="citation-box">
+            Bolt, Jutta and Jan Luiten van Zanden (2020), "Maddison style estimates of the evolution of the world economy. A new 2020 update". Maddison Project Working Paper WP-15, available for download at <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank">www.rug.nl/ggdc/historicaldevelopment/maddison/</a>
+        </div>
+
+        <p>Event data for timelines (presidents, wars, notable people, technology milestones, etc.) has been curated from various historical sources and is stored as JSON files within the project.</p>
+
+        <h2>Methodology</h2>
+
+        <p><strong>GDP Bloc Visualization:</strong> Countries are grouped into geopolitical blocs (Western, Eastern, China, India, etc.) based on historical affiliations. The GDP percentages shown represent each bloc's share of estimated world GDP at each point in time.</p>
+
+        <p><strong>Time Scales:</strong> Different timelines use different scales:</p>
+        <ul>
+            <li><strong>US History:</strong> 1770-2025, linear year scale</li>
+            <li><strong>World History:</strong> 4000 BC - 2025 AD, logarithmic scale for ancient periods</li>
+            <li><strong>British History:</strong> 100 BC - 2025 AD, linear year scale</li>
+        </ul>
+
+        <p><strong>Event Priorities:</strong> Events are classified as "major" (priority 1-2) or "minor" (priority 3+), affecting their visual prominence on the timeline.</p>
+
+        <h2>Technical Details</h2>
+
+        <p>Histomap is built with vanilla JavaScript and SVG rendering&mdash;no frameworks required:</p>
+
+        <ul class="tech-list">
+            <li><strong>Rendering:</strong> Pure SVG for resolution-independent graphics</li>
+            <li><strong>PDF Export:</strong> jsPDF + svg2pdf.js for high-quality printable output</li>
+            <li><strong>Data Format:</strong> JSON files for event data, CSV for GDP time-series</li>
+            <li><strong>Hosting:</strong> Static files served via Vercel</li>
+        </ul>
+
+        <p>The source code is available on <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a> under the MIT license.</p>
+
+        <h2>License</h2>
+
+        <p>This project is open source under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>. The Maddison Project data is used under their terms&mdash;please cite appropriately if using for research.</p>
+
+        <h2>Contact</h2>
+
+        <p>Created by <a href="https://robennals.org" target="_blank">Rob Ennals</a>. For questions, bug reports, or contributions, please open an issue on <a href="https://github.com/robennals/histomap/issues" target="_blank">GitHub</a>.</p>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/app.html">Explore Timelines</a>
+                <a href="/about.html">About</a>
+                <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
+            </div>
+            <p class="footer-copyright">Histomap - An open source project by <a href="https://robennals.org" target="_blank">Rob Ennals</a></p>
+        </div>
+    </footer>
+</body>
+</html>
