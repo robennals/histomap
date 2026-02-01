@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test British GDP Data Loading</title>
+</head>
+<body>
+    <h1>British World Power CSV Data Test</h1>
+    <div id="output"></div>
+
+    <script>
+        async function testData() {
+            const output = document.getElementById('output');
+
+            try {
+                // Load the CSV
+                const response = await fetch('data/british/world_power.csv?bust=' + Date.now());
+                const csvText = await response.text();
+
+                // Parse headers
+                const lines = csvText.trim().split('\n');
+                const headers = lines[0].split(',').map(h => h.trim());
+
+                output.innerHTML += '<h2>Headers:</h2>';
+                output.innerHTML += '<pre>' + headers.join('\n') + '</pre>';
+
+                // Find US column
+                const usIndex = headers.indexOf('US');
+                output.innerHTML += '<h2>US Column Index:</h2>';
+                output.innerHTML += '<p>Index: ' + usIndex + ' (column ' + (usIndex + 1) + ')</p>';
+
+                // Check 1950 data
+                const row1950 = lines.find(line => line.startsWith('1950,'));
+                if (row1950) {
+                    const values = row1950.split(',').map(v => v.trim());
+                    output.innerHTML += '<h2>1950 Row Data:</h2>';
+                    output.innerHTML += '<pre>';
+                    output.innerHTML += 'Year: ' + values[0] + '\n';
+                    output.innerHTML += 'China: ' + values[headers.indexOf('China')] + '\n';
+                    output.innerHTML += 'US: ' + values[usIndex] + '\n';
+                    output.innerHTML += 'NATO + Aligned: ' + values[headers.indexOf('NATO + Aligned')] + '\n';
+                    output.innerHTML += '</pre>';
+                }
+
+                // Process all GDP data like dataLoader does
+                const blocNames = headers.slice(1); // Skip 'Year' column
+                const blocData = {};
+                blocNames.forEach(bloc => {
+                    blocData[bloc] = [];
+                });
+
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+                    const values = lines[i].split(',').map(v => v.trim());
+                    const year = parseInt(values[0]);
+
+                    blocNames.forEach((bloc, idx) => {
+                        const gdpPercent = parseFloat(values[idx + 1]);
+                        blocData[bloc].push({
+                            year: year,
+                            gdpPercent: gdpPercent
+                        });
+                    });
+                }
+
+                // Show US data for years 1940-1960
+                output.innerHTML += '<h2>US GDP Data (1940-1960):</h2>';
+                output.innerHTML += '<pre>';
+                const usData = blocData['US'].filter(d => d.year >= 1940 && d.year <= 1960);
+                usData.forEach(d => {
+                    output.innerHTML += `${d.year}: ${d.gdpPercent}%\n`;
+                });
+                output.innerHTML += '</pre>';
+
+                output.innerHTML += '<h2 style="color: green;">✓ Data loads correctly!</h2>';
+
+            } catch (error) {
+                output.innerHTML += '<h2 style="color: red;">Error:</h2>';
+                output.innerHTML += '<pre>' + error.message + '</pre>';
+            }
+        }
+
+        testData();
+    </script>
+</body>
+</html>

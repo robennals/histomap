@@ -41,6 +41,10 @@ def main():
             if bloc in consolidate_to_other_european:
                 bloc = 'Other European Empires'
 
+            # Consolidate India variants into single "India"
+            if bloc in ('India - post independence', 'Independent Indian States'):
+                bloc = 'India'
+
             bloc_gdp[decade][bloc] += gdp_percent
             all_blocs.add(bloc)
             all_decades.add(decade)
@@ -50,24 +54,21 @@ def main():
 
     # Define custom bloc order based on succession/inheritance
     # Stack blocs to maximize adjacency with territory transfer partners
-    # Bottom to top: China → Ottoman (dissolves) → Other Euro Empires →
-    # NATO (receives Euro empires below and British above) → British → US (British breakaway) →
-    # Ind. Indian States (absorbed by British) → India (succession) →
-    # Japanese → Russian → USSR → BRICS → Other (at top, residual non-aligned)
+    # India is placed directly below British Empire to show absorption effect
+    # Other is always at the top (last in list)
     bloc_order = [
         'China',
         'BRICS + Aligned',
-        'India - post independence',  # Will be renamed to just "India"
         'Ottoman Empire',
         'Other European Empires',
         'NATO + Aligned',
+        'India',
         'British Empire',
         'US',
-        'Independent Indian States',
         'Japanese Empire',
         'Russian Empire',
         'USSR + Aligned',
-        'Other'
+        'Other'  # Always at top
     ]
 
     # Sort blocs according to custom order, with any unlisted blocs at the end
@@ -81,11 +82,8 @@ def main():
     with open('bloc_gdp_summary.csv', 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
 
-        # Write header with renamed blocs
-        header = ['Year'] + [
-            'India' if bloc == 'India - post independence' else bloc
-            for bloc in sorted_blocs
-        ]
+        # Write header
+        header = ['Year'] + sorted_blocs
         writer.writerow(header)
 
         # Write data rows

@@ -9,14 +9,11 @@ const Visualization = (function() {
 
     // GDP Bloc color scheme
     // Colors chosen to be distinct, with successors having related but distinguishable hues
-    // Order in file: China, Independent Indian States, India, British Empire,
-    //                NATO + Aligned, US, Russian Empire, USSR + Aligned,
-    //                Japanese Empire, Ottoman Empire, Other European Empires, Other, BRICS + Aligned
+    // Both US and British column names are mapped to ensure consistent colors
     const GDP_BLOC_COLORS = {
         'China': '#e74c3c',                      // Red (large bloc)
-        'BRICS + Aligned': '#d68910',            // Dark red (succeeds USSR, distinct but related)
-        'Independent Indian States': '#f39c12',  // Orange (adjacent to China)
-        'India': '#f39c12',                      // Darker orange (succeeds Independent Indian, similar but distinct)
+        'BRICS + Aligned': '#d68910',            // Dark orange (succeeds USSR, distinct but related)
+        'India': '#f39c12',                      // Orange (adjacent to China)
         'British Empire': '#2874a6',             // Dark blue (distinct from India/China)
         'NATO + Aligned': '#1abc9c',             // Teal (succeeds British, related blue tone but distinct)
         'US': '#9b59b6',                         // Purple (next to NATO, distinct)
@@ -24,8 +21,14 @@ const Visualization = (function() {
         'USSR + Aligned': '#b03a69',             // Darker pink (succeeds Russian, similar but distinct)
         'Japanese Empire': '#27ae60',            // Green (distinct from orange India)
         'Ottoman Empire': '#16a085',             // Dark teal (distinct)
-        'Other European Empires': '#f1c40f',     // Yellow (moved from Japanese, distinct from teal/blue)
-        'Other': '#7f8c8d'                       // Gray (neutral)
+        'Other European Empires': '#f1c40f',     // Yellow (distinct from teal/blue)
+        'Other': '#7f8c8d',                      // Gray (neutral)
+        // Ancient empires (for British History pre-1750)
+        'Roman Empire': '#8e44ad',               // Deep purple (ancient power)
+        'Parthian/Sassanid Empire': '#c0392b',   // Dark red (Persian)
+        'Byzantine Empire': '#2980b9',           // Blue (successor to Rome)
+        'Islamic Caliphate': '#27ae60',          // Green (traditional Islamic color)
+        'Mongol Empire': '#d35400'               // Burnt orange (Asian steppe)
     };
 
     // Configuration
