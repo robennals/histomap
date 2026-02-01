@@ -382,7 +382,7 @@ const Controls = (function() {
         const endYear = parseInt(document.getElementById('end-year').value);
 
         if (startYear >= endYear) {
-            alert('Start year must be before end year.');
+            // Silently skip update if date range is invalid (can happen during typing or loading)
             return;
         }
 
