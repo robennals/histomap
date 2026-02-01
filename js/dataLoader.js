@@ -18,7 +18,7 @@ const DataLoader = (function() {
                 `${base}notable-people.json`,
                 `${base}technology.json`,
                 `${base}media.json`,
-                `${base}world-power.json`
+                { type: 'csv', path: `${base}world_power.csv`, name: 'World Power' }
             ];
         } else if (path.includes('earth')) {
             return [
