@@ -6,7 +6,7 @@ const TimelineConfig = (function() {
         us: {
             id: 'us',
             name: 'US History',
-            title: 'Timeline of US History',
+            title: 'Histomap Reborn: Timeline of US History',
             startYear: 1770,
             endYear: 2025,
             scale: 'linear',
@@ -16,7 +16,7 @@ const TimelineConfig = (function() {
         world: {
             id: 'world',
             name: 'World History',
-            title: 'Timeline of World History',
+            title: 'Histomap Reborn: Timeline of World History',
             startYear: -3500,
             endYear: 2025,
             scale: 'logarithmic',
@@ -30,7 +30,7 @@ const TimelineConfig = (function() {
         british: {
             id: 'british',
             name: 'British History',
-            title: 'Timeline of British History',
+            title: 'Histomap Reborn: Timeline of British History',
             startYear: -100,
             endYear: 2025,
             scale: 'logarithmic',

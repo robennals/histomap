@@ -4,15 +4,15 @@
 // SEO metadata for each timeline
 const SEO_METADATA = {
     us: {
-        title: 'US History Timeline (1770-2025) - Histomap',
+        title: 'US History Timeline (1770-2025) - Histomap Reborn',
         description: 'Interactive visualization of US history from the American Revolution to today. Explore presidents, wars, cultural movements, and the rise of American power.'
     },
     world: {
-        title: 'World History Timeline (4000 BC - Today) - Histomap',
+        title: 'World History Timeline (4000 BC - Today) - Histomap Reborn',
         description: 'Six millennia of human civilization in one interactive timeline. Explore the rise and fall of empires, major religions, scientific revolutions, and global conflicts.'
     },
     british: {
-        title: 'British History Timeline (100 BC - Today) - Histomap',
+        title: 'British History Timeline (100 BC - Today) - Histomap Reborn',
         description: 'Interactive visualization of British history from Roman times to modern day. Explore monarchs, wars, the Industrial Revolution, and cultural transformation.'
     }
 };
