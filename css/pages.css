@@ -82,6 +82,43 @@ a:hover {
     text-decoration: none;
 }
 
+.navbar-author {
+    border-left: 1px solid var(--border-color);
+    padding-left: 24px;
+    margin-left: 8px;
+}
+
+/* Mobile menu button */
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.navbar-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-dark);
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.navbar-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.navbar-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
 /* Hero Section */
 .hero {
     position: relative;
@@ -206,12 +243,23 @@ a:hover {
     margin-top: 32px;
 }
 
+a.timeline-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+a.timeline-card:hover {
+    text-decoration: none;
+}
+
 .timeline-card {
     background: var(--white);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
 }
 
 .timeline-card:hover {
@@ -537,6 +585,45 @@ a:hover {
     border-bottom: none;
 }
 
+/* Author Box */
+.author-box {
+    background: var(--bg-light);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    border: 1px solid var(--border-color);
+}
+
+.author-box p {
+    margin-bottom: 12px;
+}
+
+.author-box p:last-child {
+    margin-bottom: 0;
+}
+
+.blog-link {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.blog-link a {
+    color: var(--primary-color);
+}
+
+.author-info {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+.author-cta {
+    margin-top: 20px;
+    text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero h1 {
@@ -547,8 +634,45 @@ a:hover {
         font-size: 1rem;
     }
 
+    .navbar-toggle {
+        display: flex;
+    }
+
     .navbar-links {
-        gap: 16px;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 16px 24px;
+        gap: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-top: 1px solid var(--border-color);
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
+
+    .navbar-links a {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .navbar-links a:last-child {
+        border-bottom: none;
+    }
+
+    .navbar-author {
+        border-left: none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .navbar-content {
+        position: relative;
     }
 
     .section h2 {
@@ -561,5 +685,10 @@ a:hover {
 
     .about-content h1 {
         font-size: 2rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 16px;
     }
 }

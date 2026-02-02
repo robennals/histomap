@@ -27,10 +27,16 @@
     <nav class="navbar">
         <div class="navbar-content">
             <a href="/" class="navbar-brand">Histomap Reborn</a>
+            <button class="navbar-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <div class="navbar-links">
                 <a href="/app.html">Explore Timelines</a>
                 <a href="/about.html">About</a>
                 <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
+                <a href="https://robennals.org" target="_blank" class="navbar-author">Rob Ennals</a>
             </div>
         </div>
     </nav>
@@ -139,10 +145,19 @@
             <div class="footer-links">
                 <a href="/app.html">Explore Timelines</a>
                 <a href="/about.html">About</a>
+                <a href="https://messyprogress.substack.com" target="_blank">Blog</a>
                 <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
             </div>
-            <p class="footer-copyright">Histomap Reborn - An open source project by <a href="https://robennals.org" target="_blank">Rob Ennals</a></p>
+            <p class="footer-copyright">Created by <a href="https://robennals.org" target="_blank">Rob Ennals</a> · <a href="https://messyprogress.substack.com" target="_blank">Subscribe to my blog</a></p>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.navbar-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.navbar-links').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

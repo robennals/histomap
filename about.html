@@ -27,10 +27,16 @@
     <nav class="navbar">
         <div class="navbar-content">
             <a href="/" class="navbar-brand">Histomap Reborn</a>
+            <button class="navbar-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <div class="navbar-links">
                 <a href="/app.html">Explore Timelines</a>
                 <a href="/about.html">About</a>
                 <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
+                <a href="https://robennals.org" target="_blank" class="navbar-author">Rob Ennals</a>
             </div>
         </div>
     </nav>
@@ -90,9 +96,18 @@
 
         <p>This project is open source under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>. The Maddison Project data is used under their terms&mdash;please cite appropriately if using for research.</p>
 
+        <h2>About the Creator</h2>
+
+        <div class="author-box">
+            <p>Histomap Reborn was created by <a href="https://robennals.org" target="_blank">Rob Ennals</a>.</p>
+            <p>I wrote about why I built this project and the fascinating way our perception of historical time is distorted in my blog post: <a href="https://messyprogress.substack.com/p/events-in-the-past-are-more-recent" target="_blank">"Events in the Past Are More Recent Than You Think"</a>.</p>
+            <p>If you find this project interesting, you might enjoy my other writing on technology, history, and ideas at <a href="https://messyprogress.substack.com" target="_blank">Messy Progress</a>.</p>
+            <p class="author-cta"><a href="https://messyprogress.substack.com" target="_blank" class="btn btn-primary">Subscribe to my blog</a></p>
+        </div>
+
         <h2>Contact</h2>
 
-        <p>Created by <a href="https://robennals.org" target="_blank">Rob Ennals</a>. For questions, bug reports, or contributions, please open an issue on <a href="https://github.com/robennals/histomap/issues" target="_blank">GitHub</a>.</p>
+        <p>For questions, bug reports, or contributions, please open an issue on <a href="https://github.com/robennals/histomap/issues" target="_blank">GitHub</a>.</p>
     </main>
 
     <!-- Footer -->
@@ -101,10 +116,19 @@
             <div class="footer-links">
                 <a href="/app.html">Explore Timelines</a>
                 <a href="/about.html">About</a>
+                <a href="https://messyprogress.substack.com" target="_blank">Blog</a>
                 <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
             </div>
-            <p class="footer-copyright">Histomap Reborn - An open source project by <a href="https://robennals.org" target="_blank">Rob Ennals</a></p>
+            <p class="footer-copyright">Created by <a href="https://robennals.org" target="_blank">Rob Ennals</a> · <a href="https://messyprogress.substack.com" target="_blank">Subscribe to my blog</a></p>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.navbar-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.navbar-links').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

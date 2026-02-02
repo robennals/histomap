@@ -50,10 +50,16 @@
     <nav class="navbar">
         <div class="navbar-content">
             <a href="/" class="navbar-brand">Histomap Reborn</a>
+            <button class="navbar-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <div class="navbar-links">
                 <a href="/app.html">Explore Timelines</a>
                 <a href="/about.html">About</a>
                 <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
+                <a href="https://robennals.org" target="_blank" class="navbar-author">Rob Ennals</a>
             </div>
         </div>
     </nav>
@@ -72,38 +78,38 @@
         <div class="section-content">
             <h2>Choose Your Timeline</h2>
             <div class="timeline-grid">
-                <div class="timeline-card">
+                <a href="/app.html?timeline=us" class="timeline-card">
                     <div class="timeline-card-image timeline-card-us">
                         <span>US History</span>
                     </div>
                     <div class="timeline-card-body">
                         <h3>US History (1770-2025)</h3>
                         <p>From the American Revolution to today. Presidents, wars, cultural movements, technology, and the rise of American power.</p>
-                        <a href="/app.html?timeline=us" class="btn btn-primary">Explore US History</a>
+                        <span class="btn btn-primary">Explore US History</span>
                     </div>
-                </div>
+                </a>
 
-                <div class="timeline-card">
+                <a href="/app.html?timeline=world" class="timeline-card">
                     <div class="timeline-card-image timeline-card-world">
                         <span>World History</span>
                     </div>
                     <div class="timeline-card-body">
                         <h3>World History (4000 BC - Today)</h3>
                         <p>Six millennia of human civilization. The rise and fall of empires, major religions, scientific revolutions, and global conflicts.</p>
-                        <a href="/app.html?timeline=world" class="btn btn-primary">Explore World History</a>
+                        <span class="btn btn-primary">Explore World History</span>
                     </div>
-                </div>
+                </a>
 
-                <div class="timeline-card">
+                <a href="/app.html?timeline=british" class="timeline-card">
                     <div class="timeline-card-image timeline-card-british">
                         <span>British History</span>
                     </div>
                     <div class="timeline-card-body">
                         <h3>British History (100 BC - Today)</h3>
                         <p>From Roman Britain through the Empire to modern times. Monarchs, wars, the Industrial Revolution, and cultural transformation.</p>
-                        <a href="/app.html?timeline=british" class="btn btn-primary">Explore British History</a>
+                        <span class="btn btn-primary">Explore British History</span>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -148,16 +154,38 @@
         </div>
     </section>
 
+    <!-- Blog Post Section -->
+    <section class="section section-alt">
+        <div class="section-content">
+            <h2>Why I Built This</h2>
+            <div class="author-box">
+                <p>I've always loved the original 1931 Histomap. It made historical events feel connected in a way that textbooks never did—you could see how civilizations rose and fell, how different eras overlapped, and how recent so much of history really is.</p>
+                <p>But the original had limitations: the data was somewhat subjective, it ended in 1931, and you couldn't explore it interactively. I wanted to bring it into the modern era with real economic data, extend it to the present day, and make it something you could customize and explore.</p>
+                <p class="blog-link">Read more: <a href="https://messyprogress.substack.com/p/events-in-the-past-are-more-recent" target="_blank">"Events in the Past Are More Recent Than You Think"</a></p>
+                <p class="author-info">Created by <a href="https://robennals.org" target="_blank">Rob Ennals</a> · <a href="https://messyprogress.substack.com" target="_blank">Subscribe to my blog</a></p>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
                 <a href="/app.html">Explore Timelines</a>
                 <a href="/about.html">About</a>
+                <a href="https://messyprogress.substack.com" target="_blank">Blog</a>
                 <a href="https://github.com/robennals/histomap" target="_blank">GitHub</a>
             </div>
-            <p class="footer-copyright">Histomap Reborn - An open source project by <a href="https://robennals.org" target="_blank">Rob Ennals</a></p>
+            <p class="footer-copyright">Created by <a href="https://robennals.org" target="_blank">Rob Ennals</a> · <a href="https://messyprogress.substack.com" target="_blank">Subscribe to my blog</a></p>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.navbar-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.navbar-links').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
