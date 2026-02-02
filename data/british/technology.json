@@ -62,6 +62,6 @@
     {"name": "Dolly the Sheep (Cloning)", "wiki": "Dolly_(sheep)", "start": "1996-07-05", "priority": 1},
     {"name": "ARM Processor", "wiki": "ARM_architecture", "start": "1985-01-01", "priority": 2},
     {"name": "Graphene Isolated", "wiki": "Graphene", "start": "2004-01-01", "priority": 1},
-    {"name": "COVID-19 Vaccine (Oxford-AstraZeneca)", "wiki": "Oxford%E2%80%93AstraZeneca_COVID-19_vaccine", "start": "2020-12-30", "priority": 1}
+    {"name": "COVID-19 Vaccine (Oxford-AstraZeneca)", "wiki": "Oxford–AstraZeneca_COVID-19_vaccine", "start": "2020-12-30", "priority": 1}
   ]
 }

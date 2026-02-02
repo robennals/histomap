@@ -12,7 +12,7 @@
       "name": "Constitution Ratified",
       "start": "1788-06-21",
       "priority": 1,
-      "wiki": "Constitution_Ratified"
+      "wiki": "Ratification_of_the_United_States_Constitution"
     },
     {
       "name": "Louisiana Purchase",
@@ -38,7 +38,7 @@
       "name": "Transcontinental Railroad Completed",
       "start": "1869-05-10",
       "priority": 2,
-      "wiki": "Transcontinental_Railroad_Completed"
+      "wiki": "First_transcontinental_railroad"
     },
     {
       "name": "New Deal",
@@ -82,7 +82,7 @@
       "name": "Fall of Berlin Wall",
       "start": "1989-11-09",
       "priority": 2,
-      "wiki": "Fall_of_Berlin_Wall"
+      "wiki": "Fall_of_the_Berlin_Wall"
     },
     {
       "name": "9/11 Attacks",

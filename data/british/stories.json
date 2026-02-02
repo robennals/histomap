@@ -20,7 +20,7 @@
     {"name": "Macbeth", "wiki": "Macbeth", "start": "1040-01-01", "priority": 1},
     {"name": "Paradise Lost", "wiki": "Paradise_Lost", "start": "-4000-01-01", "priority": 1},
     {"name": "Robinson Crusoe", "wiki": "Robinson_Crusoe", "start": "1659-01-01", "priority": 1},
-    {"name": "Gulliver's Travels", "wiki": "Gulliver%27s_Travels", "start": "1699-01-01", "priority": 1},
+    {"name": "Gulliver's Travels", "wiki": "Gulliver's_Travels", "start": "1699-01-01", "priority": 1},
     {"name": "Tristram Shandy", "wiki": "The_Life_and_Opinions_of_Tristram_Shandy,_Gentleman", "start": "1718-01-01", "priority": 2},
     {"name": "Pride and Prejudice", "wiki": "Pride_and_Prejudice", "start": "1797-01-01", "priority": 1},
     {"name": "Frankenstein", "wiki": "Frankenstein", "start": "1790-01-01", "priority": 1},
@@ -30,7 +30,7 @@
     {"name": "Wuthering Heights", "wiki": "Wuthering_Heights", "start": "1801-01-01", "priority": 1},
     {"name": "A Christmas Carol", "wiki": "A_Christmas_Carol", "start": "1843-12-25", "priority": 1},
     {"name": "Great Expectations", "wiki": "Great_Expectations", "start": "1812-01-01", "priority": 1},
-    {"name": "Alice in Wonderland", "wiki": "Alice%27s_Adventures_in_Wonderland", "start": "1862-01-01", "priority": 1},
+    {"name": "Alice in Wonderland", "wiki": "Alice's_Adventures_in_Wonderland", "start": "1862-01-01", "priority": 1},
     {"name": "The Time Machine", "wiki": "The_Time_Machine", "start": "802701-01-01", "priority": 1},
     {"name": "Dracula", "wiki": "Dracula", "start": "1897-01-01", "priority": 1},
     {"name": "The Hound of the Baskervilles", "wiki": "The_Hound_of_the_Baskervilles", "start": "1889-01-01", "priority": 1},
@@ -45,7 +45,7 @@
     {"name": "Lord of the Flies", "wiki": "Lord_of_the_Flies", "start": "1950-01-01", "priority": 1},
     {"name": "The Lord of the Rings", "wiki": "The_Lord_of_the_Rings", "start": "-3018-01-01", "priority": 1},
     {"name": "A Clockwork Orange", "wiki": "A_Clockwork_Orange_(novel)", "start": "1995-01-01", "priority": 2},
-    {"name": "Harry Potter and the Philosopher's Stone", "wiki": "Harry_Potter_and_the_Philosopher%27s_Stone", "start": "1991-01-01", "priority": 1},
+    {"name": "Harry Potter and the Philosopher's Stone", "wiki": "Harry_Potter_and_the_Philosopher's_Stone", "start": "1991-01-01", "priority": 1},
     {"name": "His Dark Materials", "wiki": "His_Dark_Materials", "start": "1995-01-01", "priority": 2}
   ]
 }

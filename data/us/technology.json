@@ -12,7 +12,7 @@
       "name": "Coke Smelting",
       "start": "1709-01-01",
       "priority": 3,
-      "wiki": "Coke_Smelting"
+      "wiki": "Coke_(fuel)"
     },
     {
       "name": "Spinning Jenny",
@@ -42,7 +42,7 @@
       "name": "Gas Lighting",
       "start": "1792-01-01",
       "priority": 2,
-      "wiki": "Gas_Lighting"
+      "wiki": "Gas_lighting"
     },
     {
       "name": "Cotton Gin",
@@ -66,7 +66,7 @@
       "name": "Food Can",
       "start": "1810-01-01",
       "priority": 3,
-      "wiki": "Food_Can"
+      "wiki": "Canning"
     },
     {
       "name": "Steamboat",
@@ -96,7 +96,7 @@
       "name": "Vulcanized Rubber",
       "start": "1839-01-01",
       "priority": 2,
-      "wiki": "Vulcanized_Rubber"
+      "wiki": "Vulcanized_rubber"
     },
     {
       "name": "Ford Model T",
@@ -114,7 +114,7 @@
       "name": "Sythetic Plastic",
       "start": "1907-01-01",
       "priority": 2,
-      "wiki": "Sythetic_Plastic"
+      "wiki": "Plastic"
     },
     {
       "name": "Frozen Food",
@@ -132,7 +132,7 @@
       "name": "Petrol Engine",
       "start": "1876-01-01",
       "priority": 2,
-      "wiki": "Petrol_Engine"
+      "wiki": "Petrol_engine"
     },
     {
       "name": "Photography",
@@ -240,7 +240,7 @@
       "name": "Electronic Computer",
       "start": "1946-02-14",
       "priority": 1,
-      "wiki": "Electronic_Computer"
+      "wiki": "Electronic_computer"
     },
     {
       "name": "Transistor",
@@ -396,7 +396,7 @@
       "name": "Human Genome Sequenced",
       "start": "2003-04-14",
       "priority": 1,
-      "wiki": "Human_Genome_Sequenced"
+      "wiki": "Human_Genome_Project"
     },
     {
       "name": "Facebook",
